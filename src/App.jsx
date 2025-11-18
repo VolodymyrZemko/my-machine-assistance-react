@@ -76,7 +76,7 @@ function App() {
       <div className="tab-content">
         {activeTab === "machines" && (
           <>
-            <h2>Мої машини</h2>
+            <h2>Мої машини1</h2>
             {loading ? (
               <p>Завантаження...</p>
             ) : memberId ? (
