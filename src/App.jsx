@@ -1,126 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Footer from "./components/Footer.jsx";
+import MyMachinesTab from "./components/MyMachinesTab.jsx";
+import Tabs from "./components/Tabs.jsx";
+import CategoryHeader from "./components/CategoryHeader.jsx";
+import ProductGrid from "./components/ProductGrid.jsx";
+import MachineDetail from "./components/MachineDetail.jsx";
+import { useCategoryProducts } from "./hooks/useCategoryProducts.js";
+// Styles moved to main.jsx for consistent global load on static hosts (Netlify)
+
+function HomeView({ activeTab, setActiveTab }) {
+  const filteredProducts = useCategoryProducts(activeTab);
+  return (
+    <>
+      <Tabs active={activeTab} onChange={setActiveTab} />
+      <main className="app-shell">
+        {activeTab === "my-machines" ? (
+          <MyMachinesTab />
+        ) : (
+          <>
+            <CategoryHeader category={activeTab} />
+            <ProductGrid products={filteredProducts} activeCategory={activeTab} />
+          </>
+        )}
+      </main>
+    </>
+  );
+}
 
 function App() {
-  const [activeTab, setActiveTab] = useState("machines");
-  const [memberId, setMemberId] = useState(null);
-  const [machines, setMachines] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function checkUserLogin() {
-      try {
-        const myCustomer = await window.napi.customer().read();
-        const memberID = myCustomer.memberNumber || null;
-
-        if (memberID) {
-          console.log("User is logged in:", memberID);
-          setMemberId(memberID);
-          fetchMachines(); // Якщо юзер залогінений, отримуємо машини
-        } else {
-          console.log("User is not logged in.");
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error in checkUserLogin:", error);
-        setError("Помилка перевірки входу");
-        setLoading(false);
-      }
-    }
-
-    async function fetchMachines() {
-      try {
-        const userMachines = await window.napi.customer().getMachines();
-
-        if (userMachines.length === 0) {
-          setMachines([]);
-          setLoading(false);
-          return;
-        }
-
-        // Отримуємо продукти для кожної машини
-        const fetchProducts = await Promise.all(
-          userMachines.map(async ({ productId, serialNumber, purchaseDate }) => {
-            const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
-            return { ...productData, serialNumber, purchaseDate };
-          })
-        );
-
-        setMachines(fetchProducts);
-      } catch (error) {
-        console.error("Error fetching machines:", error);
-        setError("Помилка отримання машин");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    checkUserLogin();
-  }, []);
+  const [activeTab, setActiveTab] = useState("my-machines");
+  const location = useLocation();
+  const isDetail = location.pathname.startsWith("/machine/");
 
   return (
-    <div>
-      <h1>Особистий кабінет</h1>
-      <div className="tabs">
-        <button onClick={() => setActiveTab("machines")} className={activeTab === "machines" ? "active" : ""}>
-          Мої машини
-        </button>
-        <button onClick={() => setActiveTab("orders")} className={activeTab === "orders" ? "active" : ""}>
-          Історія замовлень
-        </button>
-        <button onClick={() => setActiveTab("settings")} className={activeTab === "settings" ? "active" : ""}>
-          Налаштування профілю
-        </button>
-      </div>
-
-      <div className="tab-content">
-        {activeTab === "machines" && (
-          <>
-            <h2>Мої машини</h2>
-            {loading ? (
-              <p>Завантаження...</p>
-            ) : memberId ? (
-              machines.length > 0 ? (
-                <ul>
-                  {machines.map((machine, index) => (
-                    <li key={index}>
-                      <h3>{machine.name}</h3>
-                      <p><strong>Серійний номер:</strong> {machine.serialNumber}</p>
-                      <p><strong>Дата покупки:</strong> {machine.purchaseDate}</p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>У вас ще немає машин.</p>
-              )
-            ) : (
-              <p>Будь ласка, <a href="/login">увійдіть</a> або <a href="/register">зареєструйтеся</a>.</p>
-            )}
-          </>
-        )}
-
-        {activeTab === "orders" && (
-          <>
-            <h2>Історія замовлень</h2>
-            <p>Функціонал ще в розробці.</p>
-          </>
-        )}
-
-        {activeTab === "settings" && (
-          <>
-            <h2>Налаштування профілю</h2>
-            <p>Функціонал ще в розробці.</p>
-          </>
-        )}
-      </div>
-
-      <style>{`
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tabs button { padding: 10px 15px; border: none; cursor: pointer; background: #ddd; }
-        .tabs button.active { background: #555; color: white; }
-        .tab-content { border: 1px solid #ddd; padding: 20px; }
-      `}</style>
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<HomeView activeTab={activeTab} setActiveTab={setActiveTab} />} />
+        <Route path="/machine/:slug" element={<MachineDetail />} />
+      </Routes>
+      {!isDetail && <Footer />}
+    </>
   );
 }
 
