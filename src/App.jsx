@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css'; // ensure component-level styles are loaded
 import { UserProvider } from './context/UserContext.jsx';
 import { Tabs, TabContent } from './components/tabs/Tabs.jsx';
 import { MyAccountMachine } from './components/machines/MyAccountMachine.jsx';

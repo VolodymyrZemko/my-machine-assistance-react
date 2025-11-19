@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import './index.css'; // global styles (fonts, background)
 import App from "./App.jsx";
 
 const react = window.React || React;
