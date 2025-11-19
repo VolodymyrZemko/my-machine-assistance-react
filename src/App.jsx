@@ -1,23 +1,46 @@
-import products from "./data/products.json";
+import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Footer from "./components/Footer.jsx";
+import MyMachinesTab from "./components/MyMachinesTab.jsx";
+import Tabs from "./components/Tabs.jsx";
+import CategoryHeader from "./components/CategoryHeader.jsx";
+import ProductGrid from "./components/ProductGrid.jsx";
+import MachineDetail from "./components/MachineDetail.jsx";
+import { useCategoryProducts } from "./hooks/useCategoryProducts.js";
+import "./App.css"; // component + layout styles
+
+function HomeView({ activeTab, setActiveTab }) {
+  const filteredProducts = useCategoryProducts(activeTab);
+  return (
+    <>
+      <Tabs active={activeTab} onChange={setActiveTab} />
+      <main className="app-shell">
+        {activeTab === "my-machines" ? (
+          <MyMachinesTab />
+        ) : (
+          <>
+            <CategoryHeader category={activeTab} />
+            <ProductGrid products={filteredProducts} activeCategory={activeTab} />
+          </>
+        )}
+      </main>
+    </>
+  );
+}
 
 function App() {
+  const [activeTab, setActiveTab] = useState("my-machines");
+  const location = useLocation();
+  const isDetail = location.pathname.startsWith("/machine/");
+
   return (
-    <main className="app-shell">
-      <header className="hero">
-        <h1>Nespresso Machines</h1>
-        <p className="subtitle">Explore our range of coffee machines.</p>
-      </header>
-      <section className="product-grid" aria-label="Available machines">
-        {products.map(p => (
-          <article className="product-card" key={p.name} tabIndex="0">
-            <div className="img-wrap">
-              <img src={p.img} alt={p.name} loading="lazy" />
-            </div>
-            <h3>{p.name}</h3>
-          </article>
-        ))}
-      </section>
-    </main>
+    <>
+      <Routes>
+        <Route path="/" element={<HomeView activeTab={activeTab} setActiveTab={setActiveTab} />} />
+        <Route path="/machine/:slug" element={<MachineDetail />} />
+      </Routes>
+      {!isDetail && <Footer />}
+    </>
   );
 }
 
