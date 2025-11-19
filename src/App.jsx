@@ -7,7 +7,7 @@ import CategoryHeader from "./components/CategoryHeader.jsx";
 import ProductGrid from "./components/ProductGrid.jsx";
 import MachineDetail from "./components/MachineDetail.jsx";
 import { useCategoryProducts } from "./hooks/useCategoryProducts.js";
-import "./App.css"; // component + layout styles
+// Styles moved to main.jsx for consistent global load on static hosts (Netlify)
 
 function HomeView({ activeTab, setActiveTab }) {
   const filteredProducts = useCategoryProducts(activeTab);
