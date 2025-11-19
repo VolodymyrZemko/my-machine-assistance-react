@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Product grid styles */
+.app-shell { display: flex; flex-direction: column; gap: 2rem; }
+.hero { text-align: center; }
+.subtitle { margin-top: .25rem; font-size: 1rem; color: #555; }
+.product-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.product-card { background: #fff; border: 1px solid #e3e3e3; padding: 1rem; border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,.06); display: flex; flex-direction: column; align-items: center; gap: .75rem; transition: box-shadow .2s, transform .2s; }
+.product-card:focus, .product-card:hover { outline: none; box-shadow: 0 4px 14px rgba(0,0,0,.15); transform: translateY(-4px); }
+.product-card h3 { font-size: .95rem; font-weight: 600; margin: 0; text-align: center; }
+.img-wrap { width: 100%; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (min-width: 900px) {
+  .product-card h3 { font-size: 1.05rem; }
+}

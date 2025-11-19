@@ -2,11 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 
-const react = window.React || React;
-const reactDOM = window.ReactDOM || ReactDOM;
+// Mount to #root (matches index.html). Fallback to dynamic globals if provided by host.
+const R = window.React || React;
+const RD = window.ReactDOM || ReactDOM;
 
-reactDOM.createRoot(document.getElementById("my-react-app")).render(
-  <react.StrictMode>
+RD.createRoot(document.getElementById("root")).render(
+  <R.StrictMode>
     <App />
-  </react.StrictMode>
+  </R.StrictMode>
 );
