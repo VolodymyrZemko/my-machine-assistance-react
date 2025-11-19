@@ -1,0 +1,56 @@
+[
+  {
+    "id": "citiz-platinum",
+    "name": "Citiz Platinum",
+    "technology": "OL",
+    "img": "https://via.placeholder.com/120?text=Citiz+Platinum"
+  },
+  {
+    "id": "citiz",
+    "name": "Citiz",
+    "technology": "OL",
+    "img": "https://via.placeholder.com/120?text=Citiz"
+  },
+  {
+    "id": "essenza-mini",
+    "name": "Essenza Mini",
+    "technology": "OL",
+    "img": "https://via.placeholder.com/120?text=Essenza+Mini"
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier",
+    "technology": "VL",
+    "img": "https://via.placeholder.com/120?text=Atelier"
+  },
+  {
+    "id": "vertuo-next",
+    "name": "Vertuo Next",
+    "technology": "VL",
+    "img": "https://via.placeholder.com/120?text=Vertuo+Next"
+  },
+  {
+    "id": "vertuo-pop",
+    "name": "Vertuo Pop",
+    "technology": "VL",
+    "img": "https://via.placeholder.com/120?text=Vertuo+Pop"
+  },
+  {
+    "id": "aeroccino-4",
+    "name": "Aeroccino 4",
+    "technology": "MILK",
+    "img": "https://via.placeholder.com/120?text=Aeroccino+4"
+  },
+  {
+    "id": "aeroccino-3",
+    "name": "Aeroccino 3",
+    "technology": "MILK",
+    "img": "https://via.placeholder.com/120?text=Aeroccino+3"
+  },
+  {
+    "id": "lattisima-touch",
+    "name": "Lattissima Touch",
+    "technology": "MILK",
+    "img": "https://via.placeholder.com/120?text=Lattissima+Touch"
+  }
+]

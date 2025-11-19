@@ -80,3 +80,14 @@
 .machine-item p { margin: .25rem 0; }
 
 .app-wrapper h1 { margin-top: 0; }
+
+/* Footer */
+.app-footer { 
+  margin-top: 2.5rem; 
+  padding: 1.25rem 1rem; 
+  text-align: center; 
+  font-size: 0.85rem; 
+  color: #666; 
+  border-top: 1px solid #e2e2e2; 
+}
+.app-footer p { margin: 0; }
