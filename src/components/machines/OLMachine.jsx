@@ -1,22 +1,22 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { getMachinesByTechnology } from '../../data/machines.js';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { getMachinesByTechnology } from '../../data/machines.js';
 
-// export function OLMachine() {
-//   const olMachines = getMachinesByTechnology('OL');
-//   return (
-//     <div>
-//       <h2>Original (OL) Machines</h2>
-//       <ul className="machine-list">
-//         {olMachines.map(m => (
-//           <li key={m.id} className="machine-item">
-//             <Link to={`/machine/${m.id}`}> 
-//               <img src={m.img} alt={m.name} width={120} height={120} loading="lazy" />
-//               <p>{m.name}</p>
-//             </Link>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
+export function OLMachine() {
+  const olMachines = getMachinesByTechnology('OL');
+  return (
+    <div>
+      <h2>Original (OL) Machines</h2>
+      <ul className="machine-list">
+        {olMachines.map(m => (
+          <li key={m.id} className="machine-item">
+            <Link to={`/machine/${m.id}`}> 
+              <img src={m.img} alt={m.name} width={120} height={120} loading="lazy" />
+              <p>{m.name}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
