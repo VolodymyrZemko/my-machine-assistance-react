@@ -46,6 +46,10 @@ export function MachineDetail({ machine, onClose }) {
     return () => { cancelled = true; };
   }, [machine.id]);
 
+  const overview = data?.menus?.find(m => m.id === 'overview');
+  const instructions = data?.menus?.find(m => m.id === 'instructions');
+  const userManuals = data?.userManuals || [];
+
   // Sync active tab to hash
   useEffect(() => {
     const hash = window.location.hash;
@@ -88,10 +92,6 @@ export function MachineDetail({ machine, onClose }) {
     setActiveTab(tab);
     window.location.hash = `machine/${machine.id}/${tab}`;
   }
-
-  const overview = data?.menus?.find(m => m.id === 'overview');
-  const instructions = data?.menus?.find(m => m.id === 'instructions');
-  const userManuals = data?.userManuals || [];
 
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
