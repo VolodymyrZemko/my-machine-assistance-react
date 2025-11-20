@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 
-// Parse hash of form '#machine/<id>' or '#machine/<id>/tab'
+// Parse hash of form '#!/<id>' or '#!/<id>/tab'
 function parseHash() {
   const hash = window.location.hash || '';
-  if (hash.startsWith('#machine/')) {
-    const parts = hash.slice(1).split('/'); // Remove # and split
-    if (parts.length >= 2) {
-      return parts[1] || null; // Return the machine ID (second part)
+  if (hash.startsWith('#!/')) {
+    const parts = hash.slice(3).split('/'); // Remove #!/ and split
+    if (parts.length >= 1 && parts[0]) {
+      return parts[0]; // Return the machine ID (first part after #!/)
     }
   }
   return null;
@@ -25,7 +25,7 @@ export function useMachineRoute() {
 
   const openMachine = useCallback((id) => {
     if (!id) return;
-    window.location.hash = `machine/${id}`;
+    window.location.hash = `#!/${id}`;
   }, []);
 
   const closeMachine = useCallback(() => {

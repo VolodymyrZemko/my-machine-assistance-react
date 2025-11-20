@@ -53,25 +53,25 @@ export function MachineDetail({ machine, onClose }) {
   // Sync active tab to hash
   useEffect(() => {
     const hash = window.location.hash;
-    const match = hash.match(/#machine\/[^/]+\/(.+)/);
+    const match = hash.match(/#!\/[^/]+\/(.+)/);
     if (match && DETAIL_TABS.includes(match[1])) {
       setActiveTab(match[1]);
     } else {
       // Set default to overview and update URL
       setActiveTab('overview');
-      window.location.hash = `machine/${machine.id}/overview`;
+      window.location.hash = `#!/${machine.id}/overview`;
     }
 
     // Listen for hash changes
     function onHashChange() {
       const currentHash = window.location.hash;
-      const currentMatch = currentHash.match(/#machine\/[^/]+\/(.+)/);
+      const currentMatch = currentHash.match(/#!\/[^/]+\/(.+)/);
       if (currentMatch && DETAIL_TABS.includes(currentMatch[1])) {
         setActiveTab(currentMatch[1]);
       }
       
       // Check if we're in a guide detail view
-      const guideMatch = currentHash.match(/#machine\/[^/]+\/guides\/(.+)/);
+      const guideMatch = currentHash.match(/#!\/[^/]+\/guides\/(.+)/);
       if (guideMatch && instructions) {
         const guidePath = guideMatch[1];
         const guide = instructions.topics?.find(t => t.path === guidePath);
@@ -90,17 +90,17 @@ export function MachineDetail({ machine, onClose }) {
 
   function handleTabChange(tab) {
     setActiveTab(tab);
-    window.location.hash = `machine/${machine.id}/${tab}`;
+    window.location.hash = `#!/${machine.id}/${tab}`;
   }
 
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
-    window.location.hash = `machine/${machine.id}/guides/${guide.path}`;
+    window.location.hash = `#!/${machine.id}/guides/${guide.path}`;
   }
 
   function handleBackToGuides() {
     setSelectedGuide(null);
-    window.location.hash = `machine/${machine.id}/guides`;
+    window.location.hash = `#!/${machine.id}/guides`;
   }
 
   return (

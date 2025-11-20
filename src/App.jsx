@@ -48,7 +48,7 @@ export default function App() {
               <div className="machine-grid">
                 {searchResults.map(machine => (
                   <div key={machine.id} className="machine-card">
-                    <a href={`#machine/${machine.id}`}>
+                    <a href={`#!/${machine.id}`}>
                       <img src={machine.img} alt={machine.name} />
                       <p>{machine.name}</p>
                       <small>{machine.technology}</small>
@@ -86,7 +86,7 @@ export default function App() {
                 <div className="machine-grid">
                   {filtered.map(machine => (
                     <div key={machine.id} className="machine-card">
-                      <a href={`#machine/${machine.id}`}>
+                      <a href={`#!/${machine.id}`}>
                         <img src={machine.img} alt={machine.name} />
                         <p>{machine.name}</p>
                       </a>
@@ -104,7 +104,7 @@ export default function App() {
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
-      <Footer text={activeMachine ? 'Viewing machine detail' : 'Machine tabs'} />
+      <Footer text="v1.2" />
     </div>
   );
 }
