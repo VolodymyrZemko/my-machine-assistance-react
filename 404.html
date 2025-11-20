@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><title>Redirecting...</title><script>
+/* SPA GitHub Pages redirect (adapted) */
+(function() {
+  var path = window.location.pathname.replace(/^\/my-react-cms-app/, '');
+  var search = window.location.search;
+  var hash = window.location.hash;
+  // Encode original path into query so index.html can restore it
+  var target = '/my-react-cms-app/?__spa_path=' + encodeURIComponent(path + search + hash);
+  window.location.replace(target);
+})();
+</script></head><body></body></html>

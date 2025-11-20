@@ -8,6 +8,18 @@
   </head>
   <body>
     <div id="my-react-app"></div>
+    <script>
+      // Restore original path if redirected via 404.html (__spa_path param)
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var encoded = params.get('__spa_path');
+        if (encoded) {
+          var restored = decodeURIComponent(encoded);
+          // Clean query param from URL while preserving real path for BrowserRouter
+          history.replaceState(null, '', '/my-react-cms-app' + (restored.startsWith('/') ? restored : '/' + restored));
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
