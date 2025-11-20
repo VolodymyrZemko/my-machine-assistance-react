@@ -7,6 +7,7 @@ export function MachineDetail({ machine, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
+  const [selectedGuide, setSelectedGuide] = useState(null);
 
   if (!machine) return null;
 
@@ -76,11 +77,26 @@ export function MachineDetail({ machine, onClose }) {
   }
 
   const overview = data?.menus?.find(m => m.id === 'overview');
+  const instructions = data?.menus?.find(m => m.id === 'instructions');
   const userManuals = data?.userManuals || [];
+
+  function handleGuideSelect(guide) {
+    setSelectedGuide(guide);
+  }
+
+  function handleBackToGuides() {
+    setSelectedGuide(null);
+  }
 
   return (
     <div className="machine-detail">
-      <button className="back-button" onClick={onClose}>← Back</button>
+      <nav className="breadcrumbs">
+        <a href="https://www.nespresso.com" className="breadcrumb-link">Home</a>
+        <span className="breadcrumb-separator">›</span>
+        <button onClick={onClose} className="breadcrumb-link">Machine Assistance</button>
+        <span className="breadcrumb-separator">›</span>
+        <span className="breadcrumb-current">{machine.name}</span>
+      </nav>
 
       {loading && <p className="status-loading">Loading machine data...</p>}
       {error && <p className="status-error">Error loading data: {error}</p>}
@@ -150,7 +166,56 @@ export function MachineDetail({ machine, onClose }) {
                 </div>
               </div>
             )}
-            {activeTab === 'guides' && <p>Guides content coming soon...</p>}
+            {activeTab === 'guides' && instructions && (
+              <div className="guides-section">
+                {!selectedGuide ? (
+                  <>
+                    <div
+                      className="guides-bg"
+                      style={{ backgroundImage: `url(${instructions.imageBg})` }}
+                    />
+                    <p className="guides-intro">Select a functionality from the list below to view detailed guides and videos.</p>
+                    <div className="guides-grid">
+                      {instructions.topics?.map((topic, i) => (
+                        <div key={i} className="guide-card" onClick={() => handleGuideSelect(topic)}>
+                          <img src={topic.icon} alt={topic.title} />
+                          <h4>{topic.title}</h4>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="guide-detail">
+                    <button className="guide-back-button" onClick={handleBackToGuides}>
+                      <img src={selectedGuide.icon} alt="Back" />
+                      Back to all guides
+                    </button>
+                    <h3>{selectedGuide.title}</h3>
+                    {selectedGuide.videoId && (
+                      <div className="guide-video">
+                        <iframe
+                          width="100%"
+                          height="400"
+                          src={`https://www.youtube.com/embed/${selectedGuide.videoId}`}
+                          title={selectedGuide.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    )}
+                    <div className="guide-instructions">
+                      {selectedGuide.instructions?.map((instruction, i) => (
+                        <div key={i} className="instruction-step">
+                          {instruction.visual && <img src={instruction.visual} alt={`Step ${i + 1}`} />}
+                          <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
             {activeTab === 'troubleshooting' && <p>Troubleshooting content coming soon...</p>}
           </div>
         </>
