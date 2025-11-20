@@ -1,49 +1,39 @@
 import React, { useState } from 'react';
-import './App.css'; // ensure component-level styles are loaded
-import { UserProvider } from './context/UserContext.jsx';
-import { Tabs, TabContent } from './components/tabs/Tabs.jsx';
-import { MyAccountMachine } from './components/machines/MyAccountMachine.jsx';
-import { OLMachine } from './components/machines/OLMachine.jsx';
-import { VLMachine } from './components/machines/VLMachine.jsx';
-import { MilkMachine } from './components/machines/MilkMachine.jsx';
-import { MachineDetail } from './components/machines/MachineDetail.jsx';
-import { useMachineRoute } from './modules/routing/useMachineRoute.js';
-import { machinesData } from './data/machines.js';
+import './App.css';
 import { Footer } from './components/layout/Footer.jsx';
 
-function App() {
-  // Keep App purely as a connector/orchestrator.
-  const [activeTab, setActiveTab] = useState('my-account-machine');
+// Minimal reset: a self-contained tab component setup.
 
-  const tabItems = [
-    { key: 'my-account-machine', label: 'My Account Machine', render: () => <MyAccountMachine /> },
-    { key: 'ol-machine', label: 'OL Machine', render: () => <OLMachine /> },
-    { key: 'vl-machine', label: 'VL Machine', render: () => <VLMachine /> },
-    { key: 'milk-machine', label: 'Milk Machine', render: () => <MilkMachine /> },
-  ];
+const TABS = [
+  { key: 'my-account', label: 'My Account Machine', content: 'My Account placeholder content' },
+  { key: 'ol', label: 'OL Machine', content: 'OL Machine placeholder content' },
+  { key: 'vl', label: 'VL Machine', content: 'VL Machine placeholder content' },
+  { key: 'milk', label: 'Milk Machine', content: 'Milk Machine placeholder content' }
+];
 
-  const { machineId, closeMachine } = useMachineRoute();
-  const activeMachine = machineId ? machinesData.find(m => m.id === machineId) : null;
+export default function App() {
+  const [active, setActive] = useState(TABS[0].key);
+  const current = TABS.find(t => t.key === active);
 
   return (
-    <UserProvider>
-      <div className="app-wrapper">
-        {!activeMachine && (
-          <>
-            <Tabs active={activeTab} onChange={setActiveTab} items={tabItems} />
-            <TabContent active={activeTab} items={tabItems} />
-          </>
-        )}
-        {activeMachine && (
-          <div className="machine-detail-wrapper">
-            <MachineDetail machine={activeMachine} onClose={closeMachine} />
-          </div>
-        )}
-        <Footer />
+    <div className="app-wrapper minimal">
+      <div className="tabs-bar">
+        {TABS.map(tab => (
+          <button
+            key={tab.key}
+            className={tab.key === active ? 'tab active' : 'tab'}
+            onClick={() => setActive(tab.key)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
-    </UserProvider>
+      <div className="tab-panel">
+        <h2>{current.label}</h2>
+        <p>{current.content}</p>
+      </div>
+      <Footer text="v1.2 reset" />
+    </div>
   );
 }
-
-export default App;
 
