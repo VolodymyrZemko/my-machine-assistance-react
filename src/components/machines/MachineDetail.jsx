@@ -52,9 +52,23 @@ export function MachineDetail({ machine, onClose }) {
     if (match && DETAIL_TABS.includes(match[1])) {
       setActiveTab(match[1]);
     } else {
+      // Set default to overview and update URL
       setActiveTab('overview');
+      window.location.hash = `machine/${machine.id}/overview`;
     }
-  }, []);
+
+    // Listen for hash changes
+    function onHashChange() {
+      const currentHash = window.location.hash;
+      const currentMatch = currentHash.match(/#machine\/[^/]+\/(.+)/);
+      if (currentMatch && DETAIL_TABS.includes(currentMatch[1])) {
+        setActiveTab(currentMatch[1]);
+      }
+    }
+
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, [machine.id]);
 
   function handleTabChange(tab) {
     setActiveTab(tab);
