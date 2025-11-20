@@ -22,6 +22,31 @@ Refactored `App.jsx` into a lightweight connector that orchestrates four machine
 - Enhance `useUser` with caching, error retries, or optimistic updates.
 - Introduce routing (React Router already installed) if deep-linking per tab is needed.
 
+## Hash-Based Machine Deep Links
+Machine detail pages are now exposed via location hash instead of a router:
+
+Format: `#machine/<id>` (e.g. `#machine/vertuo-plus`).
+
+Deep linking: You can link directly to a machine detail by appending the hash to the page URL:
+```
+https://www.nespresso.com/gr/en/test-page-gwp#machine/vertuo-plus
+```
+or on GitHub Pages:
+```
+https://VolodymyrZemko.github.io/my-react-cms-app/#machine/pixie
+```
+
+Behavior:
+- When a matching hash is present, tabs are hidden and the machine detail component is shown.
+- Clicking Back (or clearing the hash manually) restores the tab interface.
+- No dependency on React Router, minimizing interference with CMS scripts.
+
+Implementation Details:
+- `useMachineRoute` listens for `hashchange` events and extracts machine id.
+- `MachineDetail` is prop-driven and updates `document.title` during view lifecycle.
+
+To programmatically open a machine: `window.location.hash = 'machine/<id>'`.
+
 ## Future Ideas
 - Machine detail view component.
 - Persist selected tab in URL or localStorage.

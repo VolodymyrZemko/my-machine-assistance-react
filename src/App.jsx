@@ -6,6 +6,9 @@ import { MyAccountMachine } from './components/machines/MyAccountMachine.jsx';
 import { OLMachine } from './components/machines/OLMachine.jsx';
 import { VLMachine } from './components/machines/VLMachine.jsx';
 import { MilkMachine } from './components/machines/MilkMachine.jsx';
+import { MachineDetail } from './components/machines/MachineDetail.jsx';
+import { useMachineRoute } from './modules/routing/useMachineRoute.js';
+import { machinesData } from './data/machines.js';
 import { Footer } from './components/layout/Footer.jsx';
 
 function App() {
@@ -19,11 +22,23 @@ function App() {
     { key: 'milk-machine', label: 'Milk Machine', render: () => <MilkMachine /> },
   ];
 
+  const { machineId, closeMachine } = useMachineRoute();
+  const activeMachine = machineId ? machinesData.find(m => m.id === machineId) : null;
+
   return (
     <UserProvider>
       <div className="app-wrapper">
-        <Tabs active={activeTab} onChange={setActiveTab} items={tabItems} />
-        <TabContent active={activeTab} items={tabItems} />
+        {!activeMachine && (
+          <>
+            <Tabs active={activeTab} onChange={setActiveTab} items={tabItems} />
+            <TabContent active={activeTab} items={tabItems} />
+          </>
+        )}
+        {activeMachine && (
+          <div className="machine-detail-wrapper">
+            <MachineDetail machine={activeMachine} onClose={closeMachine} />
+          </div>
+        )}
         <Footer />
       </div>
     </UserProvider>
