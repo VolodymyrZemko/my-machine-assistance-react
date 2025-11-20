@@ -1,11 +1,15 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8"/><title>Redirecting...</title><script>
-/* SPA GitHub Pages redirect (adapted) */
+/* Dynamic SPA redirect supporting multiple basenames */
 (function() {
-  var path = window.location.pathname.replace(/^\/my-react-cms-app/, '');
-  var search = window.location.search;
-  var hash = window.location.hash;
-  // Encode original path into query so index.html can restore it
-  var target = '/my-react-cms-app/?__spa_path=' + encodeURIComponent(path + search + hash);
+  var full = window.location.pathname + window.location.search + window.location.hash;
+  var pathname = window.location.pathname;
+  var base = '/';
+  if (pathname.includes('/my-react-cms-app')) base = '/my-react-cms-app';
+  else if (pathname.includes('/test-page-gwp')) base = '/gr/en/test-page-gwp';
+  // Remove base from the front to get relative path
+  var relative = pathname.startsWith(base) ? pathname.slice(base.length) : pathname;
+  if (relative === '') relative = '/';
+  var target = base + '/?__spa_path=' + encodeURIComponent(relative + window.location.search + window.location.hash);
   window.location.replace(target);
 })();
 </script></head><body></body></html>
