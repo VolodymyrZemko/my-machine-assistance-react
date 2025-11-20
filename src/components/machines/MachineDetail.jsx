@@ -65,11 +65,24 @@ export function MachineDetail({ machine, onClose }) {
       if (currentMatch && DETAIL_TABS.includes(currentMatch[1])) {
         setActiveTab(currentMatch[1]);
       }
+      
+      // Check if we're in a guide detail view
+      const guideMatch = currentHash.match(/#machine\/[^/]+\/guides\/(.+)/);
+      if (guideMatch && instructions) {
+        const guidePath = guideMatch[1];
+        const guide = instructions.topics?.find(t => t.path === guidePath);
+        if (guide) {
+          setSelectedGuide(guide);
+        }
+      } else if (currentHash.includes('/guides') && !currentHash.includes('/guides/')) {
+        // We're on guides tab but no specific guide
+        setSelectedGuide(null);
+      }
     }
 
     window.addEventListener('hashchange', onHashChange);
     return () => window.removeEventListener('hashchange', onHashChange);
-  }, [machine.id]);
+  }, [machine.id, instructions]);
 
   function handleTabChange(tab) {
     setActiveTab(tab);
@@ -82,10 +95,12 @@ export function MachineDetail({ machine, onClose }) {
 
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
+    window.location.hash = `machine/${machine.id}/guides/${guide.path}`;
   }
 
   function handleBackToGuides() {
     setSelectedGuide(null);
+    window.location.hash = `machine/${machine.id}/guides`;
   }
 
   return (
