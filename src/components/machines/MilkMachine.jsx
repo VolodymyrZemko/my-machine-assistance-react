@@ -1,22 +1,21 @@
 import React from 'react';
-import machines from '../../data/machines.json';
+import { getMachinesByTechnology } from '../../data/machines.js';
 
 export function MilkMachine() {
-  const list = machines.filter(m => m.technology === 'MILK');
+  const milkMachines = getMachinesByTechnology('MILK');
   return (
     <div>
-      <h3>Milk Machines</h3>
-      <div className="machine-grid">
-        {list.map(machine => (
-          <div key={machine.id} className="machine-card">
-            <a href={`#machine/${machine.id}`}>
-              <img src={machine.img} alt={machine.name} />
-              <p>{machine.name}</p>
+      <h2>Milk Machines</h2>
+      <ul className="machine-list">
+        {milkMachines.map(m => (
+          <li key={m.id} className="machine-item">
+            <a href={`#machine/${m.id}`}>
+              <img src={m.img} alt={m.name} width={120} height={120} loading="lazy" />
+              <p>{m.name}</p>
             </a>
-          </div>
+          </li>
         ))}
-        {list.length === 0 && <p>No Milk machines.</p>}
-      </div>
+      </ul>
     </div>
   );
 }

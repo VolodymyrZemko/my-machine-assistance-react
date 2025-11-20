@@ -1,22 +1,21 @@
 import React from 'react';
-import machines from '../../data/machines.json';
+import { getMachinesByTechnology } from '../../data/machines.js';
 
 export function OLMachine() {
-  const list = machines.filter(m => m.technology === 'OL');
+  const olMachines = getMachinesByTechnology('OL');
   return (
     <div>
-      <h3>OL Machines</h3>
-      <div className="machine-grid">
-        {list.map(machine => (
-          <div key={machine.id} className="machine-card">
-            <a href={`#machine/${machine.id}`}>
-              <img src={machine.img} alt={machine.name} />
-              <p>{machine.name}</p>
+      <h2>Original (OL) Machines</h2>
+      <ul className="machine-list">
+        {olMachines.map(m => (
+          <li key={m.id} className="machine-item">
+            <a href={`#machine/${m.id}`}>
+              <img src={m.img} alt={m.name} width={120} height={120} loading="lazy" />
+              <p>{m.name}</p>
             </a>
-          </div>
+          </li>
         ))}
-        {list.length === 0 && <p>No OL machines.</p>}
-      </div>
+      </ul>
     </div>
   );
 }
