@@ -6,6 +6,7 @@ import { MachineDetail } from './components/machines/MachineDetail.jsx';
 import { Footer } from './components/layout/Footer.jsx';
 
 const TECH_TABS = [
+  { key: 'MY_MACHINE', label: 'My Machine' },
   { key: 'OL', label: 'OL Machines' },
   { key: 'VL', label: 'VL Machines' },
   { key: 'MILK', label: 'Milk Machines' }
@@ -13,20 +14,55 @@ const TECH_TABS = [
 
 export default function App() {
   const [active, setActive] = useState(TECH_TABS[0].key);
+  const [searchQuery, setSearchQuery] = useState('');
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
-  const filtered = useMemo(() => machines.filter(m => m.technology === active), [active]);
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const query = searchQuery.toLowerCase();
+    return machines.filter(m => m.name.toLowerCase().includes(query));
+  }, [searchQuery]);
 
-  function handleTestRouting() {
-    const first = filtered[0];
-    if (first) openMachine(first.id);
-  }
+  const filtered = useMemo(() => {
+    if (active === 'MY_MACHINE') return [];
+    return machines.filter(m => m.technology === active);
+  }, [active]);
 
   return (
     <div className="app-wrapper minimal">
       {!activeMachine && (
         <>
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search machines by name..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          {searchQuery.trim() && searchResults.length > 0 && (
+            <div className="search-results">
+              <h3>Search Results ({searchResults.length})</h3>
+              <div className="machine-grid">
+                {searchResults.map(machine => (
+                  <div key={machine.id} className="machine-card">
+                    <a href={`#machine/${machine.id}`}>
+                      <img src={machine.img} alt={machine.name} />
+                      <p>{machine.name}</p>
+                      <small>{machine.technology}</small>
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {searchQuery.trim() && searchResults.length === 0 && (
+            <div className="search-results">
+              <p>No machines found for "{searchQuery}"</p>
+            </div>
+          )}
           <div className="tabs-bar">
             {TECH_TABS.map(tab => (
               <button
@@ -37,21 +73,29 @@ export default function App() {
                 {tab.label}
               </button>
             ))}
-            <button className="tab" onClick={handleTestRouting}>test routing</button>
           </div>
           <div className="tab-panel">
-            <h2>{TECH_TABS.find(t => t.key === active)?.label}</h2>
-            <div className="machine-grid">
-              {filtered.map(machine => (
-                <div key={machine.id} className="machine-card">
-                  <a href={`#machine/${machine.id}`}>
-                    <img src={machine.img} alt={machine.name} />
-                    <p>{machine.name}</p>
-                  </a>
+            {active === 'MY_MACHINE' ? (
+              <div>
+                <h2>My Machine</h2>
+                <p>Login to see your machine</p>
+              </div>
+            ) : (
+              <>
+                <h2>{TECH_TABS.find(t => t.key === active)?.label}</h2>
+                <div className="machine-grid">
+                  {filtered.map(machine => (
+                    <div key={machine.id} className="machine-card">
+                      <a href={`#machine/${machine.id}`}>
+                        <img src={machine.img} alt={machine.name} />
+                        <p>{machine.name}</p>
+                      </a>
+                    </div>
+                  ))}
+                  {filtered.length === 0 && <p>No machines.</p>}
                 </div>
-              ))}
-              {filtered.length === 0 && <p>No machines.</p>}
-            </div>
+              </>
+            )}
           </div>
         </>
       )}

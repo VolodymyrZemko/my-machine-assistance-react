@@ -57,6 +57,48 @@
   margin: 0;
 }
 
+/* Search */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color .2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.search-results {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+}
+
+.search-results h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.search-results small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+}
+
 /* Machines */
 .machine-grid {
   display: grid;
