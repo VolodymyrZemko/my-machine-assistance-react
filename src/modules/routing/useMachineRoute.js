@@ -1,11 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
 
-// Parse hash of form '#machine/<id>'
+// Parse hash of form '#machine/<id>' or '#machine/<id>/tab'
 function parseHash() {
   const hash = window.location.hash || '';
   if (hash.startsWith('#machine/')) {
-    const id = hash.slice('#machine/'.length).trim();
-    return id || null;
+    const parts = hash.slice(1).split('/'); // Remove # and split
+    if (parts.length >= 2) {
+      return parts[1] || null; // Return the machine ID (second part)
+    }
   }
   return null;
 }
