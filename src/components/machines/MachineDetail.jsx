@@ -188,6 +188,10 @@ export function MachineDetail({ machine, onClose }) {
                     </a>
                   )}
                 </div>
+                <div
+                  className="overview-bg-mobile"
+                  style={{ backgroundImage: `url(${overview.imageBgMob})` }}
+                />
                 <div className="specifications">
                   <h3>Specifications</h3>
                   <div className="specs-grid">
@@ -218,6 +222,10 @@ export function MachineDetail({ machine, onClose }) {
                         </div>
                       ))}
                     </div>
+                    <div
+                      className="guides-bg-mobile"
+                      style={{ backgroundImage: `url(${instructions.imageBgMob})` }}
+                    />
                   </>
                 ) : (
                   <div className="guide-detail">
@@ -292,6 +300,10 @@ export function MachineDetail({ machine, onClose }) {
                     </div>
                   ))}
                 </div>
+                <div
+                  className="troubleshooting-bg-mobile"
+                  style={{ backgroundImage: `url(${troubleshooting.imageBgMob})` }}
+                />
               </div>
             )}
           </div>

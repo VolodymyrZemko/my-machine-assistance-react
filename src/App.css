@@ -116,11 +116,14 @@
   transition: box-shadow .15s, transform .15s;
 }
 
-.machine-card a { text-decoration: none; color: inherit; display: block; }
+.machine-card a { 
+  text-decoration: none; 
+  color: inherit; 
+  display: block; 
+}
 
-.machine-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  transform: translateY(-2px);
+.machine-card:hover img {
+  transform: scale(1.1);
 }
 
 .machine-card img {
@@ -147,6 +150,11 @@
 .machine-card img[src] {
   animation: none;
   background: transparent;
+  transition: .2s ease-out;
+}
+
+.machine-card p {
+    margin: auto;
 }
 
 .machine-detail {
@@ -333,6 +341,22 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.overview-bg-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .overview-bg-mobile {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+}
+
 .overview-text h2 {
   margin-top: 0;
   font-size: 22px;
@@ -427,6 +451,22 @@
   background-position: center;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.guides-bg-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .guides-bg-mobile {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
 }
 
 .guides-intro {
@@ -553,6 +593,22 @@
   background-position: center;
   margin-bottom: 24px;
   border-radius: 8px;
+}
+
+.troubleshooting-bg-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .troubleshooting-bg-mobile {
+    display: block;
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
 }
 
 .troubleshooting-list {

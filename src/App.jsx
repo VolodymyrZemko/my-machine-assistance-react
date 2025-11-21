@@ -52,23 +52,31 @@ export default function App() {
           </div>
           {searchQuery.trim() && searchResults.length > 0 && (
             <div className="search-results">
-              <h3>Search Results ({searchResults.length})</h3>
+              <h3>Search result for: {searchQuery}</h3>
               <div className="machine-grid">
                 {searchResults.map(machine => (
                   <div key={machine.id} className="machine-card">
                     <a href={`#!/${machine.id}`}>
-                      <img src={machine.img} alt={machine.name} />
+                      <img 
+                        src={machine.img} 
+                        alt={machine.name}
+                        loading="eager"
+                      />
                       <p>{machine.name}</p>
-                      <small>{machine.technology}</small>
                     </a>
                   </div>
                 ))}
               </div>
+              <p className='search-more-title'>Didn't find what you need?</p>
+              <p>Select your machine from the list below.</p>
             </div>
           )}
           {searchQuery.trim() && searchResults.length === 0 && (
-            <div className="search-results">
-              <p>No machines found for "{searchQuery}"</p>
+            <div className="search-results no-results">
+              <p>Search result for: "{searchQuery}"</p>
+              <div className="no-search-result">
+                <p>Select your machine from the list below.</p>
+              </div>
             </div>
           )}
           <div className="tabs-bar">
@@ -95,7 +103,11 @@ export default function App() {
                   {filtered.map(machine => (
                     <div key={machine.id} className="machine-card">
                       <a href={`#!/${machine.id}`}>
-                        <img src={machine.img} alt={machine.name} />
+                        <img 
+                          src={machine.img} 
+                          alt={machine.name}
+                          loading="eager"
+                        />
                         <p>{machine.name}</p>
                       </a>
                     </div>
