@@ -35,12 +35,13 @@ export default function App() {
 
   // Check user login status and fetch their machines
   useEffect(() => {
-    // Normalize name for comparison (remove "Nespresso", spaces, lowercase)
+    // Normalize name for comparison (remove "Nespresso", colors, spaces, lowercase)
     function normalizeName(name) {
       return name
         .toLowerCase()
         .replace(/nespresso/gi, '')
         .replace(/\s+/g, '')
+        .replace(/-/g, '')
         .trim();
     }
 
@@ -48,11 +49,20 @@ export default function App() {
     function findMatchingMachine(apiName) {
       const normalizedApiName = normalizeName(apiName);
       
+      // Sort machines by name length (longest first) to prioritize more specific matches
+      const sortedMachines = [...machines].sort((a, b) => b.name.length - a.name.length);
+      
       // Find best match by checking if normalized JSON name is contained in API name
-      return machines.find(machine => {
+      return sortedMachines.find(machine => {
         const normalizedMachineName = normalizeName(machine.name);
-        return normalizedApiName.includes(normalizedMachineName) || 
-               normalizedMachineName.includes(normalizedApiName);
+        
+        // Only match if the machine name length is at least 2 characters (avoid single letter matches like "U")
+        if (normalizedMachineName.length < 2) {
+          // For single letter machines like "U", require exact match
+          return normalizedApiName === normalizedMachineName;
+        }
+        
+        return normalizedApiName.includes(normalizedMachineName);
       });
     }
 
@@ -106,10 +116,10 @@ export default function App() {
               const matchedMachine = findMatchingMachine(productData.name);
               
               return {
-                apiName: productData.name,
-                name: matchedMachine?.name || productData.name,
+                apiName: productData.name, // Original name from API
+                name: productData.name, // Use API name for display
                 id: matchedMachine?.id || null,
-                img: matchedMachine?.img || productData.image || machines[0].img,
+                img: productData.images?.icon || productData.image || matchedMachine?.img || machines[0].img, // Use API image first
                 technology: matchedMachine?.technology || 'OL',
                 serialNumber,
                 purchaseDate,
