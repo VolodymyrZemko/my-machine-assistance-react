@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import './App.css';
 import machines from './data/machines.json';
 import { useMachineRoute } from './modules/routing/useMachineRoute.js';
@@ -17,6 +17,14 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
+
+  // Preload all machine images on mount
+  useEffect(() => {
+    machines.forEach(machine => {
+      const img = new Image();
+      img.src = machine.img;
+    });
+  }, []);
 
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];

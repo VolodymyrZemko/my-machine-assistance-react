@@ -39,6 +39,7 @@ export function MachineDetail({ machine, onClose }) {
       })
       .catch(err => {
         if (!cancelled) {
+          console.error('Failed to load machine data:', err);
           setError(err.message);
           setLoading(false);
         }
@@ -119,8 +120,21 @@ export function MachineDetail({ machine, onClose }) {
         <span className="breadcrumb-current">{machine.name}</span>
       </nav>
 
-      {loading && <p className="status-loading">Loading machine data...</p>}
-      {error && <p className="status-error">Error loading data: {error}</p>}
+      {(loading || error) && (
+        <div className="shimmer-container">
+          <div className="shimmer-header"></div>
+          <div className="shimmer-tabs">
+            <div className="shimmer-tab"></div>
+            <div className="shimmer-tab"></div>
+            <div className="shimmer-tab"></div>
+          </div>
+          <div className="shimmer-content">
+            <div className="shimmer-box large"></div>
+            <div className="shimmer-box medium"></div>
+            <div className="shimmer-box small"></div>
+          </div>
+        </div>
+      )}
 
       {data && (
         <>

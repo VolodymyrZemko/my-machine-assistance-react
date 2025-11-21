@@ -125,9 +125,28 @@
 
 .machine-card img {
   max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
   display: block;
   margin: 0 auto 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.machine-card img[src] {
+  animation: none;
+  background: transparent;
 }
 
 .machine-detail {
@@ -595,5 +614,65 @@
 
 .trouble-content li {
   margin: 6px 0;
+}
+
+/* Shimmer Loading States */
+.shimmer-container {
+  padding: 20px 0;
+}
+
+.shimmer-header {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.shimmer-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.shimmer-tab {
+  width: 120px;
+  height: 36px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.shimmer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shimmer-box {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.shimmer-box.large {
+  width: 100%;
+  height: 300px;
+}
+
+.shimmer-box.medium {
+  width: 80%;
+  height: 150px;
+}
+
+.shimmer-box.small {
+  width: 60%;
+  height: 100px;
 }
 
