@@ -113,14 +113,14 @@ export default function App() {
                 faqLink: productData.faq // Keep FAQ link for debugging
               };
             } catch (err) {
-              console.error(`Error fetching product ${productId}:`, err);
+              // Skip products that can't be fetched (ResourceNotFoundError, etc.)
+              console.warn(`Skipping product ${productId}: Product not found or unavailable`);
               return null;
             }
           })
         );
 
         // Filter out any null results from failed fetches
-        setUserMachines(fetchProducts.filter(Boolean));
         setUserMachines(fetchProducts.filter(Boolean));
       } catch (error) {
         console.error("Error fetching machines:", error);
@@ -233,17 +233,12 @@ export default function App() {
                             {machine.id ? (
                               <a href={`#!/${machine.id}`} className="my-machine-link primary">View Details</a>
                             ) : (
-                              <span className="my-machine-not-found">Machine not found in our database</span>
+                              <span className="my-machine-not-found">Unfortunately, we did not find your machine. Please use search or find it from the list below.</span>
                             )}
                           </div>
                         </div>
                       ))}
                     </div>
-                    {userMachines.some(m => !m.id) && (
-                      <div className="no-match-message">
-                        <p>Unfortunately, we did not find your machine. Please use search or find it from the list below.</p>
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <div className="no-machines">
