@@ -8,6 +8,7 @@ export function MachineDetail({ machine, onClose }) {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedGuide, setSelectedGuide] = useState(null);
+  const [expandedTrouble, setExpandedTrouble] = useState(null);
 
   if (!machine) return null;
 
@@ -48,6 +49,7 @@ export function MachineDetail({ machine, onClose }) {
 
   const overview = data?.menus?.find(m => m.id === 'overview');
   const instructions = data?.menus?.find(m => m.id === 'instructions');
+  const troubleshooting = data?.menus?.find(m => m.id === 'troubleshooting');
   const userManuals = data?.userManuals || [];
 
   // Sync active tab to hash
@@ -101,6 +103,10 @@ export function MachineDetail({ machine, onClose }) {
   function handleBackToGuides() {
     setSelectedGuide(null);
     window.location.hash = `#!/${machine.id}/guides`;
+  }
+
+  function toggleTrouble(index) {
+    setExpandedTrouble(expandedTrouble === index ? null : index);
   }
 
   return (
@@ -231,7 +237,49 @@ export function MachineDetail({ machine, onClose }) {
                 )}
               </div>
             )}
-            {activeTab === 'troubleshooting' && <p>Troubleshooting content coming soon...</p>}
+            {activeTab === 'troubleshooting' && troubleshooting && (
+              <div className="troubleshooting-section">
+                <div
+                  className="troubleshooting-bg"
+                  style={{ backgroundImage: `url(${troubleshooting.imageBg})` }}
+                />
+                <div className="troubleshooting-list">
+                  <h3>Select the issue you are facing from the list below.</h3>
+                  {troubleshooting.troubles?.map((trouble, index) => (
+                    <div key={index} className="trouble-item">
+                      <button
+                        className="trouble-button"
+                        onClick={() => toggleTrouble(index)}
+                        aria-expanded={expandedTrouble === index}
+                      >
+                        <span>{trouble.title}</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="chevron"
+                          style={{ transform: expandedTrouble === index ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                        >
+                          <path d="m12 15.3-8-8v1.4l8 8 8-8V7.3l-8 8Z"></path>
+                        </svg>
+                      </button>
+                      <div
+                        className="trouble-panel"
+                        style={{
+                          maxHeight: expandedTrouble === index ? '500px' : '0px',
+                          overflow: 'hidden',
+                          transition: 'max-height 0.3s ease-out'
+                        }}
+                      >
+                        <div className="trouble-content" dangerouslySetInnerHTML={{ __html: trouble.content }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}
