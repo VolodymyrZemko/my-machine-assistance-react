@@ -58,9 +58,10 @@ export default function App() {
     async function checkUserLogin() {
       try {
         if (!window.napi?.customer) {
-          console.log("NAPI not available");
+          console.log("NAPI not available - switching to OL tab");
           setIsLoggedIn(false);
           setLoadingUser(false);
+          setActive('OL'); // Switch to OL tab
           return;
         }
 
@@ -79,9 +80,9 @@ export default function App() {
         }
       } catch (error) {
         console.error("Error in checkUserLogin:", error);
-        setUserError("Unable to verify login status");
         setIsLoggedIn(false);
         setLoadingUser(false);
+        setActive('OL'); // Switch to OL tab on error
       }
     }
 
@@ -245,7 +246,6 @@ export default function App() {
                     <p>You do not have any registered machine, choose from list.</p>
                   </div>
                 )}
-                {userError && <p className="error-message">{userError}</p>}
               </div>
             ) : (
               <>
