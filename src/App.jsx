@@ -35,6 +35,27 @@ export default function App() {
 
   // Check user login status and fetch their machines
   useEffect(() => {
+    // Normalize name for comparison (remove "Nespresso", spaces, lowercase)
+    function normalizeName(name) {
+      return name
+        .toLowerCase()
+        .replace(/nespresso/gi, '')
+        .replace(/\s+/g, '')
+        .trim();
+    }
+
+    // Find matching machine from our JSON based on API name
+    function findMatchingMachine(apiName) {
+      const normalizedApiName = normalizeName(apiName);
+      
+      // Find best match by checking if normalized JSON name is contained in API name
+      return machines.find(machine => {
+        const normalizedMachineName = normalizeName(machine.name);
+        return normalizedApiName.includes(normalizedMachineName) || 
+               normalizedMachineName.includes(normalizedApiName);
+      });
+    }
+
     async function checkUserLogin() {
       try {
         if (!window.napi?.customer) {
@@ -67,9 +88,9 @@ export default function App() {
 
     async function fetchMachines() {
       try {
-        const machines = await window.napi.customer().getMachines();
+        const userMachinesData = await window.napi.customer().getMachines();
 
-        if (machines.length === 0) {
+        if (userMachinesData.length === 0) {
           setUserMachines([]);
           setLoadingUser(false);
           return;
@@ -77,13 +98,32 @@ export default function App() {
 
         // Fetch product details for each machine
         const fetchProducts = await Promise.all(
-          machines.map(async ({ productId, serialNumber, purchaseDate }) => {
-            const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
-            return { ...productData, serialNumber, purchaseDate };
+          userMachinesData.map(async ({ productId, serialNumber, purchaseDate }) => {
+            try {
+              const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
+              
+              // Find matching machine from our local JSON
+              const matchedMachine = findMatchingMachine(productData.name);
+              
+              return {
+                apiName: productData.name,
+                name: matchedMachine?.name || productData.name,
+                id: matchedMachine?.id || null,
+                img: matchedMachine?.img || productData.image || machines[0].img,
+                technology: matchedMachine?.technology || 'OL',
+                serialNumber,
+                purchaseDate,
+                productData // Keep original API data for debugging
+              };
+            } catch (err) {
+              console.error(`Error fetching product ${productId}:`, err);
+              return null;
+            }
           })
         );
 
-        setUserMachines(fetchProducts);
+        // Filter out any null results from failed fetches
+        setUserMachines(fetchProducts.filter(Boolean));
       } catch (error) {
         console.error("Error fetching machines:", error);
         setUserError("Unable to load your machines");
@@ -178,15 +218,28 @@ export default function App() {
                     <div className="machine-grid">
                       {userMachines.map((machine, index) => (
                         <div key={index} className="machine-card">
-                          <a href={`#!/${machine.code || machine.id}`}>
-                            <img 
-                              src={machine.image || machine.img || machines[0].img} 
-                              alt={machine.name}
-                              loading="eager"
-                            />
-                            <p>{machine.name}</p>
-                            {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
-                          </a>
+                          {machine.id ? (
+                            <a href={`#!/${machine.id}`}>
+                              <img 
+                                src={machine.img} 
+                                alt={machine.name}
+                                loading="eager"
+                              />
+                              <p>{machine.name}</p>
+                              {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
+                            </a>
+                          ) : (
+                            <div className="machine-card-no-link">
+                              <img 
+                                src={machine.img} 
+                                alt={machine.name}
+                                loading="eager"
+                              />
+                              <p>{machine.name}</p>
+                              <small>Not available</small>
+                              {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
