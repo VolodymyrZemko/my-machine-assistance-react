@@ -18,12 +18,81 @@ export default function App() {
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
+  // My Machine tab states
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [memberId, setMemberId] = useState(null);
+  const [userMachines, setUserMachines] = useState([]);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [userError, setUserError] = useState(null);
+
   // Preload all machine images on mount
   useEffect(() => {
     machines.forEach(machine => {
       const img = new Image();
       img.src = machine.img;
     });
+  }, []);
+
+  // Check user login status and fetch their machines
+  useEffect(() => {
+    async function checkUserLogin() {
+      try {
+        if (!window.napi?.customer) {
+          console.log("NAPI not available");
+          setIsLoggedIn(false);
+          setLoadingUser(false);
+          return;
+        }
+
+        const myCustomer = await window.napi.customer().read();
+        const memberID = myCustomer.memberNumber || null;
+
+        if (memberID) {
+          console.log("User is logged in:", memberID);
+          setMemberId(memberID);
+          setIsLoggedIn(true);
+          await fetchMachines();
+        } else {
+          console.log("User is not logged in.");
+          setIsLoggedIn(false);
+          setLoadingUser(false);
+        }
+      } catch (error) {
+        console.error("Error in checkUserLogin:", error);
+        setUserError("Unable to verify login status");
+        setIsLoggedIn(false);
+        setLoadingUser(false);
+      }
+    }
+
+    async function fetchMachines() {
+      try {
+        const machines = await window.napi.customer().getMachines();
+
+        if (machines.length === 0) {
+          setUserMachines([]);
+          setLoadingUser(false);
+          return;
+        }
+
+        // Fetch product details for each machine
+        const fetchProducts = await Promise.all(
+          machines.map(async ({ productId, serialNumber, purchaseDate }) => {
+            const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
+            return { ...productData, serialNumber, purchaseDate };
+          })
+        );
+
+        setUserMachines(fetchProducts);
+      } catch (error) {
+        console.error("Error fetching machines:", error);
+        setUserError("Unable to load your machines");
+      } finally {
+        setLoadingUser(false);
+      }
+    }
+
+    checkUserLogin();
   }, []);
 
   const searchResults = useMemo(() => {
@@ -92,9 +161,42 @@ export default function App() {
           </div>
           <div className="tab-panel">
             {active === 'MY_MACHINE' ? (
-              <div>
+              <div className="my-machine-section">
                 <h2>My Machine</h2>
-                <p>Login to see your machine</p>
+                {loadingUser ? (
+                  <div className="shimmer-container">
+                    <div className="shimmer-box medium"></div>
+                  </div>
+                ) : !isLoggedIn ? (
+                  <div className="login-prompt">
+                    <p>Please log in to your account to find the machines registered to you.</p>
+                    <a href="/login" className="login-link">Log in to your account</a>
+                  </div>
+                ) : userMachines.length > 0 ? (
+                  <div>
+                    <h3>Your Machines</h3>
+                    <div className="machine-grid">
+                      {userMachines.map((machine, index) => (
+                        <div key={index} className="machine-card">
+                          <a href={`#!/${machine.code || machine.id}`}>
+                            <img 
+                              src={machine.image || machine.img || machines[0].img} 
+                              alt={machine.name}
+                              loading="eager"
+                            />
+                            <p>{machine.name}</p>
+                            {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="no-machines">
+                    <p>You do not have any registered machine, choose from list.</p>
+                  </div>
+                )}
+                {userError && <p className="error-message">{userError}</p>}
               </div>
             ) : (
               <>
