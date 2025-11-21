@@ -788,6 +788,138 @@
   color: #555;
 }
 
+/* My Machines List - 3 Column Layout */
+.my-machines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.my-machine-item {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  gap: 20px;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+.my-machine-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.my-machine-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.my-machine-image img {
+  max-width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.my-machine-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.my-machine-info h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+.my-machine-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.my-machine-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.my-machine-link {
+  display: inline-block;
+  padding: 10px 16px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+}
+
+.my-machine-link:hover {
+  border-color: #999;
+  background: #f5f5f5;
+}
+
+.my-machine-link.primary {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.my-machine-link.primary:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
+.my-machine-not-found {
+  font-size: 13px;
+  color: #999;
+  text-align: center;
+  font-style: italic;
+  padding: 8px;
+}
+
+@media (max-width: 768px) {
+  .my-machine-item {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .my-machine-image img {
+    max-height: 100px;
+  }
+
+  .my-machine-actions {
+    width: 100%;
+  }
+}
+
+.no-match-message {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff3cd;
+  border-radius: 8px;
+  border-left: 4px solid #ffc107;
+}
+
+.no-match-message p {
+  font-size: 15px;
+  color: #856404;
+  margin: 0;
+  line-height: 1.5;
+}
+
 .error-message {
   color: #d32f2f;
   font-size: 14px;

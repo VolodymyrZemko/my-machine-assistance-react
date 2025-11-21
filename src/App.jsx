@@ -35,35 +35,24 @@ export default function App() {
 
   // Check user login status and fetch their machines
   useEffect(() => {
-    // Normalize name for comparison (remove "Nespresso", colors, spaces, lowercase)
-    function normalizeName(name) {
-      return name
-        .toLowerCase()
-        .replace(/nespresso/gi, '')
-        .replace(/\s+/g, '')
-        .replace(/-/g, '')
-        .trim();
+    // Extract machine ID from FAQ link
+    function extractMachineIdFromFaq(faqLink) {
+      if (!faqLink) return null;
+      
+      // Extract the part after #!/ in the FAQ link
+      const match = faqLink.match(/#!\/([^/]+)/);
+      if (match && match[1]) {
+        return match[1].toLowerCase(); // Convert to lowercase to match our JSON ids
+      }
+      return null;
     }
 
-    // Find matching machine from our JSON based on API name
-    function findMatchingMachine(apiName) {
-      const normalizedApiName = normalizeName(apiName);
+    // Find matching machine from our JSON based on FAQ link
+    function findMatchingMachine(faqLink) {
+      const machineId = extractMachineIdFromFaq(faqLink);
+      if (!machineId) return null;
       
-      // Sort machines by name length (longest first) to prioritize more specific matches
-      const sortedMachines = [...machines].sort((a, b) => b.name.length - a.name.length);
-      
-      // Find best match by checking if normalized JSON name is contained in API name
-      return sortedMachines.find(machine => {
-        const normalizedMachineName = normalizeName(machine.name);
-        
-        // Only match if the machine name length is at least 2 characters (avoid single letter matches like "U")
-        if (normalizedMachineName.length < 2) {
-          // For single letter machines like "U", require exact match
-          return normalizedApiName === normalizedMachineName;
-        }
-        
-        return normalizedApiName.includes(normalizedMachineName);
-      });
+      return machines.find(machine => machine.id === machineId);
     }
 
     async function checkUserLogin() {
@@ -112,18 +101,16 @@ export default function App() {
             try {
               const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
               
-              // Find matching machine from our local JSON
-              const matchedMachine = findMatchingMachine(productData.name);
+              // Find matching machine from our local JSON using FAQ link
+              const matchedMachine = findMatchingMachine(productData.faq);
               
               return {
-                apiName: productData.name, // Original name from API
-                name: productData.name, // Use API name for display
+                name: productData.name, // Original name from API
                 id: matchedMachine?.id || null,
-                img: productData.images?.icon || productData.image || matchedMachine?.img || machines[0].img, // Use API image first
-                technology: matchedMachine?.technology || 'OL',
+                img: productData.images?.icon || productData.image || matchedMachine?.img || machines[0].img,
                 serialNumber,
                 purchaseDate,
-                productData // Keep original API data for debugging
+                faqLink: productData.faq // Keep FAQ link for debugging
               };
             } catch (err) {
               console.error(`Error fetching product ${productId}:`, err);
@@ -133,6 +120,7 @@ export default function App() {
         );
 
         // Filter out any null results from failed fetches
+        setUserMachines(fetchProducts.filter(Boolean));
         setUserMachines(fetchProducts.filter(Boolean));
       } catch (error) {
         console.error("Error fetching machines:", error);
@@ -225,34 +213,37 @@ export default function App() {
                 ) : userMachines.length > 0 ? (
                   <div>
                     <h3>Your Machines</h3>
-                    <div className="machine-grid">
+                    <div className="my-machines-list">
                       {userMachines.map((machine, index) => (
-                        <div key={index} className="machine-card">
-                          {machine.id ? (
-                            <a href={`#!/${machine.id}`}>
-                              <img 
-                                src={machine.img} 
-                                alt={machine.name}
-                                loading="eager"
-                              />
-                              <p>{machine.name}</p>
-                              {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
-                            </a>
-                          ) : (
-                            <div className="machine-card-no-link">
-                              <img 
-                                src={machine.img} 
-                                alt={machine.name}
-                                loading="eager"
-                              />
-                              <p>{machine.name}</p>
-                              <small>Not available</small>
-                              {machine.serialNumber && <small>S/N: {machine.serialNumber}</small>}
-                            </div>
-                          )}
+                        <div key={index} className="my-machine-item">
+                          <div className="my-machine-image">
+                            <img 
+                              src={machine.img} 
+                              alt={machine.name}
+                              loading="eager"
+                            />
+                          </div>
+                          <div className="my-machine-info">
+                            <h4>{machine.name}</h4>
+                            {machine.serialNumber && <p>S/N: {machine.serialNumber}</p>}
+                            {machine.purchaseDate && <p>Purchase Date: {new Date(machine.purchaseDate).toLocaleDateString()}</p>}
+                          </div>
+                          <div className="my-machine-actions">
+                            <a href="/my-machine-page" className="my-machine-link">My Account</a>
+                            {machine.id ? (
+                              <a href={`#!/${machine.id}`} className="my-machine-link primary">View Details</a>
+                            ) : (
+                              <span className="my-machine-not-found">Machine not found in our database</span>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>
+                    {userMachines.some(m => !m.id) && (
+                      <div className="no-match-message">
+                        <p>Unfortunately, we did not find your machine. Please use search or find it from the list below.</p>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="no-machines">
