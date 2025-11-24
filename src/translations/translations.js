@@ -17,7 +17,8 @@ export const translations = {
     // My Machine Section
     yourMachines: "Your Machines",
     pleaseLogin: "Please log in to your account to find the machines registered to you.",
-    loginToAccount: "Log in to your account",
+    registerMachineInfo: "You can register your machine through the Nespresso website during the account registration process, by going to your account page and adding your machine registration in \"My Personal Information\" or by clicking",
+    loginHere: "Log in here.",
     noMachines: "You do not have any registered machine, choose from list.",
     myAccount: "My Account",
     viewDetails: "View Details",
@@ -83,7 +84,8 @@ export const translations = {
     // My Machine Section
     yourMachines: "Οι Μηχανές Σας",
     pleaseLogin: "Παρακαλώ συνδεθείτε στον λογαριασμό σας για να βρείτε τις μηχανές που είναι εγγεγραμμένες σε εσάς.",
-    loginToAccount: "Συνδεθείτε στον λογαριασμό σας",
+    registerMachineInfo: "Μπορείτε να καταχωρίσετε τη μηχανή σας μέσω του ιστότοπου Nespresso κατά τη διαδικασία εγγραφής λογαριασμού, μεταβαίνοντας στη σελίδα του λογαριασμού σας και προσθέτοντας την καταχώριση της μηχανής σας στις \"Προσωπικές μου Πληροφορίες\" ή κάνοντας κλικ",
+    loginHere: "Συνδεθείτε εδώ.",
     noMachines: "Δεν έχετε καμία εγγεγραμμένη μηχανή, επιλέξτε από τη λίστα.",
     myAccount: "Ο Λογαριασμός Μου",
     viewDetails: "Προβολή Λεπτομερειών",

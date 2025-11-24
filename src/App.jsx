@@ -78,7 +78,10 @@ export default function App() {
             onMachineClick={handleMachineClick}
           />
           <div className="select-from-list-message">
-            <p>{t('selectFromList')}</p>
+            {searchQuery.trim() && searchResults.length > 0 && (
+              <p className='search-more-title'>{t('didntFindWhat')}</p>
+            )}
+            <p className='select-from-list-title'>{t('selectFromList')}</p>
           </div>
           <div className="tabs-bar" role="tablist" aria-label="Machine categories">
             {TECH_TABS.map(tab => (

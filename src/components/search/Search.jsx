@@ -26,7 +26,15 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
 
       {searchQuery.trim() && searchResults.length > 0 && (
         <div className="search-results">
-          <h3>{t('searchResultFor')} {searchQuery}</h3>
+          <p>{t('searchResultFor')} <span>{searchQuery}</span>
+            <button 
+              className="remove-search-button" 
+              onClick={() => onSearchChange('')}
+              aria-label="Clear search"
+            >
+              <nb-icon icon="24/symbol/close"></nb-icon>
+            </button>
+          </p>
           <div className="machine-grid">
             {searchResults.map(machine => (
               <div key={machine.id} className="machine-card">
@@ -41,13 +49,20 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
               </div>
             ))}
           </div>
-          <p className='search-more-title'>{t('didntFindWhat')}</p>
         </div>
       )}
 
       {searchQuery.trim() && searchResults.length === 0 && (
         <div className="search-results no-results">
-          <p>{t('searchResultFor')} "{searchQuery}"</p>
+            <p>{t('searchResultFor')} <span>{searchQuery}</span>
+                <button 
+                className="remove-search-button" 
+                onClick={() => onSearchChange('')}
+                aria-label="Clear search"
+                >
+                <nb-icon icon="24/symbol/close"></nb-icon>
+                </button>
+            </p>
         </div>
       )}
     </div>

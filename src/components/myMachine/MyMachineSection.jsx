@@ -124,7 +124,9 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
       ) : !isLoggedIn ? (
         <div className="login-prompt">
           <p>{t('pleaseLogin')}</p>
-          <a href="/login" className="login-link">{t('loginToAccount')}</a>
+          <p className="register-info">
+            {t('registerMachineInfo')} <a href="/login" className="login-link-inline">{t('loginHere')}</a>
+          </p>
         </div>
       ) : userMachines.length > 0 ? (
         <div>
