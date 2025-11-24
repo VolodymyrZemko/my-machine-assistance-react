@@ -4,15 +4,18 @@ import machines from './data/machines.json';
 import { useMachineRoute } from './modules/routing/useMachineRoute.js';
 import { MachineDetail } from './components/machines/MachineDetail.jsx';
 import { Footer } from './components/layout/Footer.jsx';
+import { Search } from './components/search/Search.jsx';
+import { useTranslation } from './translations/translations.js';
 
 const TECH_TABS = [
-  { key: 'MY_MACHINE', label: 'My Machine' },
-  { key: 'OL', label: 'OL Machines' },
-  { key: 'VL', label: 'VL Machines' },
-  { key: 'MILK', label: 'Milk Machines' }
+  { key: 'MY_MACHINE', label: 'myMachine' },
+  { key: 'OL', label: 'olMachines' },
+  { key: 'VL', label: 'vlMachines' },
+  { key: 'MILK', label: 'milkMachines' }
 ];
 
 export default function App() {
+  const t = useTranslation();
   const [active, setActive] = useState(TECH_TABS[0].key);
   const [searchQuery, setSearchQuery] = useState('');
   const { machineId, openMachine, closeMachine } = useMachineRoute();
@@ -172,71 +175,43 @@ export default function App() {
     <div className="app-wrapper minimal">
       {!activeMachine && (
         <>
-          <div className="search-container">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search machines by name..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-          {searchQuery.trim() && searchResults.length > 0 && (
-            <div className="search-results">
-              <h3>Search result for: {searchQuery}</h3>
-              <div className="machine-grid">
-                {searchResults.map(machine => (
-                  <div key={machine.id} className="machine-card">
-                    <a href={`#!/${machine.id}`} onClick={(e) => handleMachineClick(e, machine.id)}>
-                      <img 
-                        src={machine.img} 
-                        alt={machine.name}
-                        loading="eager"
-                      />
-                      <p>{machine.name}</p>
-                    </a>
-                  </div>
-                ))}
-              </div>
-              <p className='search-more-title'>Didn't find what you need?</p>
-              <p>Select your machine from the list below.</p>
-            </div>
-          )}
-          {searchQuery.trim() && searchResults.length === 0 && (
-            <div className="search-results no-results">
-              <p>Search result for: "{searchQuery}"</p>
-              <div className="no-search-result">
-                <p>Select your machine from the list below.</p>
-              </div>
-            </div>
-          )}
-          <div className="tabs-bar">
+          <Search 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchResults={searchResults}
+            onMachineClick={handleMachineClick}
+          />
+          <div className="tabs-bar" role="tablist" aria-label="Machine categories">
             {TECH_TABS.map(tab => (
               <button
                 key={tab.key}
                 className={tab.key === active ? 'tab active' : 'tab'}
                 onClick={() => setActive(tab.key)}
+                role="tab"
+                aria-selected={tab.key === active}
+                aria-controls={`panel-${tab.key}`}
+                id={`tab-${tab.key}`}
               >
-                {tab.label}
+                {t(tab.label)}
               </button>
             ))}
           </div>
-          <div className="tab-panel">
+          <div className="tab-panel" role="tabpanel" id={`panel-${active}`} aria-labelledby={`tab-${active}`}>
             {active === 'MY_MACHINE' ? (
               <div className="my-machine-section">
-                <h2>My Machine</h2>
+                <h2 className="sr-only">{t('myMachine')}</h2>
                 {loadingUser ? (
                   <div className="shimmer-container">
                     <div className="shimmer-box medium"></div>
                   </div>
                 ) : !isLoggedIn ? (
                   <div className="login-prompt">
-                    <p>Please log in to your account to find the machines registered to you.</p>
-                    <a href="/login" className="login-link">Log in to your account</a>
+                    <p>{t('pleaseLogin')}</p>
+                    <a href="/login" className="login-link">{t('loginToAccount')}</a>
                   </div>
                 ) : userMachines.length > 0 ? (
                   <div>
-                    <h3>Your Machines</h3>
+                    <h3>{t('yourMachines')}</h3>
                     <div className="my-machines-list">
                       {userMachines.map((machine, index) => (
                         <div key={index} className="my-machine-item">
@@ -249,15 +224,15 @@ export default function App() {
                           </div>
                           <div className="my-machine-info">
                             <h4>{machine.name}</h4>
-                            {machine.serialNumber && <p>S/N: {machine.serialNumber}</p>}
-                            {machine.purchaseDate && <p>Purchase Date: {new Date(machine.purchaseDate).toLocaleDateString()}</p>}
+                            {machine.serialNumber && <p>{t('serialNumber')}: {machine.serialNumber}</p>}
+                            {machine.purchaseDate && <p>{t('purchaseDate')}: {new Date(machine.purchaseDate).toLocaleDateString()}</p>}
                           </div>
                           <div className="my-machine-actions">
                             <a href="/my-machine-page" className="my-machine-link">My Account</a>
                             {machine.id ? (
                               <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => handleMachineClick(e, machine.id)}>View Details</a>
                             ) : (
-                              <span className="my-machine-not-found">Unfortunately, we did not find your machine. Please use search or find it from the list below.</span>
+                              <span className="my-machine-not-found">{t('machineNotFound')}</span>
                             )}
                           </div>
                         </div>
@@ -266,13 +241,13 @@ export default function App() {
                   </div>
                 ) : (
                   <div className="no-machines">
-                    <p>You do not have any registered machine, choose from list.</p>
+                    <p>{t('noMachines')}</p>
                   </div>
                 )}
               </div>
             ) : (
               <>
-                <h2>{TECH_TABS.find(t => t.key === active)?.label}</h2>
+                <h2 className="sr-only">{t(TECH_TABS.find(tab => tab.key === active)?.label)}</h2>
                 <div className="machine-grid">
                   {filtered.map(machine => (
                     <div key={machine.id} className="machine-card">

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from '../../translations/translations.js';
 
 const DETAIL_TABS = ['overview', 'guides', 'troubleshooting'];
 
 export function MachineDetail({ machine, onClose }) {
+  const t = useTranslation();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -120,9 +122,9 @@ export function MachineDetail({ machine, onClose }) {
   return (
     <div className="machine-detail">
       <nav className="breadcrumbs">
-        <a href="https://www.nespresso.com" className="breadcrumb-link">Home</a>
+        <a href="https://www.nespresso.com" className="breadcrumb-link">{t('home')}</a>
         <span className="breadcrumb-separator">›</span>
-        <button onClick={onClose} className="breadcrumb-link">Machine Assistance</button>
+        <button onClick={onClose} className="breadcrumb-link">{t('machineAssistance')}</button>
         <span className="breadcrumb-separator">›</span>
         <span className="breadcrumb-current">{machine.name}</span>
       </nav>
@@ -172,7 +174,7 @@ export function MachineDetail({ machine, onClose }) {
                 className={tab === activeTab ? 'detail-tab active' : 'detail-tab'}
                 onClick={() => handleTabChange(tab)}
               >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                {t(tab)}
               </button>
             ))}
           </div>
@@ -219,7 +221,7 @@ export function MachineDetail({ machine, onClose }) {
               </div>
             ) : activeTab === 'overview' && !overview ? (
               <div className="no-data-message">
-                <p>Overview data is not available for this machine.</p>
+                <p>{t('overviewNotAvailable')}</p>
               </div>
             ) : null}
             {activeTab === 'guides' && instructions ? (
@@ -230,7 +232,7 @@ export function MachineDetail({ machine, onClose }) {
                       className="guides-bg"
                       style={{ backgroundImage: `url(${instructions.imageBg})` }}
                     />
-                    <p className="guides-intro">Select a functionality from the list below to view detailed guides and videos.</p>
+                    <p className="guides-intro">{t('selectFunctionality')}</p>
                     <div className="guides-grid">
                       {instructions.topics?.map((topic, i) => (
                         <div key={i} className="guide-card" onClick={() => handleGuideSelect(topic)}>
@@ -250,7 +252,7 @@ export function MachineDetail({ machine, onClose }) {
                   <div className="guide-detail">
                     <button className="guide-back-button" onClick={handleBackToGuides}>
                       {selectedGuide.icon && <img src={selectedGuide.icon} alt="Back" />}
-                      Back to all guides
+                      {t('backToGuides')}
                     </button>
                     <h3>{selectedGuide.title}</h3>
                     {selectedGuide.videoId && (
@@ -269,8 +271,8 @@ export function MachineDetail({ machine, onClose }) {
                     <div className="guide-instructions">
                       {selectedGuide.instructions?.map((instruction, i) => (
                         <div key={i} className="instruction-step">
-                          {instruction.visual && <img src={instruction.visual} alt={`Step ${i + 1}`} />}
-                          <strong className="instruction-step-index">Step {i + 1}</strong>
+                          {instruction.visual && <img src={instruction.visual} alt={`${t('step')} ${i + 1}`} />}
+                          <strong className="instruction-step-index">{t('step')} {i + 1}</strong>
                           <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
                         </div>
                       ))}
@@ -280,7 +282,7 @@ export function MachineDetail({ machine, onClose }) {
               </div>
             ) : activeTab === 'guides' && !instructions ? (
               <div className="no-data-message">
-                <p>Guides data is not available for this machine.</p>
+                <p>{t('guidesNotAvailable')}</p>
               </div>
             ) : null}
             {activeTab === 'troubleshooting' && troubleshooting ? (
@@ -290,7 +292,7 @@ export function MachineDetail({ machine, onClose }) {
                   style={{ backgroundImage: `url(${troubleshooting.imageBg})` }}
                 />
                 <div className="troubleshooting-list">
-                  <h3>Select the issue you are facing from the list below.</h3>
+                  <h3>{t('selectIssue')}</h3>
                   {troubleshooting.troubles?.map((trouble, index) => (
                     <div key={index} className="trouble-item">
                       <button
@@ -333,7 +335,7 @@ export function MachineDetail({ machine, onClose }) {
               </div>
             ) : activeTab === 'troubleshooting' && !troubleshooting ? (
               <div className="no-data-message">
-                <p>Troubleshooting data is not available for this machine.</p>
+                <p>{t('troubleshootingNotAvailable')}</p>
               </div>
             ) : null}
           </div>

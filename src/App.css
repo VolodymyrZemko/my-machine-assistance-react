@@ -6,6 +6,19 @@
   margin: 0 auto;
 }
 
+/* Screen reader only class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .tabs-bar {
   display: flex;
   gap: 8px;
@@ -32,6 +45,8 @@
 
 .tab-panel {
   background: #fff;
+  max-width: 960px;
+  margin: auto;
 }
 
 .tab-panel h2 {
@@ -55,7 +70,8 @@
 
 /* Search */
 .search-container {
-  margin-bottom: 20px;
+  max-width: 960px;
+  margin: auto;
 }
 
 .search-input {
