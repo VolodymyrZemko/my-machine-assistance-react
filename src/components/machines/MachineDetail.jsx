@@ -12,6 +12,11 @@ export function MachineDetail({ machine, onClose }) {
 
   if (!machine) return null;
 
+  // Scroll to top when machine changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [machine.id]);
+
   useEffect(() => {
     const prev = document.title;
     document.title = `${machine.name} • Machine Detail`;

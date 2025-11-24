@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import './App.css';
 import machines from './data/machines.json';
 import { useMachineRoute } from './modules/routing/useMachineRoute.js';
@@ -18,12 +18,35 @@ export default function App() {
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
+  // Scroll position ref
+  const scrollPositionRef = useRef(0);
+
   // My Machine tab states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [memberId, setMemberId] = useState(null);
   const [userMachines, setUserMachines] = useState([]);
   const [loadingUser, setLoadingUser] = useState(true);
   const [userError, setUserError] = useState(null);
+
+  // Save scroll position when opening a machine detail, restore when closing
+  useEffect(() => {
+    if (!machineId) {
+      // Restore scroll position when returning to list
+      const savedPos = sessionStorage.getItem('machineListScrollPos');
+      if (savedPos) {
+        // Use requestAnimationFrame to ensure DOM is ready
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(savedPos, 10));
+        });
+      }
+    }
+  }, [machineId]);
+
+  // Save scroll position before navigating to machine detail
+  const handleMachineClick = (e, machineId) => {
+    sessionStorage.setItem('machineListScrollPos', window.scrollY.toString());
+    // Let the default href navigation happen
+  };
 
   // Preload all machine images on mount
   useEffect(() => {
@@ -164,7 +187,7 @@ export default function App() {
               <div className="machine-grid">
                 {searchResults.map(machine => (
                   <div key={machine.id} className="machine-card">
-                    <a href={`#!/${machine.id}`}>
+                    <a href={`#!/${machine.id}`} onClick={(e) => handleMachineClick(e, machine.id)}>
                       <img 
                         src={machine.img} 
                         alt={machine.name}
@@ -232,7 +255,7 @@ export default function App() {
                           <div className="my-machine-actions">
                             <a href="/my-machine-page" className="my-machine-link">My Account</a>
                             {machine.id ? (
-                              <a href={`#!/${machine.id}`} className="my-machine-link primary">View Details</a>
+                              <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => handleMachineClick(e, machine.id)}>View Details</a>
                             ) : (
                               <span className="my-machine-not-found">Unfortunately, we did not find your machine. Please use search or find it from the list below.</span>
                             )}
@@ -253,7 +276,7 @@ export default function App() {
                 <div className="machine-grid">
                   {filtered.map(machine => (
                     <div key={machine.id} className="machine-card">
-                      <a href={`#!/${machine.id}`}>
+                      <a href={`#!/${machine.id}`} onClick={(e) => handleMachineClick(e, machine.id)}>
                         <img 
                           src={machine.img} 
                           alt={machine.name}
