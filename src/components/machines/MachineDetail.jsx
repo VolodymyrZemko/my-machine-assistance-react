@@ -152,7 +152,7 @@ export function MachineDetail({ machine, onClose }) {
                 {userManuals.map((manual, i) => (
                   <div key={i} className="manual-item">
                     <span>{manual.name} ({manual.weight})</span>
-                    {manual.links.map((link, j) => (
+                    {manual.links?.map((link, j) => (
                       <a key={j} href={link.url} target="_blank" rel="noopener noreferrer">
                         {link.language}
                       </a>
@@ -176,41 +176,51 @@ export function MachineDetail({ machine, onClose }) {
           </div>
 
           <div className="detail-content">
-            {activeTab === 'overview' && overview && (
+            {activeTab === 'overview' && overview ? (
               <div className="overview-section">
                 <div
                   className="overview-bg"
                   style={{ backgroundImage: `url(${overview.imageBg})` }}
                 />
-                <div className="overview-text">
-                  <h2>{overview.overviewHeaderTitle.title}</h2>
-                  <h3>{overview.overviewHeaderTitle.headline}</h3>
-                  <h4>{overview.overviewHeaderTitle.subheadline}</h4>
-                  <p>{overview.overviewHeaderTitle.description}</p>
-                  {overview.overviewHeaderTitle.cta && (
-                    <a href={overview.overviewHeaderTitle.cta.link} target="_blank" rel="noopener noreferrer" className="cta-button">
-                      {overview.overviewHeaderTitle.cta.text}
-                    </a>
-                  )}
-                </div>
-                <div
-                  className="overview-bg-mobile"
-                  style={{ backgroundImage: `url(${overview.imageBgMob})` }}
-                />
-                <div className="specifications">
-                  <h3>Specifications</h3>
-                  <div className="specs-grid">
-                    {overview.specifications.map((spec, i) => (
-                      <div key={i} className="spec-item">
-                        <img src={spec.icon} alt="" />
-                        <div dangerouslySetInnerHTML={{ __html: spec.content }} />
-                      </div>
-                    ))}
+                {overview.overviewHeaderTitle ? (
+                  <div className="overview-text">
+                    <h2>{overview.overviewHeaderTitle.title}</h2>
+                    <h3>{overview.overviewHeaderTitle.headline}</h3>
+                    <h4>{overview.overviewHeaderTitle.subheadline}</h4>
+                    <p>{overview.overviewHeaderTitle.description}</p>
+                    {overview.overviewHeaderTitle.cta && (
+                      <a href={overview.overviewHeaderTitle.cta.link} target="_blank" rel="noopener noreferrer" className="cta-button">
+                        {overview.overviewHeaderTitle.cta.text}
+                      </a>
+                    )}
                   </div>
-                </div>
+                ) : null}
+                {overview.imageBgMob && (
+                  <div
+                    className="overview-bg-mobile"
+                    style={{ backgroundImage: `url(${overview.imageBgMob})` }}
+                  />
+                )}
+                {overview.specifications && overview.specifications.length > 0 && (
+                  <div className="specifications">
+                    <h3>Specifications</h3>
+                    <div className="specs-grid">
+                      {overview.specifications.map((spec, i) => (
+                        <div key={i} className="spec-item">
+                          <img src={spec.icon} alt="" />
+                          <div dangerouslySetInnerHTML={{ __html: spec.content }} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-            {activeTab === 'guides' && instructions && (
+            ) : activeTab === 'overview' && !overview ? (
+              <div className="no-data-message">
+                <p>Overview data is not available for this machine.</p>
+              </div>
+            ) : null}
+            {activeTab === 'guides' && instructions ? (
               <div className="guides-section">
                 {!selectedGuide ? (
                   <>
@@ -227,15 +237,17 @@ export function MachineDetail({ machine, onClose }) {
                         </div>
                       ))}
                     </div>
-                    <div
-                      className="guides-bg-mobile"
-                      style={{ backgroundImage: `url(${instructions.imageBgMob})` }}
-                    />
+                    {instructions.imageBgMob && (
+                      <div
+                        className="guides-bg-mobile"
+                        style={{ backgroundImage: `url(${instructions.imageBgMob})` }}
+                      />
+                    )}
                   </>
                 ) : (
                   <div className="guide-detail">
                     <button className="guide-back-button" onClick={handleBackToGuides}>
-                      <img src={selectedGuide.icon} alt="Back" />
+                      {selectedGuide.icon && <img src={selectedGuide.icon} alt="Back" />}
                       Back to all guides
                     </button>
                     <h3>{selectedGuide.title}</h3>
@@ -263,8 +275,12 @@ export function MachineDetail({ machine, onClose }) {
                   </div>
                 )}
               </div>
-            )}
-            {activeTab === 'troubleshooting' && troubleshooting && (
+            ) : activeTab === 'guides' && !instructions ? (
+              <div className="no-data-message">
+                <p>Guides data is not available for this machine.</p>
+              </div>
+            ) : null}
+            {activeTab === 'troubleshooting' && troubleshooting ? (
               <div className="troubleshooting-section">
                 <div
                   className="troubleshooting-bg"
@@ -305,12 +321,18 @@ export function MachineDetail({ machine, onClose }) {
                     </div>
                   ))}
                 </div>
-                <div
-                  className="troubleshooting-bg-mobile"
-                  style={{ backgroundImage: `url(${troubleshooting.imageBgMob})` }}
-                />
+                {troubleshooting.imageBgMob && (
+                  <div
+                    className="troubleshooting-bg-mobile"
+                    style={{ backgroundImage: `url(${troubleshooting.imageBgMob})` }}
+                  />
+                )}
               </div>
-            )}
+            ) : activeTab === 'troubleshooting' && !troubleshooting ? (
+              <div className="no-data-message">
+                <p>Troubleshooting data is not available for this machine.</p>
+              </div>
+            ) : null}
           </div>
         </>
       )}
