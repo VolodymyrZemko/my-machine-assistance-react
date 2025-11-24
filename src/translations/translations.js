@@ -6,9 +6,9 @@ export const translations = {
     searchPlaceholder: "Search machines by name...",
     searchResultFor: "Search result for:",
     didntFindWhat: "Didn't find what you need?",
-    selectFromList: "Select your machine from the list below.",
     
     // Tabs
+    selectFromList: "Select your machine from the list below.",
     myMachine: "My Machine",
     olMachines: "OL Machines",
     vlMachines: "VL Machines",

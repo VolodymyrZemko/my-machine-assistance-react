@@ -19,11 +19,25 @@
   border-width: 0;
 }
 
+.select-from-list-message {
+  text-align: center;
+  margin: 2rem auto 1.5rem;
+  max-width: 960px;
+}
+
+.select-from-list-message p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+}
+
 .tabs-bar {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   margin-bottom: 16px;
+  max-width: 960px;
+  margin: auto;
 }
 
 .tab {
@@ -90,11 +104,10 @@
 }
 
 .search-results {
-  margin-bottom: 20px;
   padding: 16px;
   background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
+  max-width: 960px;
+  margin: auto;
 }
 
 .search-results h3 {

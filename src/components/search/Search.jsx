@@ -40,16 +40,12 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
             ))}
           </div>
           <p className='search-more-title'>{t('didntFindWhat')}</p>
-          <p>{t('selectFromList')}</p>
         </div>
       )}
 
       {searchQuery.trim() && searchResults.length === 0 && (
         <div className="search-results no-results">
           <p>{t('searchResultFor')} "{searchQuery}"</p>
-          <div className="no-search-result">
-            <p>{t('selectFromList')}</p>
-          </div>
         </div>
       )}
     </div>

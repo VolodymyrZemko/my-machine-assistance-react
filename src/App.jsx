@@ -5,6 +5,7 @@ import { useMachineRoute } from './modules/routing/useMachineRoute.js';
 import { MachineDetail } from './components/machines/MachineDetail.jsx';
 import { Footer } from './components/layout/Footer.jsx';
 import { Search } from './components/search/Search.jsx';
+import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
 import { useTranslation } from './translations/translations.js';
 
 const TECH_TABS = [
@@ -20,16 +21,6 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
-
-  // Scroll position ref
-  const scrollPositionRef = useRef(0);
-
-  // My Machine tab states
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [memberId, setMemberId] = useState(null);
-  const [userMachines, setUserMachines] = useState([]);
-  const [loadingUser, setLoadingUser] = useState(true);
-  const [userError, setUserError] = useState(null);
 
   // Save scroll position when opening a machine detail, restore when closing
   useEffect(() => {
@@ -59,107 +50,6 @@ export default function App() {
     });
   }, []);
 
-  // Check user login status and fetch their machines
-  useEffect(() => {
-    // Extract machine ID from FAQ link
-    function extractMachineIdFromFaq(faqLink) {
-      if (!faqLink) return null;
-      
-      // Extract the part after #!/ in the FAQ link
-      const match = faqLink.match(/#!\/([^/]+)/);
-      if (match && match[1]) {
-        return match[1].toLowerCase(); // Convert to lowercase to match our JSON ids
-      }
-      return null;
-    }
-
-    // Find matching machine from our JSON based on FAQ link
-    function findMatchingMachine(faqLink) {
-      const machineId = extractMachineIdFromFaq(faqLink);
-      if (!machineId) return null;
-      
-      return machines.find(machine => machine.id === machineId);
-    }
-
-    async function checkUserLogin() {
-      try {
-        if (!window.napi?.customer) {
-          console.log("NAPI not available - switching to OL tab");
-          setIsLoggedIn(false);
-          setLoadingUser(false);
-          setActive('OL'); // Switch to OL tab
-          return;
-        }
-
-        const myCustomer = await window.napi.customer().read();
-        const memberID = myCustomer.memberNumber || null;
-
-        if (memberID) {
-          console.log("User is logged in:", memberID);
-          setMemberId(memberID);
-          setIsLoggedIn(true);
-          await fetchMachines();
-        } else {
-          console.log("User is not logged in.");
-          setIsLoggedIn(false);
-          setLoadingUser(false);
-        }
-      } catch (error) {
-        console.error("Error in checkUserLogin:", error);
-        setIsLoggedIn(false);
-        setLoadingUser(false);
-        setActive('OL'); // Switch to OL tab on error
-      }
-    }
-
-    async function fetchMachines() {
-      try {
-        const userMachinesData = await window.napi.customer().getMachines();
-
-        if (userMachinesData.length === 0) {
-          setUserMachines([]);
-          setLoadingUser(false);
-          return;
-        }
-
-        // Fetch product details for each machine
-        const fetchProducts = await Promise.all(
-          userMachinesData.map(async ({ productId, serialNumber, purchaseDate }) => {
-            try {
-              const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
-              
-              // Find matching machine from our local JSON using FAQ link
-              const matchedMachine = findMatchingMachine(productData.faq);
-              
-              return {
-                name: productData.name, // Original name from API
-                id: matchedMachine?.id || null,
-                img: productData.images?.icon || productData.image || matchedMachine?.img || machines[0].img,
-                serialNumber,
-                purchaseDate,
-                faqLink: productData.faq // Keep FAQ link for debugging
-              };
-            } catch (err) {
-              // Skip products that can't be fetched (ResourceNotFoundError, etc.)
-              console.warn(`Skipping product ${productId}: Product not found or unavailable`);
-              return null;
-            }
-          })
-        );
-
-        // Filter out any null results from failed fetches
-        setUserMachines(fetchProducts.filter(Boolean));
-      } catch (error) {
-        console.error("Error fetching machines:", error);
-        setUserError("Unable to load your machines");
-      } finally {
-        setLoadingUser(false);
-      }
-    }
-
-    checkUserLogin();
-  }, []);
-
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const query = searchQuery.toLowerCase();
@@ -181,6 +71,9 @@ export default function App() {
             searchResults={searchResults}
             onMachineClick={handleMachineClick}
           />
+          <div className="select-from-list-message">
+            <p>{t('selectFromList')}</p>
+          </div>
           <div className="tabs-bar" role="tablist" aria-label="Machine categories">
             {TECH_TABS.map(tab => (
               <button
@@ -198,53 +91,7 @@ export default function App() {
           </div>
           <div className="tab-panel" role="tabpanel" id={`panel-${active}`} aria-labelledby={`tab-${active}`}>
             {active === 'MY_MACHINE' ? (
-              <div className="my-machine-section">
-                <h2 className="sr-only">{t('myMachine')}</h2>
-                {loadingUser ? (
-                  <div className="shimmer-container">
-                    <div className="shimmer-box medium"></div>
-                  </div>
-                ) : !isLoggedIn ? (
-                  <div className="login-prompt">
-                    <p>{t('pleaseLogin')}</p>
-                    <a href="/login" className="login-link">{t('loginToAccount')}</a>
-                  </div>
-                ) : userMachines.length > 0 ? (
-                  <div>
-                    <h3>{t('yourMachines')}</h3>
-                    <div className="my-machines-list">
-                      {userMachines.map((machine, index) => (
-                        <div key={index} className="my-machine-item">
-                          <div className="my-machine-image">
-                            <img 
-                              src={machine.img} 
-                              alt={machine.name}
-                              loading="eager"
-                            />
-                          </div>
-                          <div className="my-machine-info">
-                            <h4>{machine.name}</h4>
-                            {machine.serialNumber && <p>{t('serialNumber')}: {machine.serialNumber}</p>}
-                            {machine.purchaseDate && <p>{t('purchaseDate')}: {new Date(machine.purchaseDate).toLocaleDateString()}</p>}
-                          </div>
-                          <div className="my-machine-actions">
-                            <a href="/my-machine-page" className="my-machine-link">My Account</a>
-                            {machine.id ? (
-                              <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => handleMachineClick(e, machine.id)}>View Details</a>
-                            ) : (
-                              <span className="my-machine-not-found">{t('machineNotFound')}</span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="no-machines">
-                    <p>{t('noMachines')}</p>
-                  </div>
-                )}
-              </div>
+              <MyMachineSection onMachineClick={handleMachineClick} />
             ) : (
               <>
                 <h2 className="sr-only">{t(TECH_TABS.find(tab => tab.key === active)?.label)}</h2>
