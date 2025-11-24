@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../../translations/translations.js';
 import machines from '../../data/machines.json';
 
-export function MyMachineSection({ onMachineClick }) {
+export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked }) {
   const t = useTranslation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [memberId, setMemberId] = useState(null);
@@ -34,9 +34,11 @@ export function MyMachineSection({ onMachineClick }) {
     async function checkUserLogin() {
       try {
         if (!window.napi?.customer) {
-          console.log("NAPI not available");
+          console.log("NAPI not available - switching to OL tab");
           setIsLoggedIn(false);
           setLoadingUser(false);
+          onSwitchToOL(); // Switch to OL tab
+          onLoginChecked(); // Mark login check as complete
           return;
         }
 
@@ -48,15 +50,19 @@ export function MyMachineSection({ onMachineClick }) {
           setMemberId(memberID);
           setIsLoggedIn(true);
           await fetchMachines();
+          onLoginChecked(); // Mark login check as complete
         } else {
           console.log("User is not logged in.");
           setIsLoggedIn(false);
           setLoadingUser(false);
+          onLoginChecked(); // Mark login check as complete
         }
       } catch (error) {
         console.error("Error in checkUserLogin:", error);
         setIsLoggedIn(false);
         setLoadingUser(false);
+        onSwitchToOL(); // Switch to OL tab on error
+        onLoginChecked(); // Mark login check as complete
       }
     }
 

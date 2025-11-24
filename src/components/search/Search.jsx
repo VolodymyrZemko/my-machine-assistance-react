@@ -7,19 +7,21 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
 
   return (
     <div className="search-section">
-      <div className="search-header">
-        <h1>{t('searchTitle')}</h1>
-        <p>{t('searchDescription')}</p>
-      </div>
-      
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-input"
-          placeholder={t('searchPlaceholder')}
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
+      <div className="search-wrapper">
+        <div className="search-header">
+          <h1>{t('searchTitle')}</h1>
+          <p>{t('searchDescription')}</p>
+        </div>
+        
+        <div className="search-container">
+          <input
+            type="text"
+            className="search-input"
+            placeholder={t('searchPlaceholder')}
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+          />
+        </div>
       </div>
 
       {searchQuery.trim() && searchResults.length > 0 && (

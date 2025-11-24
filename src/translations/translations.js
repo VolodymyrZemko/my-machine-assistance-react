@@ -3,16 +3,16 @@ export const translations = {
     // Search
     searchTitle: "Machine Assistance",
     searchDescription: "Nespresso offers step by step instructions and easy guides to help you make the most of your Nespresso machine and Aeroccino milk frother. Simply choose your model listed below and find everything you need to know about your machine.",
-    searchPlaceholder: "Search machines by name...",
+    searchPlaceholder: "Enter machine name or serial number",
     searchResultFor: "Search result for:",
     didntFindWhat: "Didn't find what you need?",
-    
+
     // Tabs
     selectFromList: "Select your machine from the list below.",
     myMachine: "My Machine",
-    olMachines: "OL Machines",
-    vlMachines: "VL Machines",
-    milkMachines: "Milk Machines",
+    olMachines: "Original",
+    vlMachines: "Vertuo",
+    milkMachines: "Milk Devices",
     
     // My Machine Section
     yourMachines: "Your Machines",
@@ -50,7 +50,20 @@ export const translations = {
     
     // Footer
     personalizedAssistance: "PERSONALIZED MACHINE ASSISTANCE",
-    needHelp: "NEED HELP?"
+    needHelp: "NEED HELP?",
+    contactAssistance: "If you require assistance, contact Nespresso on 800 11 71 300 toll free from any landline and receive personalized technical diagnosis and support.",
+    assistancePackage: "If required, Nespresso offers a full-service Assistance Package which includes complimentary pick-up and repair of your machine and its return to your address of choice.",
+    termsConditions: "You may find the Terms & Conditions for your machine service",
+    here: "here",
+    pickup: "PICK-UP",
+    pickupDesc: "Nespresso will pick-up your machine at your preferred address.",
+    replacement: "REPLACEMENT",
+    replacementDesc: "Nespresso will provide you with a loan machine while yours is being assessed, so you never have to go without your coffee. Milk frothers or milk devices excluded.",
+    returnService: "RETURN",
+    returnDesc: "The machine will be returned back to the pick-up address and all repairs are covered with a six-month warranty.",
+    machineRegistration: "MACHINE REGISTRATION",
+    registrationDesc: "You can register your machine through the Nespresso website during the account registration process or by going to your account page and adding your machine registration in \"My Personal Information.\"",
+    registerMachine: "REGISTER YOUR MACHINE"
   },
   el: {
     // Search
@@ -103,7 +116,20 @@ export const translations = {
     
     // Footer
     personalizedAssistance: "ΕΞΑΤΟΜΙΚΕΥΜΕΝΗ ΥΠΟΣΤΗΡΙΞΗ ΜΗΧΑΝΩΝ",
-    needHelp: "ΧΡΕΙΑΖΕΣΤΕ ΒΟΗΘΕΙΑ;"
+    needHelp: "ΧΡΕΙΑΖΕΣΤΕ ΒΟΗΘΕΙΑ;",
+    contactAssistance: "Εάν χρειάζεστε βοήθεια, επικοινωνήστε με τη Nespresso στο 800 11 71 300 δωρεάν από οποιοδήποτε σταθερό τηλέφωνο και λάβετε εξατομικευμένη τεχνική διάγνωση και υποστήριξη.",
+    assistancePackage: "Εάν απαιτείται, η Nespresso προσφέρει ένα πλήρες Πακέτο Υποστήριξης που περιλαμβάνει δωρεάν παραλαβή και επισκευή της μηχανής σας και την επιστροφή της στη διεύθυνση της επιλογής σας.",
+    termsConditions: "Μπορείτε να βρείτε τους Όρους & Προϋποθέσεις για την εξυπηρέτηση της μηχανής σας",
+    here: "εδώ",
+    pickup: "ΠΑΡΑΛΑΒΗ",
+    pickupDesc: "Η Nespresso θα παραλάβει τη μηχανή σας στη διεύθυνση που προτιμάτε.",
+    replacement: "ΑΝΤΙΚΑΤΑΣΤΑΣΗ",
+    replacementDesc: "Η Nespresso θα σας παρέχει μια μηχανή δανεισμού ενώ η δική σας αξιολογείται, ώστε να μην μείνετε ποτέ χωρίς τον καφέ σας. Εξαιρούνται οι αφρογαλακτοποιητές ή οι συσκευές γάλακτος.",
+    returnService: "ΕΠΙΣΤΡΟΦΗ",
+    returnDesc: "Η μηχανή θα επιστραφεί στη διεύθυνση παραλαβής και όλες οι επισκευές καλύπτονται με εγγύηση έξι μηνών.",
+    machineRegistration: "ΕΓΓΡΑΦΗ ΜΗΧΑΝΗΣ",
+    registrationDesc: "Μπορείτε να καταχωρίσετε τη μηχανή σας μέσω του ιστότοπου Nespresso κατά τη διαδικασία εγγραφής λογαριασμού ή μεταβαίνοντας στη σελίδα του λογαριασμού σας και προσθέτοντας την καταχώριση της μηχανής σας στις \"Προσωπικές μου Πληροφορίες\".",
+    registerMachine: "ΚΑΤΑΧΩΡΙΣΤΕ ΤΗ ΜΗΧΑΝΗ ΣΑΣ"
   }
 };
 

@@ -1,21 +1,30 @@
 .search-section {
   margin-bottom: 2rem;
+  width: 100%;
 }
 
-.search-header {
+.search-wrapper {
+    background-color: antiquewhite;
+}
+
+.search-section .search-header {
   text-align: center;
   margin-bottom: 2rem;
   padding: 2rem 1rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.search-header h1 {
+.search-section .search-header h1 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  margin-top: 0;
   color: #333;
 }
 
-.search-header p {
+.search-section .search-header p {
   font-size: 1rem;
   line-height: 1.6;
   color: #666;
@@ -23,12 +32,58 @@
   margin: 0 auto;
 }
 
+.search-container {
+  max-width: 960px;
+  margin: auto;
+}
+
+.search-section .search-input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color .2s;
+}
+
+.search-section .search-input:focus {
+  outline: none;
+  border-color: #222;
+}
+
+.search-section .search-results {
+  padding: 16px;
+  background: #fafafa;
+  max-width: 960px;
+  margin: 1rem auto;
+}
+
+.search-section .search-results h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.search-section .search-results small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.search-section .search-more-title {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
 @media (max-width: 768px) {
-  .search-header h1 {
+  .search-section .search-header h1 {
     font-size: 1.8rem;
   }
   
-  .search-header p {
+  .search-section .search-header p {
     font-size: 0.9rem;
   }
 }

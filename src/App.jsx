@@ -8,17 +8,23 @@ import { Search } from './components/search/Search.jsx';
 import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
 import { useTranslation } from './translations/translations.js';
 
+// Tab icon components
+const TabIcon = ({ icon }) => {
+  return <nb-icon icon={icon} aria-hidden="true"></nb-icon>;
+};
+
 const TECH_TABS = [
-  { key: 'MY_MACHINE', label: 'myMachine' },
-  { key: 'OL', label: 'olMachines' },
-  { key: 'VL', label: 'vlMachines' },
-  { key: 'MILK', label: 'milkMachines' }
+  { key: 'MY_MACHINE', label: 'myMachine', icon: '32/machine/machine-care-ol' },
+  { key: 'OL', label: 'olMachines', icon: '32/machine/machine-technology-ol' },
+  { key: 'VL', label: 'vlMachines', icon: '32/machine/machine-technology-vl' },
+  { key: 'MILK', label: 'milkMachines', icon: '32/machine/milk-frothing' }
 ];
 
 export default function App() {
   const t = useTranslation();
   const [active, setActive] = useState(TECH_TABS[0].key);
   const [searchQuery, setSearchQuery] = useState('');
+  const [hasCheckedLogin, setHasCheckedLogin] = useState(false);
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
@@ -85,13 +91,23 @@ export default function App() {
                 aria-controls={`panel-${tab.key}`}
                 id={`tab-${tab.key}`}
               >
-                {t(tab.label)}
+                <TabIcon icon={tab.icon} />
+                <span>{t(tab.label)}</span>
               </button>
             ))}
           </div>
           <div className="tab-panel" role="tabpanel" id={`panel-${active}`} aria-labelledby={`tab-${active}`}>
             {active === 'MY_MACHINE' ? (
-              <MyMachineSection onMachineClick={handleMachineClick} />
+              <MyMachineSection 
+                onMachineClick={handleMachineClick} 
+                onSwitchToOL={() => {
+                  // Only switch if login hasn't been checked yet
+                  if (!hasCheckedLogin) {
+                    setActive('OL');
+                  }
+                }}
+                onLoginChecked={() => setHasCheckedLogin(true)}
+              />
             ) : (
               <>
                 <h2 className="sr-only">{t(TECH_TABS.find(tab => tab.key === active)?.label)}</h2>
@@ -120,7 +136,7 @@ export default function App() {
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
-      <Footer text="v1.2" />
+      <Footer />
     </div>
   );
 }

@@ -1,0 +1,125 @@
+.app-footer {
+  margin-top: 4rem;
+}
+
+.app-footer .section-user-info {
+    background-color: #d8d2c3;
+    padding: 2rem;
+}
+
+.section-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.app-footer .footer-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.app-footer .footer-subtitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.app-footer p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.app-footer a {
+  color: #333;
+  text-decoration: underline;
+}
+
+.app-footer a:hover {
+  color: #000;
+}
+
+.app-footer .features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.app-footer .feature {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.app-footer .feature svg,
+.app-footer .feature .nb-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.app-footer .feature-text-wrapper {
+  flex: 1;
+}
+
+.app-footer .feature-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.app-footer .machine-registration {
+    background-color: #63472f;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.app-footer .registration-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.app-footer .btn {
+  display: inline-block;
+  background-color: #222;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.app-footer .btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.app-footer .version {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .app-footer .features {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .app-footer .footer-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .app-footer .machine-registration {
+    padding: 1.5rem;
+  }
+}
