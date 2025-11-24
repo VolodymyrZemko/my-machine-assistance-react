@@ -270,7 +270,7 @@ export function MachineDetail({ machine, onClose }) {
                       {selectedGuide.instructions?.map((instruction, i) => (
                         <div key={i} className="instruction-step">
                           {instruction.visual && <img src={instruction.visual} alt={`Step ${i + 1}`} />}
-                          <strong className="instruction-step-index">{i + 1}</strong>
+                          <strong className="instruction-step-index">Step {i + 1}</strong>
                           <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
                         </div>
                       ))}

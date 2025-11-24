@@ -1,8 +1,8 @@
 /* Minimal tabs styling after reset */
 .app-wrapper.minimal {
   font-family: system-ui, Arial, sans-serif;
-  padding: 20px;
-  max-width: 960px;
+  /* padding: 20px; */
+  /* max-width: 960px; */
   margin: 0 auto;
 }
 
@@ -32,10 +32,6 @@
 
 .tab-panel {
   background: #fff;
-  border: 1px solid #e5e5e5;
-  padding: 24px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 .tab-panel h2 {
@@ -102,7 +98,7 @@
 /* Machines */
 .machine-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 12px;
 }
@@ -159,10 +155,6 @@
 
 .machine-detail {
   background: #fff;
-  border: 1px solid #e0e0e0;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .machine-detail h2 { margin-top: 0; }
@@ -189,6 +181,10 @@
   padding: 8px 0;
   font-size: 14px;
   color: #666;
+
+  width: 960px;
+  margin: auto;
+  margin-bottom: 16px;
 }
 
 .breadcrumb-link {
@@ -260,6 +256,9 @@
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 2px solid #e5e5e5;
+
+  max-width: 960px;
+  margin: auto;
 }
 
 .machine-header-img {
@@ -294,12 +293,15 @@
 .manual-item a:hover {
   text-decoration: underline;
 }
-
+.overview-section
 .detail-tabs {
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
   border-bottom: 1px solid #ddd;
+
+  max-width: 960px;
+  margin: auto;
 }
 
 .detail-tab {
@@ -330,6 +332,13 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  position: relative;
+}
+
+.overview-text {
+  max-width: 960px;
+  margin: auto;
 }
 
 .overview-bg {
@@ -346,6 +355,10 @@
 }
 
 @media (max-width: 768px) {
+  .machine-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .overview-bg {
     display: none;
   }
@@ -359,6 +372,11 @@
     border-radius: 8px;
     margin-bottom: 20px;
   }
+}
+
+.overview-text {
+    max-width: 960px;
+    margin: auto;
 }
 
 .overview-text h2 {
@@ -399,7 +417,9 @@
 }
 
 .specifications {
-  margin-top: 24px;
+    width: 960px;
+    margin: auto;
+    margin-top: 24px;
 }
 
 .specifications h3 {
@@ -446,6 +466,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
 }
 
 .guides-bg {
@@ -477,12 +498,18 @@
   font-size: 15px;
   color: #555;
   margin: 0;
+
+  width: 960px;
+  margin: auto;
 }
 
 .guides-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 16px;
+
+  width: 960px;
+  margin: auto;
 }
 
 .guide-card {
@@ -586,8 +613,7 @@
 
 /* Troubleshooting Section */
 .troubleshooting-section {
-  max-width: 900px;
-  margin: 0 auto;
+  position: relative;
 }
 
 .troubleshooting-bg {
@@ -604,6 +630,10 @@
 }
 
 @media (max-width: 768px) {
+  .troubleshooting-bg {
+    display: none;
+  }
+
   .troubleshooting-bg-mobile {
     display: block;
     width: 100%;
@@ -617,6 +647,9 @@
 
 .troubleshooting-list {
   padding: 0 16px;
+
+  width: 960px;
+  margin: auto;
 }
 
 .troubleshooting-list h3 {
