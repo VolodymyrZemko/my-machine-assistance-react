@@ -104,6 +104,8 @@ export function MachineDetail({ machine, onClose }) {
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
     window.location.hash = `#!/${machine.id}/guides/${guide.path}`;
+    // Scroll to top when opening a guide
+    window.scrollTo(0, 0);
   }
 
   function handleBackToGuides() {
@@ -268,6 +270,7 @@ export function MachineDetail({ machine, onClose }) {
                       {selectedGuide.instructions?.map((instruction, i) => (
                         <div key={i} className="instruction-step">
                           {instruction.visual && <img src={instruction.visual} alt={`Step ${i + 1}`} />}
+                          <strong className="instruction-step-index">{i + 1}</strong>
                           <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
                         </div>
                       ))}
