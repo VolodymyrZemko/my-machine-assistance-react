@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from '../../translations/translations.js';
 
-const DETAIL_TABS = ['overview', 'guides', 'troubleshooting'];
+const DETAIL_TABS = [
+  { key: 'overview', label: 'overview', icon: '32/machine/dimensions' },
+  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl' },
+  { key: 'troubleshooting', label: 'troubleshooting', icon: '32/machine/machine-care-ol' }
+];
+
+// Detail tab icon component
+const DetailTabIcon = ({ icon }) => {
+  return <nb-icon icon={icon} aria-hidden="true"></nb-icon>;
+};
 
 export function MachineDetail({ machine, onClose }) {
   const t = useTranslation();
@@ -64,7 +73,8 @@ export function MachineDetail({ machine, onClose }) {
   useEffect(() => {
     const hash = window.location.hash;
     const match = hash.match(/#!\/[^/]+\/(.+)/);
-    if (match && DETAIL_TABS.includes(match[1])) {
+    const tabKeys = DETAIL_TABS.map(t => t.key);
+    if (match && tabKeys.includes(match[1])) {
       setActiveTab(match[1]);
     } else {
       // Set default to overview and update URL
@@ -76,7 +86,7 @@ export function MachineDetail({ machine, onClose }) {
     function onHashChange() {
       const currentHash = window.location.hash;
       const currentMatch = currentHash.match(/#!\/[^/]+\/(.+)/);
-      if (currentMatch && DETAIL_TABS.includes(currentMatch[1])) {
+      if (currentMatch && tabKeys.includes(currentMatch[1])) {
         setActiveTab(currentMatch[1]);
       }
       
@@ -122,11 +132,13 @@ export function MachineDetail({ machine, onClose }) {
   return (
     <div className="machine-detail">
       <nav className="breadcrumbs">
-        <a href="https://www.nespresso.com" className="breadcrumb-link">{t('home')}</a>
-        <span className="breadcrumb-separator">›</span>
-        <button onClick={onClose} className="breadcrumb-link">{t('machineAssistance')}</button>
-        <span className="breadcrumb-separator">›</span>
-        <span className="breadcrumb-current">{machine.name}</span>
+        <div className="breadcrumbs-wrapper">
+          <a href="https://www.nespresso.com" className="breadcrumb-link">{t('home')}</a>
+          <span className="breadcrumb-separator">›</span>
+          <button onClick={onClose} className="breadcrumb-link">{t('machineAssistance')}</button>
+          <span className="breadcrumb-separator">›</span>
+          <span className="breadcrumb-current">{machine.name}</span>
+        </div>
       </nav>
 
       {(loading || error) && (
@@ -148,33 +160,38 @@ export function MachineDetail({ machine, onClose }) {
       {data && (
         <>
           <div className="detail-header">
-            <img src={machine.img} alt={machine.name} className="machine-header-img" />
-            <h2>{machine.name}</h2>
-            {userManuals.length > 0 && (
-              <div className="user-manuals">
-                <strong>User Manuals:</strong>
-                {userManuals.map((manual, i) => (
-                  <div key={i} className="manual-item">
-                    <span>{manual.name} ({manual.weight})</span>
-                    {manual.links?.map((link, j) => (
-                      <a key={j} href={link.url} target="_blank" rel="noopener noreferrer">
-                        {link.language}
-                      </a>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="detail-header-image">
+              <img src={machine.img} alt={machine.name} className="machine-header-img" />
+            </div>
+            <div className="detail-header-content">
+              <h2>{machine.name}</h2>
+              {userManuals.length > 0 && (
+                <div className="user-manuals">
+                  <strong>{t('userManuals')}</strong>
+                  {userManuals.map((manual, i) => (
+                    <div key={i} className="manual-item">
+                      <span>{manual.name} ({manual.weight})</span>
+                      {manual.links?.map((link, j) => (
+                        <a key={j} href={link.url} target="_blank" rel="noopener noreferrer">
+                          {link.language}
+                        </a>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="detail-tabs">
             {DETAIL_TABS.map(tab => (
               <button
-                key={tab}
-                className={tab === activeTab ? 'detail-tab active' : 'detail-tab'}
-                onClick={() => handleTabChange(tab)}
+                key={tab.key}
+                className={tab.key === activeTab ? 'detail-tab active' : 'detail-tab'}
+                onClick={() => handleTabChange(tab.key)}
               >
-                {t(tab)}
+                <DetailTabIcon icon={tab.icon} />
+                <span data-text={t(tab.label)}>{t(tab.label)}</span>
               </button>
             ))}
           </div>

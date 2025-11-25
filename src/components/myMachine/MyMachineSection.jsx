@@ -130,7 +130,6 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         </div>
       ) : userMachines.length > 0 ? (
         <div>
-          <h3>{t('yourMachines')}</h3>
           <div className="my-machines-list">
             {userMachines.map((machine, index) => (
               <div key={index} className="my-machine-item">
@@ -143,8 +142,8 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                 </div>
                 <div className="my-machine-info">
                   <h4>{machine.name}</h4>
-                  {machine.serialNumber && <p>{t('serialNumber')}: {machine.serialNumber}</p>}
-                  {machine.purchaseDate && <p>{t('purchaseDate')}: {new Date(machine.purchaseDate).toLocaleDateString()}</p>}
+                  {machine.serialNumber && <p>{t('serialNumber')} <span>{machine.serialNumber}</span></p>}
+                  {machine.purchaseDate && <p>{t('purchaseDate')} <span>{new Date(machine.purchaseDate).toLocaleDateString()}</span></p>}
                 </div>
                 <div className="my-machine-actions">
                   <a href="/my-machine-page" className="my-machine-link">My Account</a>

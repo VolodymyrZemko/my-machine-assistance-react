@@ -15,18 +15,18 @@ export const translations = {
     milkMachines: "Milk Devices",
     
     // My Machine Section
-    yourMachines: "Your Machines",
     pleaseLogin: "Please log in to your account to find the machines registered to you.",
     registerMachineInfo: "You can register your machine through the Nespresso website during the account registration process, by going to your account page and adding your machine registration in \"My Personal Information\" or by clicking",
     loginHere: "Log in here.",
     noMachines: "You do not have any registered machine, choose from list.",
     myAccount: "My Account",
     viewDetails: "View Details",
-    machineNotFound: "Unfortunately, we did not find your machine. Please use search or find it from the list below.",
+    machineNotFound: "Unfortunately, we did not find your machine. Please use search or find it from the list please.",
     
     // Machine Detail
     serialNumber: "S/N:",
     purchaseDate: "Purchase Date:",
+    userManuals: "User Manuals:",
     
     // Breadcrumbs
     home: "Home",
@@ -94,6 +94,7 @@ export const translations = {
     // Machine Detail
     serialNumber: "Α/Σ:",
     purchaseDate: "Ημερομηνία Αγοράς:",
+    userManuals: "Εγχειρίδια Χρήστη:",
     
     // Breadcrumbs
     home: "Αρχική",

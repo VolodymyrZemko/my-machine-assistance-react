@@ -21,20 +21,20 @@
 
 .select-from-list-message {
   text-align: center;
-  margin: 2rem auto 1.5rem;
+    margin: 30px auto;
   max-width: 960px;
 }
 
 .select-from-list-message p {
-  font-size: 1rem;
-  color: #666;
-  margin: 0;
+  font-size: 20px;
+  color: #454547;
+  font-weight: 500;
 }
 
 .tabs-bar {
   display: flex;
   max-width: 960px;
-  margin: 2rem auto 0;
+  margin: 30px auto;
   background: #fff;
   gap: 20px;
   justify-content: center;
@@ -65,6 +65,7 @@
 
 .tab span {
   font-weight: 500;
+  font-size: 16px;
 }
 
 /* Reserve space for bold text to prevent layout shift */
@@ -95,8 +96,7 @@
 }
 
 .tab-panel {
-  max-width: 960px;
-  margin: auto;
+
 }
 
 .tab-panel h2 {
@@ -165,7 +165,9 @@
 }
 
 .machine-card p {
-    margin: auto;
+  margin: auto;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .machine-detail {
@@ -189,21 +191,25 @@
 
 /* Breadcrumbs */
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 8px 0;
-  font-size: 14px;
-  color: #666;
+    width: 100%;
+    background-color: #F3EEE6;
+}
 
-  width: 960px;
-  margin: auto;
-  margin-bottom: 16px;
+.breadcrumbs-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 72.5rem;
+    margin: auto;
+    padding: 8px 10px;
+    color: #17171A;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .breadcrumb-link {
-  color: #1976d2;
+  color: #17171A;
   text-decoration: none;
   background: none;
   border: none;
@@ -268,13 +274,70 @@
 
 /* Detail Page Structure */
 .detail-header {
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 2px solid #e5e5e5;
-
   max-width: 960px;
   margin: auto;
 }
+
+.machine-detail .detail-tabs {
+    max-width: 72.5rem;
+    padding: 0 10px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    box-shadow: 0px 0px 8px 0px rgba(23, 23, 26, 0.3215686275);
+}
+
+.detail-tab {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    padding: 20px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    gap: 4px;
+    color: #17171a;
+    transition: border-color .2s, color .2s;
+}
+
+.detail-tab nb-icon,
+.detail-tab svg {
+  width: 32px;
+  height: 32px;
+}
+
+.detail-tab span {
+  font-weight: 400;
+}
+
+/* Reserve space for bold text to prevent layout shift */
+.detail-tab span::after {
+  content: attr(data-text);
+  font-weight: 600;
+  height: 0;
+  visibility: hidden;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  display: block;
+}
+
+.detail-tab.active span {
+  font-weight: 600;
+}
+
+.detail-tab.active {
+  border-bottom-color: #222;
+}
+
+.detail-tab:hover {
+  color: #222;
+}
+
+
 
 .machine-header-img {
   max-width: 200px;
@@ -317,25 +380,6 @@
 
   max-width: 960px;
   margin: auto;
-}
-
-.detail-tab {
-  background: transparent;
-  border: none;
-  padding: 10px 16px;
-  font-size: 14px;
-  cursor: pointer;
-  border-bottom: 3px solid transparent;
-  transition: border-color .2s, color .2s;
-}
-
-.detail-tab.active {
-  border-bottom-color: #222;
-  font-weight: 600;
-}
-
-.detail-tab:hover {
-  color: #222;
 }
 
 .detail-content {
@@ -851,18 +895,14 @@
 
 .my-machine-item {
   display: grid;
-  grid-template-columns: 150px 1fr auto;
-  gap: 20px;
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  align-items: center;
-  transition: box-shadow 0.2s;
-}
-
-.my-machine-item:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  grid-template-columns: 150px 1fr 1fr;
+  width: 80%;
+  margin: auto;
+  border-bottom: 1px solid #E7E7E7;
+  padding: 20px 0px;
+  color: #17171a;
+  justify-content: space-between;
+  gap: 30px;
 }
 
 .my-machine-image {
@@ -874,7 +914,7 @@
 .my-machine-image img {
   max-width: 100%;
   height: auto;
-  max-height: 120px;
+  max-height: 200px;
   object-fit: contain;
 }
 
@@ -886,36 +926,47 @@
 
 .my-machine-info h4 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #222;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .my-machine-info p {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+    font-size: 20px;
+    color: #17171a;
+    width: 100%;
+    line-height: 24px;
+    margin-bottom: 20px;
+}
+
+.my-machine-info p span {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .my-machine-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
   min-width: 150px;
+  padding: 20px 0px;
 }
 
 .my-machine-link {
-  display: inline-block;
-  padding: 10px 16px;
+  padding: 15px 30px;
+  min-width: 170px;
+  border: 1px solid #17171A !important;
+  border-radius: 50px !important;
   text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
   transition: all 0.2s;
-  border: 1px solid #ddd;
   background: #fff;
-  color: #333;
+  color: #17171a;
 }
 
 .my-machine-link:hover {
@@ -930,15 +981,16 @@
 }
 
 .my-machine-link.primary:hover {
-  background-color: #333;
+  background-color: #ffffff;
   border-color: #333;
+  color: #17171a;
 }
 
 .my-machine-not-found {
-  font-size: 13px;
-  color: #999;
+  font-size: 20px;
+  color: #17171a;
   text-align: center;
-  font-style: italic;
+  line-height: 24px;
   padding: 8px;
 }
 
