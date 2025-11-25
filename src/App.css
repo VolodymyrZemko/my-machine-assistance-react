@@ -96,12 +96,18 @@
 }
 
 .tab-panel {
-
+    max-width: 960px;
+    margin: auto;
 }
 
 .tab-panel h2 {
   margin-top: 0;
   font-size: 18px;
+}
+
+/* Machine Detail Panel */
+.machine-detail-panel {
+  width: 100%;
 }
 
 /* Footer */

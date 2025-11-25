@@ -135,7 +135,7 @@ export default function App() {
         </>
       )}
       {activeMachine && (
-        <div className="tab-panel">
+        <div className="machine-detail-panel">
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
