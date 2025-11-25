@@ -280,8 +280,11 @@
 
 /* Detail Page Structure */
 .detail-header {
-  max-width: 960px;
-  margin: auto;
+    max-width: 960px;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 .machine-detail .detail-tabs {
@@ -292,19 +295,22 @@
     justify-content: center;
     gap: 20px;
     box-shadow: 0px 0px 8px 0px rgba(23, 23, 26, 0.3215686275);
+        z-index: 2;
+    position: relative;
+    background-color: #ffffff;
 }
 
 .detail-tab {
     background: transparent;
     display: flex;
-    flex-direction: column;
     align-items: center;
     border: none;
     padding: 20px 10px;
     font-size: 16px;
+    text-transform: uppercase;
     cursor: pointer;
     border-bottom: 3px solid transparent;
-    gap: 4px;
+    gap: 10px;
     color: #17171a;
     transition: border-color .2s, color .2s;
 }
@@ -317,6 +323,7 @@
 
 .detail-tab span {
   font-weight: 400;
+  letter-spacing: 1px;
 }
 
 /* Reserve space for bold text to prevent layout shift */
@@ -346,19 +353,37 @@
 
 
 .machine-header-img {
-  max-width: 200px;
+    max-width: 300px;
   height: auto;
   display: block;
-  margin-bottom: 12px;
+}
+
+.detail-header-content-main-title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20.8px;
+    letter-spacing: normal;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #000000;
 }
 
 .detail-header h2 {
-  margin: 0 0 12px;
-  font-size: 24px;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: 10px;
+    margin-bottom: 20px;
 }
 
 .user-manuals {
-  font-size: 14px;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: normal;
+}
+
+.user-manuals strong {
+  font-weight: 500;
 }
 
 .manual-item {
@@ -369,7 +394,7 @@
 }
 
 .manual-item a {
-  color: #1976d2;
+  color: #876C43;
   text-decoration: none;
   font-weight: 500;
 }
@@ -389,7 +414,9 @@
 }
 
 .detail-content {
-  padding: 16px 0;
+    padding: 60px 16px 0;
+    margin-top: -35px;
+    background-color: #FAF9F8;
 }
 
 /* Overview Section */
@@ -407,12 +434,15 @@
 }
 
 .overview-bg {
-  width: 100%;
-  height: 300px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    aspect-ratio: 1 / 1;
+    background-size: contain;
+    background-position: center right;
+    background-repeat: no-repeat;
+    display: block;
+    height: calc(100% - 6.5rem);
+    max-height: calc(100% - 6.5rem);
+    position: absolute;
+    inset: 1.5rem 0 5rem calc(100vw - 13.5rem);
 }
 
 .overview-bg-mobile {
@@ -442,26 +472,63 @@
 .overview-text {
     max-width: 960px;
     margin: auto;
+      text-align: center;
 }
 
 .overview-text h2 {
-  margin-top: 0;
-  font-size: 22px;
+    margin-top: 0;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16.8px;
+    color: #6F6F70;
+    text-align: center;
+    padding: 20px;
 }
 
 .overview-text h3 {
-  font-size: 18px;
-  color: #444;
+    color: #444;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43.2px;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .overview-text h4 {
-  font-size: 16px;
-  color: #666;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
+    text-align: center;
+    color: #17171A;
+    margin-bottom: 20px;
 }
 
 .overview-text p {
-  line-height: 1.6;
-  color: #555;
+font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
+    text-align: center;
+    color: #454547;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.overview-text .cta-button {
+    display: inline-block;
+    margin-top: 12px;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 600;
+    color: #454547;
+    text-align: center;
+}
+
+.overview-text .cta-button:hover {
+  color: #000000;
 }
 
 .cta-button {
@@ -482,9 +549,8 @@
 }
 
 .specifications {
-    width: 960px;
-    margin: auto;
-    margin-top: 24px;
+    width: 72.5rem;
+    margin: 24px auto auto;
 }
 
 .specifications h3 {
@@ -493,37 +559,49 @@
 }
 
 .specs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 50px 50px 40px;
+}
+
+@media (max-width: 768px) {
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .spec-item {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 12px;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
+    display: flex;
+    gap: 12px;
+    width: 80%;
+    align-items: center;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E7E7E7;
 }
 
 .spec-item img {
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
+width: 48px;
+    height: 48px;
+    flex-shrink: 0;
 }
 
 .spec-item strong {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 4px;
+    display: block;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
+    letter-spacing: normal;
+    color: #17171A;
+    margin-bottom: 4px;
 }
 
 .spec-item span {
-  display: block;
-  font-size: 12px;
-  color: #666;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
 }
 
 /* Guides Section */
@@ -535,12 +613,15 @@
 }
 
 .guides-bg {
-  width: 100%;
-  height: 250px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    aspect-ratio: 1 / 1;
+    background-size: contain;
+    background-position: center right;
+    background-repeat: no-repeat;
+    display: block;
+    height: calc(100% - 6.5rem);
+    max-height: calc(100% - 6.5rem);
+    position: absolute;
+    inset: 1.5rem 0 5rem calc(100vw - 26.5rem);
 }
 
 .guides-bg-mobile {
@@ -560,73 +641,92 @@
 }
 
 .guides-intro {
-  font-size: 15px;
-  color: #555;
-  margin: 0;
-
-  width: 960px;
-  margin: auto;
+color: #454547;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: normal;
+    text-align: center;
+    padding: 20px;
 }
 
 .guides-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
+display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 50px 50px 40px;
+    width: 72.5rem;
+    margin: auto;
+}
 
-  width: 960px;
-  margin: auto;
+@media (max-width: 768px) {
+  .guides-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .guide-card {
-  padding: 16px;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: box-shadow .2s, transform .2s;
+    display: flex;
+    gap: 12px;
+    width: 80%;
+    align-items: center;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E7E7E7;
+    cursor: pointer;
+    transition: border-color 0.2s;
 }
 
 .guide-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transform: translateY(-2px);
+  border-bottom-color: #000;
+}
+
+.guide-card:hover h4 {
+  color: #000;
 }
 
 .guide-card img {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 12px;
-  display: block;
+    width: 48px;
+    height: 48px;
+    display: block;
 }
 
 .guide-card h4 {
-  margin: 0;
-  font-size: 14px;
-  color: #333;
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 10px;
 }
 
 .guide-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 72.5rem;
+    margin: auto;
 }
 
 .guide-back-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: transparent;
-  border: none;
-  color: #1976d2;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 8px 0;
-  align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: transparent;
+    border: none;
+    color: #000000;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: underline;
+    margin-bottom: 20px;
 }
 
 .guide-back-button img {
-  width: 24px;
-  height: 24px;
+    width: 48px;
+    height: 48px;
 }
 
 .guide-back-button:hover {
@@ -644,23 +744,22 @@
 }
 
 .guide-video iframe {
-  border-radius: 8px;
+width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 20px 0;
 }
 
 .guide-instructions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .instruction-step {
-  display: flex;
-  gap: 16px;
-  padding: 16px;
-  background: #f9f9f9;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  align-items: flex-start;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #E7E7E7;
+    padding: 50px 8%;
+    gap: 30px;
 }
 
 .instruction-step img {
@@ -670,10 +769,21 @@
   border-radius: 4px;
 }
 
+strong.instruction-step-index {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: normal;
+}
+
 .instruction-step div {
   flex: 1;
-  font-size: 14px;
-  line-height: 1.6;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: normal;
+    color: #454547;
 }
 
 /* Troubleshooting Section */
@@ -713,7 +823,7 @@
 .troubleshooting-list {
   padding: 0 16px;
 
-  width: 960px;
+  max-width: 960px;
   margin: auto;
 }
 
@@ -729,23 +839,20 @@
 }
 
 .trouble-button {
-  width: 100%;
-  background: transparent;
-  border: none;
-  padding: 16px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-  color: #333;
-  transition: color 0.2s;
-}
-
-.trouble-button:hover {
-  color: #000;
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    color: #000000;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: normal;
 }
 
 .trouble-button .chevron {
@@ -759,10 +866,12 @@
 }
 
 .trouble-content {
-  padding: 0 0 16px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: #555;
+    padding: 0 0 16px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: normal;
+    color: #17171A;
 }
 
 .trouble-content ul {

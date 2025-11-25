@@ -26,6 +26,7 @@ export const translations = {
     // Machine Detail
     serialNumber: "S/N:",
     purchaseDate: "Purchase Date:",
+    detailHeaderMainTitle: "MACHINE ASSISTANCE",
     userManuals: "User Manuals:",
     
     // Breadcrumbs
@@ -45,7 +46,7 @@ export const translations = {
     
     // Guide section
     selectFunctionality: "Select a functionality from the list below to view detailed guides and videos.",
-    backToGuides: "Back to all guides",
+    backToGuides: "GUIDES & VIDEOS",
     step: "Step",
     selectIssue: "Select the issue you are facing from the list below.",
     
@@ -94,6 +95,7 @@ export const translations = {
     // Machine Detail
     serialNumber: "Α/Σ:",
     purchaseDate: "Ημερομηνία Αγοράς:",
+    detailHeaderMainTitle: "MACHINE ASSISTANCE",
     userManuals: "Εγχειρίδια Χρήστη:",
     
     // Breadcrumbs
@@ -113,7 +115,7 @@ export const translations = {
     
     // Guide section
     selectFunctionality: "Επιλέξτε μια λειτουργία από την παρακάτω λίστα για να δείτε λεπτομερείς οδηγούς και βίντεο.",
-    backToGuides: "Πίσω σε όλους τους οδηγούς",
+    backToGuides: "GUIDES & VIDEOS",
     step: "Βήμα",
     selectIssue: "Επιλέξτε το πρόβλημα που αντιμετωπίζετε από την παρακάτω λίστα.",
     

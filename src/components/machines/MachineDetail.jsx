@@ -164,6 +164,7 @@ export function MachineDetail({ machine, onClose }) {
               <img src={machine.img} alt={machine.name} className="machine-header-img" />
             </div>
             <div className="detail-header-content">
+              <p className='detail-header-content-main-title'>{t('detailHeaderMainTitle')}</p>
               <h2>{machine.name}</h2>
               {userManuals.length > 0 && (
                 <div className="user-manuals">
@@ -224,7 +225,7 @@ export function MachineDetail({ machine, onClose }) {
                 )}
                 {overview.specifications && overview.specifications.length > 0 && (
                   <div className="specifications">
-                    <h3>Specifications</h3>
+                    <h3 className="sr-only">Specifications</h3>
                     <div className="specs-grid">
                       {overview.specifications.map((spec, i) => (
                         <div key={i} className="spec-item">
@@ -267,6 +268,7 @@ export function MachineDetail({ machine, onClose }) {
                   </>
                 ) : (
                   <div className="guide-detail">
+                    <p className="guides-intro">{t('selectFunctionality')}</p>
                     <button className="guide-back-button" onClick={handleBackToGuides}>
                       {selectedGuide.icon && <img src={selectedGuide.icon} alt="Back" />}
                       {t('backToGuides')}
@@ -289,8 +291,10 @@ export function MachineDetail({ machine, onClose }) {
                       {selectedGuide.instructions?.map((instruction, i) => (
                         <div key={i} className="instruction-step">
                           {instruction.visual && <img src={instruction.visual} alt={`${t('step')} ${i + 1}`} />}
-                          <strong className="instruction-step-index">{t('step')} {i + 1}</strong>
-                          <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
+                          <div className="instruction-step-content">
+                            <strong className="instruction-step-index">{t('step')} {i + 1}</strong>
+                            <div dangerouslySetInnerHTML={{ __html: instruction.content }} />
+                          </div>
                         </div>
                       ))}
                     </div>
