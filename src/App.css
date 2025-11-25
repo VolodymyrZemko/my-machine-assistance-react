@@ -34,7 +34,7 @@
 .tabs-bar {
   display: flex;
   max-width: 960px;
-  margin: 30px auto;
+  margin: 30px auto 50px;
   background: #fff;
   gap: 20px;
   justify-content: center;
@@ -442,7 +442,7 @@
     height: calc(100% - 6.5rem);
     max-height: calc(100% - 6.5rem);
     position: absolute;
-    inset: 1.5rem 0 5rem calc(100vw - 13.5rem);
+    inset: 2.5rem 0 5rem calc(100vw - 13.5rem);
 }
 
 .overview-bg-mobile {
@@ -531,19 +531,6 @@ font-weight: 400;
   color: #000000;
 }
 
-.cta-button {
-  display: inline-block;
-  margin-top: 12px;
-  padding: 10px 20px;
-  background: #222;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: background .2s;
-}
-
 .cta-button:hover {
   background: #000;
 }
@@ -608,7 +595,6 @@ width: 48px;
 .guides-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   position: relative;
 }
 
@@ -621,7 +607,7 @@ width: 48px;
     height: calc(100% - 6.5rem);
     max-height: calc(100% - 6.5rem);
     position: absolute;
-    inset: 1.5rem 0 5rem calc(100vw - 26.5rem);
+    inset: 2.5rem 0 5rem calc(100vw - 26.5rem);
 }
 
 .guides-bg-mobile {
@@ -739,6 +725,7 @@ display: grid;
 }
 
 .guide-video {
+  margin: auto;
   width: 100%;
   max-width: 800px;
 }
@@ -792,12 +779,15 @@ strong.instruction-step-index {
 }
 
 .troubleshooting-bg {
-  width: 100%;
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 24px;
-  border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    background-size: contain;
+    background-position: center right;
+    background-repeat: no-repeat;
+    display: block;
+    height: calc(100% - 6.5rem);
+    max-height: calc(100% - 6.5rem);
+    position: absolute;
+    inset: 2.5rem 0 5rem calc(100vw - 13.5rem);
 }
 
 .troubleshooting-bg-mobile {
@@ -943,6 +933,35 @@ strong.instruction-step-index {
   height: 100px;
 }
 
+/* Shimmer for My Machine Items */
+.shimmer-machine-item {
+  pointer-events: none;
+}
+
+.shimmer-image {
+  width: 100%;
+  height: 200px;
+  border-radius: 4px;
+}
+
+.shimmer-title {
+  width: 70%;
+  height: 24px;
+  margin-bottom: 20px;
+}
+
+.shimmer-text {
+  width: 90%;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.shimmer-button {
+  width: 100%;
+  height: 50px;
+  border-radius: 50px;
+}
+
 /* My Machine Section */
 .my-machine-section {
   padding: 20px 0;
@@ -961,29 +980,29 @@ strong.instruction-step-index {
 
 .login-prompt {
   text-align: center;
-  padding: 40px 20px;
 }
 
 .login-prompt p {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 20px;
+    color: #17171a;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: normal;
 }
 
 .login-prompt .register-info {
-  margin-top: 30px;
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 500;
 }
 
 .login-link-inline {
   color: #000;
   text-decoration: underline;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .login-link-inline:hover {

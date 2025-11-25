@@ -89,9 +89,13 @@ margin-top: 40px;
 background-color: #63472f;
     padding: 50px 10px;
     margin-bottom: 30px;
+    background-image: url(https://www.nespresso.com/shared_res/markets/gr/Images/MachineAssistance/Machine-Assistance-Bottom-Hero-Desktop.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.app-footer .registration-title {
+.app-footer .machine-registration .registration-title {
 font-weight: 700;
     font-size: 36px;
     line-height: 43.2px;

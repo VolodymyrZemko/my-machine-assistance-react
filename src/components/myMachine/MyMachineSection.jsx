@@ -118,8 +118,35 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
     <div className="my-machine-section">
       <h2 className="sr-only">{t('myMachine')}</h2>
       {loadingUser ? (
-        <div className="shimmer-container">
-          <div className="shimmer-box medium"></div>
+        <div className="my-machines-list">
+          <div className="my-machine-item shimmer-machine-item">
+            <div className="my-machine-image">
+              <div className="shimmer-box shimmer-image"></div>
+            </div>
+            <div className="my-machine-info">
+              <div className="shimmer-box shimmer-title"></div>
+              <div className="shimmer-box shimmer-text"></div>
+              <div className="shimmer-box shimmer-text"></div>
+            </div>
+            <div className="my-machine-actions">
+              <div className="shimmer-box shimmer-button"></div>
+              <div className="shimmer-box shimmer-button"></div>
+            </div>
+          </div>
+          <div className="my-machine-item shimmer-machine-item">
+            <div className="my-machine-image">
+              <div className="shimmer-box shimmer-image"></div>
+            </div>
+            <div className="my-machine-info">
+              <div className="shimmer-box shimmer-title"></div>
+              <div className="shimmer-box shimmer-text"></div>
+              <div className="shimmer-box shimmer-text"></div>
+            </div>
+            <div className="my-machine-actions">
+              <div className="shimmer-box shimmer-button"></div>
+              <div className="shimmer-box shimmer-button"></div>
+            </div>
+          </div>
         </div>
       ) : !isLoggedIn ? (
         <div className="login-prompt">

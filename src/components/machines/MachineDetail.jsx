@@ -273,7 +273,7 @@ export function MachineDetail({ machine, onClose }) {
                       {selectedGuide.icon && <img src={selectedGuide.icon} alt="Back" />}
                       {t('backToGuides')}
                     </button>
-                    <h3>{selectedGuide.title}</h3>
+                    <h3 className="sr-only">{selectedGuide.title}</h3>
                     {selectedGuide.videoId && (
                       <div className="guide-video">
                         <iframe
