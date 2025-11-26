@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from '../../translations/translations.js';
+import { useTranslation, getCurrentLanguage } from '../../translations/translations.js';
 
 const DETAIL_TABS = [
   { key: 'overview', label: 'overview', icon: '32/machine/dimensions' },
@@ -40,7 +40,8 @@ export function MachineDetail({ machine, onClose }) {
     setError(null);
     setData(null);
 
-    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v2/${machine.id}_en.json`;
+    const lang = getCurrentLanguage();
+    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v2/${machine.id}_${lang}.json`;
 
     fetch(url)
       .then(res => {
@@ -142,8 +143,18 @@ export function MachineDetail({ machine, onClose }) {
       </nav>
 
       {(loading || error) && (
-        <div className="shimmer-container">
-          <div className="shimmer-header"></div>
+        <div className="shimmer-detail-container">
+          <div className="shimmer-detail-header">
+            <div className="shimmer-detail-image">
+              <div className="shimmer-box shimmer-machine-image"></div>
+            </div>
+            <div className="shimmer-detail-content">
+              <div className="shimmer-box shimmer-detail-subtitle"></div>
+              <div className="shimmer-box shimmer-detail-title"></div>
+              <div className="shimmer-box shimmer-detail-text"></div>
+              <div className="shimmer-box shimmer-detail-text"></div>
+            </div>
+          </div>
           <div className="shimmer-tabs">
             <div className="shimmer-tab"></div>
             <div className="shimmer-tab"></div>

@@ -104,6 +104,14 @@ font-weight: 700;
     color: #ffffff;
 }
 
+@media (max-width: 768px) {
+    .app-footer .machine-registration .registration-title {
+        font-size: 30px;
+        line-height: 38.4px;
+        padding: 0;
+    }   
+}
+
 .app-footer .machine-registration p {
     font-weight: 400;
     font-size: 20px;

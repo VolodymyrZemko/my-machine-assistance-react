@@ -26,14 +26,17 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
 
       {searchQuery.trim() && searchResults.length > 0 && (
         <div className="search-results">
-          <p>{t('searchResultFor')} <span>{searchQuery}</span>
-            <button 
-              className="remove-search-button" 
-              onClick={() => onSearchChange('')}
-              aria-label="Clear search"
-            >
-              <nb-icon icon="24/symbol/close"></nb-icon>
-            </button>
+          <p className='search-results-field-text'>{t('searchResultFor')} 
+            <span className='search-query-wrapper'>
+                <span>{searchQuery}</span>
+                <button 
+                className="remove-search-button" 
+                onClick={() => onSearchChange('')}
+                aria-label="Clear search"
+                >
+                <nb-icon icon="24/symbol/close"></nb-icon>
+                </button>
+            </span>
           </p>
           <div className="machine-grid">
             {searchResults.map(machine => (
@@ -54,14 +57,17 @@ export function Search({ searchQuery, onSearchChange, searchResults, onMachineCl
 
       {searchQuery.trim() && searchResults.length === 0 && (
         <div className="search-results no-results">
-            <p>{t('searchResultFor')} <span>{searchQuery}</span>
-                <button 
-                className="remove-search-button" 
-                onClick={() => onSearchChange('')}
-                aria-label="Clear search"
-                >
-                <nb-icon icon="24/symbol/close"></nb-icon>
-                </button>
+            <p className='search-results-field-text'>{t('searchResultFor')} 
+                <span className='search-query-wrapper'>
+                    <span>{searchQuery}</span>
+                    <button 
+                    className="remove-search-button" 
+                    onClick={() => onSearchChange('')}
+                    aria-label="Clear search"
+                    >
+                    <nb-icon icon="24/symbol/close"></nb-icon>
+                    </button>
+                </span>
             </p>
         </div>
       )}
