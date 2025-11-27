@@ -38,6 +38,8 @@ export default function App() {
         requestAnimationFrame(() => {
           window.scrollTo(0, parseInt(savedPos, 10));
         });
+        // Remove the saved position after using it
+        sessionStorage.removeItem('machineListScrollPos');
       }
     }
   }, [machineId]);

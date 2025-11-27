@@ -20,7 +20,7 @@ export function Footer() {
             <p>{t('contactAssistance')}</p>
             <p>{t('assistancePackage')}</p>
             <p>
-              {t('termsConditions')} <a id="machine-registration-tc-link" href="/gr/en/legal">{t('here')}</a>.
+              {t('termsConditions')} <a id="machine-registration-tc-link" href="legal">{t('here')}</a>.
             </p>
             
             <div className="features">
@@ -55,7 +55,7 @@ export function Footer() {
           <div className="section-wrapper">
             <p className="registration-title">{t('machineRegistration')}</p>
             <p>{t('registrationDesc')}</p>
-            <a id="machine-registration-link" href="/gr/en/myaccount/machines" className="btn">{t('registerMachine')}</a>
+            <a id="machine-registration-link" href="myaccount/machines" className="btn">{t('registerMachine')}</a>
           </div>
         </div>
 

@@ -78,9 +78,10 @@ export function MachineDetail({ machine, onClose }) {
     if (match && tabKeys.includes(match[1])) {
       setActiveTab(match[1]);
     } else {
-      // Set default to overview and update URL
+      // Set default to overview and replace URL (don't create new history entry)
       setActiveTab('overview');
-      window.location.hash = `#!/${machine.id}/overview`;
+      const newHash = `#!/${machine.id}/overview`;
+      history.replaceState(null, '', window.location.pathname + window.location.search + newHash);
     }
 
     // Listen for hash changes

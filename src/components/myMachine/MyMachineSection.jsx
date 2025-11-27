@@ -59,6 +59,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         }
       } catch (error) {
         console.error("Error in checkUserLogin:", error);
+        console.log("User is not logged in.");
         setIsLoggedIn(false);
         setLoadingUser(false);
         onSwitchToOL(); // Switch to OL tab on error
@@ -152,7 +153,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         <div className="login-prompt">
           <p>{t('pleaseLogin')}</p>
           <p className="register-info">
-            {t('registerMachineInfo')} <a href="/login" className="login-link-inline">{t('loginHere')}</a>
+            {t('registerMachineInfo')} <a href="secure/login" className="login-link-inline">{t('loginHere')}</a>
           </p>
         </div>
       ) : userMachines.length > 0 ? (
@@ -173,7 +174,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                   {machine.purchaseDate && <p>{t('purchaseDate')} <span>{new Date(machine.purchaseDate).toLocaleDateString()}</span></p>}
                 </div>
                 <div className="my-machine-actions">
-                  <a href="/my-machine-page" className="my-machine-link">My Account</a>
+                  <a href="myaccount" className="my-machine-link">My Account</a>
                   {machine.id ? (
                     <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => onMachineClick(e, machine.id)}>View Details</a>
                   ) : (
