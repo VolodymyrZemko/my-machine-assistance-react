@@ -1,9 +1,9 @@
 {
-  "name": "cms-react-test",
+  "name": "my-machine-assistance-react--V1",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://VolodymyrZemko.github.io/my-react-cms-app",
+  "homepage": "https://VolodymyrZemko.github.io/my-machine-assistance-react--V1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
