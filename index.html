@@ -2,28 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Machine Assistance</title>
   </head>
   <body>
     <div id="my-react-app"></div>
-    <script>
-      (function() {
-        var params = new URLSearchParams(window.location.search);
-        var encoded = params.get('__spa_path');
-        if (!encoded) return;
-        var restored = decodeURIComponent(encoded);
-        var current = window.location.pathname;
-        // Detect which base we are under.
-        var base = '/';
-        if (current.includes('/my-react-cms-app')) base = '/my-react-cms-app';
-        else if (current.includes('/test-page-gwp')) base = '/gr/en/test-page-gwp';
-        // Normalize restored leading slash
-        if (!restored.startsWith('/')) restored = '/' + restored;
-        history.replaceState(null, '', base + restored);
-      })();
-    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

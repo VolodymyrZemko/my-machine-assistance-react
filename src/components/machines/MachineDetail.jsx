@@ -135,7 +135,7 @@ export function MachineDetail({ machine, onClose }) {
     <div className="machine-detail">
       <nav className="breadcrumbs">
         <div className="breadcrumbs-wrapper">
-          <a href="https://www.nespresso.com" className="breadcrumb-link">{t('home')}</a>
+          <a href="/" className="breadcrumb-link">{t('home')}</a>
           <span className="breadcrumb-separator">›</span>
           <button onClick={onClose} className="breadcrumb-link">{t('machineAssistance')}</button>
           <span className="breadcrumb-separator">›</span>
