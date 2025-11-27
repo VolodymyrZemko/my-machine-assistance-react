@@ -1,127 +1,148 @@
-import { useState, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import './App.css';
+import machines from './data/machines.json';
+import { useMachineRoute } from './modules/routing/useMachineRoute.js';
+import { MachineDetail } from './components/machines/MachineDetail.jsx';
+import { Footer } from './components/layout/Footer.jsx';
+import { Search } from './components/search/Search.jsx';
+import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
+import { useTranslation } from './translations/translations.js';
 
-function App() {
-  const [activeTab, setActiveTab] = useState("machines");
-  const [memberId, setMemberId] = useState(null);
-  const [machines, setMachines] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+// Tab icon components
+const TabIcon = ({ icon }) => {
+  return <nb-icon icon={icon} aria-hidden="true"></nb-icon>;
+};
 
+const TECH_TABS = [
+  { key: 'MY_MACHINE', label: 'myMachine', icon: '32/machine/machine-care-ol' },
+  { key: 'OL', label: 'olMachines', icon: '32/machine/machine-technology-ol' },
+  { key: 'VL', label: 'vlMachines', icon: '32/machine/machine-technology-vl' },
+  { key: 'MILK', label: 'milkMachines', icon: '32/machine/milk-frothing' }
+];
+
+export default function App() {
+  const t = useTranslation();
+  const [active, setActive] = useState(TECH_TABS[0].key);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hasCheckedLogin, setHasCheckedLogin] = useState(false);
+  const { machineId, openMachine, closeMachine } = useMachineRoute();
+  const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
+
+  // Save scroll position when opening a machine detail, restore when closing
   useEffect(() => {
-    async function checkUserLogin() {
-      try {
-        const myCustomer = await window.napi.customer().read();
-        const memberID = myCustomer.memberNumber || null;
-
-        if (memberID) {
-          console.log("User is logged in:", memberID);
-          setMemberId(memberID);
-          fetchMachines(); // Якщо юзер залогінений, отримуємо машини
-        } else {
-          console.log("User is not logged in.");
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error in checkUserLogin:", error);
-        setError("Помилка перевірки входу");
-        setLoading(false);
+    if (!machineId) {
+      // Restore scroll position when returning to list
+      const savedPos = sessionStorage.getItem('machineListScrollPos');
+      if (savedPos) {
+        // Use requestAnimationFrame to ensure DOM is ready
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(savedPos, 10));
+        });
+        // Remove the saved position after using it
+        sessionStorage.removeItem('machineListScrollPos');
       }
     }
+  }, [machineId]);
 
-    async function fetchMachines() {
-      try {
-        const userMachines = await window.napi.customer().getMachines();
+  // Save scroll position before navigating to machine detail
+  const handleMachineClick = (e, machineId) => {
+    sessionStorage.setItem('machineListScrollPos', window.scrollY.toString());
+    // Let the default href navigation happen
+  };
 
-        if (userMachines.length === 0) {
-          setMachines([]);
-          setLoading(false);
-          return;
-        }
-
-        // Отримуємо продукти для кожної машини
-        const fetchProducts = await Promise.all(
-          userMachines.map(async ({ productId, serialNumber, purchaseDate }) => {
-            const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
-            return { ...productData, serialNumber, purchaseDate };
-          })
-        );
-
-        setMachines(fetchProducts);
-      } catch (error) {
-        console.error("Error fetching machines:", error);
-        setError("Помилка отримання машин");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    checkUserLogin();
+  // Preload all machine images on mount
+  useEffect(() => {
+    machines.forEach(machine => {
+      const img = new Image();
+      img.src = machine.img;
+    });
   }, []);
 
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    const query = searchQuery.toLowerCase();
+    return machines.filter(m => m.name.toLowerCase().includes(query));
+  }, [searchQuery]);
+
+  const filtered = useMemo(() => {
+    if (active === 'MY_MACHINE') return [];
+    return machines.filter(m => m.technology === active);
+  }, [active]);
+
   return (
-    <div>
-      <h1>Особистий кабінет</h1>
-      <div className="tabs">
-        <button onClick={() => setActiveTab("machines")} className={activeTab === "machines" ? "active" : ""}>
-          Мої машини
-        </button>
-        <button onClick={() => setActiveTab("orders")} className={activeTab === "orders" ? "active" : ""}>
-          Історія замовлень
-        </button>
-        <button onClick={() => setActiveTab("settings")} className={activeTab === "settings" ? "active" : ""}>
-          Налаштування профілю
-        </button>
-      </div>
-
-      <div className="tab-content">
-        {activeTab === "machines" && (
-          <>
-            <h2>Мої машини</h2>
-            {loading ? (
-              <p>Завантаження...</p>
-            ) : memberId ? (
-              machines.length > 0 ? (
-                <ul>
-                  {machines.map((machine, index) => (
-                    <li key={index}>
-                      <h3>{machine.name}</h3>
-                      <p><strong>Серійний номер:</strong> {machine.serialNumber}</p>
-                      <p><strong>Дата покупки:</strong> {machine.purchaseDate}</p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>У вас ще немає машин.</p>
-              )
-            ) : (
-              <p>Будь ласка, <a href="/login">увійдіть</a> або <a href="/register">зареєструйтеся</a>.</p>
+    <div className="app-wrapper minimal">
+      {!activeMachine && (
+        <>
+          <Search 
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchResults={searchResults}
+            onMachineClick={handleMachineClick}
+          />
+          <div className="select-from-list-message">
+            {searchQuery.trim() && searchResults.length > 0 && (
+              <p className='search-more-title'>{t('didntFindWhat')}</p>
             )}
-          </>
-        )}
-
-        {activeTab === "orders" && (
-          <>
-            <h2>Історія замовлень</h2>
-            <p>Функціонал ще в розробці.</p>
-          </>
-        )}
-
-        {activeTab === "settings" && (
-          <>
-            <h2>Налаштування профілю</h2>
-            <p>Функціонал ще в розробці.</p>
-          </>
-        )}
-      </div>
-
-      <style>{`
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tabs button { padding: 10px 15px; border: none; cursor: pointer; background: #ddd; }
-        .tabs button.active { background: #555; color: white; }
-        .tab-content { border: 1px solid #ddd; padding: 20px; }
-      `}</style>
+            <p className='select-from-list-title'>{t('selectFromList')}</p>
+          </div>
+          <div className="tabs-bar" role="tablist" aria-label="Machine categories">
+            {TECH_TABS.map(tab => (
+              <button
+                key={tab.key}
+                className={tab.key === active ? 'tab active' : 'tab'}
+                onClick={() => setActive(tab.key)}
+                role="tab"
+                aria-selected={tab.key === active}
+                aria-controls={`panel-${tab.key}`}
+                id={`tab-${tab.key}`}
+              >
+                <TabIcon icon={tab.icon} />
+                <span>{t(tab.label)}</span>
+              </button>
+            ))}
+          </div>
+          <div className="tab-panel" role="tabpanel" id={`panel-${active}`} aria-labelledby={`tab-${active}`}>
+            {active === 'MY_MACHINE' ? (
+              <MyMachineSection 
+                onMachineClick={handleMachineClick} 
+                onSwitchToOL={() => {
+                  // Only switch if login hasn't been checked yet
+                  if (!hasCheckedLogin) {
+                    setActive('OL');
+                  }
+                }}
+                onLoginChecked={() => setHasCheckedLogin(true)}
+              />
+            ) : (
+              <>
+                <h2 className="sr-only">{t(TECH_TABS.find(tab => tab.key === active)?.label)}</h2>
+                <div className="machine-grid">
+                  {filtered.map(machine => (
+                    <div key={machine.id} className="machine-card">
+                      <a href={`#!/${machine.id}`} onClick={(e) => handleMachineClick(e, machine.id)}>
+                        <img 
+                          src={machine.img} 
+                          alt={machine.name}
+                          loading="eager"
+                        />
+                        <p>{machine.name}</p>
+                      </a>
+                    </div>
+                  ))}
+                  {filtered.length === 0 && <p>No machines.</p>}
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      )}
+      {activeMachine && (
+        <div className="machine-detail-panel">
+          <MachineDetail machine={activeMachine} onClose={closeMachine} />
+        </div>
+      )}
+      <Footer />
     </div>
   );
 }
 
-export default App;

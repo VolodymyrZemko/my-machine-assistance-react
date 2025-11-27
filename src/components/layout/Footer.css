@@ -1,0 +1,163 @@
+.app-footer {
+  margin-top: 4rem;
+}
+
+.app-footer .section-user-info {
+    background-color: #d8d2c3;
+    padding: 50px 0;
+}
+
+.section-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.app-footer .footer-title {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16.8px;
+    letter-spacing: 2px;
+    color: #000000;
+}
+
+.app-footer .footer-subtitle {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43.2px;
+    letter-spacing: 4px;
+    color: #000000;
+}
+
+.app-footer p {
+    margin-bottom: 16px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #454547;
+    padding: 0 10px;
+}
+
+.app-footer a {
+  color: #333;
+  text-decoration: underline;
+}
+
+.app-footer a:hover {
+  color: #000;
+}
+
+.app-footer .features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+margin-top: 40px;
+}
+
+.app-footer .feature {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.app-footer .feature svg {
+    padding: 20px;
+    background: #F3EEE6;
+    color: #9a958b;
+    border-radius: 50%;
+    overflow: visible;
+    box-sizing: content-box;
+}
+
+.app-footer .feature-text-wrapper {
+  flex: 1;
+}
+
+.app-footer .feature-title {
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+    letter-spacing: 5px;
+    color: #000000;
+}
+
+.app-footer .machine-registration {
+background-color: #63472f;
+    padding: 50px 10px;
+    margin-bottom: 30px;
+    background-image: url(https://www.nespresso.com/shared_res/markets/gr/Images/MachineAssistance/Machine-Assistance-Bottom-Hero-Desktop.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.app-footer .machine-registration .registration-title {
+font-weight: 700;
+    font-size: 36px;
+    line-height: 43.2px;
+    letter-spacing: 10px;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .app-footer .machine-registration .registration-title {
+        font-size: 30px;
+        line-height: 38.4px;
+        padding: 0;
+    }   
+}
+
+.app-footer .machine-registration p {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ffffff;
+    letter-spacing: normal;
+}
+
+.app-footer .btn {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 16px;
+    transition: background-color .2s;
+    padding: 15px 30px;
+    border: 1px solid white;
+    border-radius: 50px;
+}
+
+.app-footer .btn:hover {
+    background-color: #000;
+    border-color: #000000;
+    color: #fff;
+}
+
+.app-footer .version {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .app-footer .features {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .app-footer .footer-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .app-footer .machine-registration {
+    padding: 1.5rem;
+  }
+}

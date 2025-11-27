@@ -1,12 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import './index.css'; // global styles (fonts, background)
 import App from "./App.jsx";
 
-const react = window.React || React;
-const reactDOM = window.ReactDOM || ReactDOM;
+// Use the standard React & ReactDOM objects directly to avoid any potential
+// reassignment attempts on local const aliases that could trigger errors
+// like "Assignment to constant variable" during HMR in embedded environments.
 
-reactDOM.createRoot(document.getElementById("my-react-app")).render(
-  <react.StrictMode>
+ReactDOM.createRoot(document.getElementById("my-react-app")).render(
+  <React.StrictMode>
     <App />
-  </react.StrictMode>
+  </React.StrictMode>
 );
+
+

@@ -1,0 +1,176 @@
+[
+  {
+    "id": "citiz",
+    "name": "Citiz",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Citiz_M.png"
+  },
+  {
+    "id": "citiz-platinum",
+    "name": "Citiz Platinum",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Citiz-Platinum_M.png"
+  },
+  {
+    "id": "creatista",
+    "name": "Creatista",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Creatista_M.png"
+  },
+  {
+    "id": "creatista-pro",
+    "name": "Creatista Pro",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Creatista-Pro_M.png"
+  },
+  {
+    "id": "essenza-mini",
+    "name": "Essenza Mini",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Essenza-Mini_M.png"
+  },
+  {
+    "id": "essenza-plus",
+    "name": "Essenza Plus",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Essenza-Plus_M.png"
+  },
+  {
+    "id": "expert",
+    "name": "Expert",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Expert_M.png"
+  },
+  {
+    "id": "inissia",
+    "name": "Inissia",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Inissia_M.png"
+  },
+  {
+    "id": "lattissima-one",
+    "name": "Lattissima One",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Lattissima-One_M.png"
+  },
+  {
+    "id": "lattissima-plus",
+    "name": "Lattissima Plus",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Lattissima-Plus_M.png"
+  },
+  {
+    "id": "lattissima-pro",
+    "name": "Lattissima Pro",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Lattissima-Pro_M.png"
+  },
+  {
+    "id": "lattissima-touch",
+    "name": "Lattissima Touch",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Lattissima-Touch_M.png"
+  },
+  {
+    "id": "gran-lattissima",
+    "name": "Gran Lattissima",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Gran-Lattissima_M.png"
+  },
+  {
+    "id": "atelier",
+    "name": "Atelier",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Atelier-K2_M.png"
+  },
+  {
+    "id": "pixie",
+    "name": "Pixie",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Pixie_M.png"
+  },
+  {
+    "id": "pixie-clips",
+    "name": "Pixie Clips",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Pixie-Clips_M.png"
+  },
+  {
+    "id": "prodigio",
+    "name": "Prodigio",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Prodigio_M.png"
+  },
+  {
+    "id": "u",
+    "name": "U",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/U-machine_M.png"
+  },
+  {
+    "id": "vertuo-creatista",
+    "name": "Vertuo Creatista",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Vertuo-Creatista_M.png"
+  },
+  {
+    "id": "vertuo-lattissima",
+    "name": "Vertuo Lattissima",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/ecom/medias/sys_master/public/27722210115614/Vertuo-Lattissima-M.png"
+  },
+  {
+    "id": "vertuo-pop-plus",
+    "name": "Vertuo POP+",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Vertuo-POP-Plus_M.png"
+  },
+  {
+    "id": "vertuo-pop",
+    "name": "Vertuo POP",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Vertuo-POP_M.png"
+  },
+  {
+    "id": "vertuo-next",
+    "name": "Vertuo Next",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Vertuo-Next_M.png"
+  },
+  {
+    "id": "vertuo-plus",
+    "name": "Vertuo Plus",
+    "technology": "VL",
+    "img": "https://www.nespresso.com/ecom/medias/sys_master/public/26394184056862/vertuoplus-machine-assistance.png"
+  },
+  {
+    "id": "aeroccino-plus",
+    "name": "Aeroccino+",
+    "technology": "MILK",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Aeroccino-plus_M.png"
+  },
+  {
+    "id": "aeroccino-3",
+    "name": "Aeroccino 3",
+    "technology": "MILK",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Aeroccino-3_M.png"
+  },
+  {
+    "id": "aeroccino-4",
+    "name": "Aeroccino 4",
+    "technology": "MILK",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Aeroccino-4_M.png"
+  },
+  {
+    "id": "aeroccino-xl",
+    "name": "Aeroccino XL",
+    "technology": "MILK",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Aeroccino-XL_M.png"
+  },
+  {
+    "id": "barista",
+    "name": "Barista",
+    "technology": "MILK",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Barista_M.png"
+  }
+]
