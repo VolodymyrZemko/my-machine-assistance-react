@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
   const isProd = mode === 'production';
   return {
     plugins: [react()],
-    base: isProd ? '/my-machine-assistance-react-v1/' : '/', // GitHub Pages base path
+    base: isProd ? '/my-machine-assistance-react/' : '/', // GitHub Pages base path
     build: {
       rollupOptions: {
         output: {

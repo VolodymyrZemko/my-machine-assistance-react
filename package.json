@@ -1,9 +1,9 @@
 {
-  "name": "my-machine-assistance-react-v1",
+  "name": "my-machine-assistance-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://VolodymyrZemko.github.io/my-machine-assistance-react-v1",
+  "homepage": "https://VolodymyrZemko.github.io/my-machine-assistance-react",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
