@@ -3,7 +3,7 @@ export const translations = {
     // Search
     searchTitle: "Machine Assistance",
     searchDescription: "Nespresso offers step by step instructions and easy guides to help you make the most of your Nespresso machine and Aeroccino milk frother. Simply choose your model listed below and find everything you need to know about your machine.",
-    searchPlaceholder: "Enter machine name or serial number",
+    searchPlaceholder: "Enter machine name",
     searchResultFor: "Search result for:",
     didntFindWhat: "Didn't find what you need?",
 
@@ -71,7 +71,7 @@ export const translations = {
     // Search
     searchTitle: "Υποστήριξη Μηχανών",
     searchDescription: "Η Nespresso προσφέρει οδηγίες βήμα προς βήμα και εύκολους οδηγούς για να σας βοηθήσει να αξιοποιήσετε στο έπακρο τη μηχανή Nespresso και τον αφρογαλακτοποιητή Aeroccino. Απλά επιλέξτε το μοντέλο σας από την παρακάτω λίστα και βρείτε όλα όσα χρειάζεστε να γνωρίζετε για τη μηχανή σας.",
-    searchPlaceholder: "Αναζήτηση μηχανών κατά όνομα...",
+    searchPlaceholder: "Enter machine name",
     searchResultFor: "Αποτέλεσμα αναζήτησης για:",
     didntFindWhat: "Δεν βρήκατε αυτό που χρειάζεστε;",
     selectFromList: "Επιλέξτε τη μηχανή σας από την παρακάτω λίστα.",

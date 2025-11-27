@@ -174,7 +174,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                   {machine.purchaseDate && <p>{t('purchaseDate')} <span>{new Date(machine.purchaseDate).toLocaleDateString()}</span></p>}
                 </div>
                 <div className="my-machine-actions">
-                  <a href="myaccount" className="my-machine-link">My Account</a>
+                  <a href="myaccount/machines" className="my-machine-link">My Account</a>
                   {machine.id ? (
                     <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => onMachineClick(e, machine.id)}>View Details</a>
                   ) : (
