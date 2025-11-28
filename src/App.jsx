@@ -7,6 +7,8 @@ import { Footer } from './components/layout/Footer.jsx';
 import { Search } from './components/search/Search.jsx';
 import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
 import { useTranslation } from './translations/translations.js';
+import * as GTMTracking from './utils/gtmTracking.js';
+import { useInView } from 'react-intersection-observer';
 
 // Tab icon components
 const TabIcon = ({ icon }) => {
@@ -14,10 +16,10 @@ const TabIcon = ({ icon }) => {
 };
 
 const TECH_TABS = [
-  { key: 'MY_MACHINE', label: 'myMachine', icon: '32/machine/machine-care-ol' },
-  { key: 'OL', label: 'olMachines', icon: '32/machine/machine-technology-ol' },
-  { key: 'VL', label: 'vlMachines', icon: '32/machine/machine-technology-vl' },
-  { key: 'MILK', label: 'milkMachines', icon: '32/machine/milk-frothing' }
+  { key: 'MY_MACHINE', label: 'myMachine', GTMlabelEN: 'My Machine', icon: '32/machine/machine-care-ol' },
+  { key: 'OL', label: 'olMachines', GTMlabelEN: 'Original', icon: '32/machine/machine-technology-ol' },
+  { key: 'VL', label: 'vlMachines', GTMlabelEN: 'Vertuo', icon: '32/machine/machine-technology-vl' },
+  { key: 'MILK', label: 'milkMachines', GTMlabelEN: 'Milk Devices', icon: '32/machine/milk-frothing' }
 ];
 
 export default function App() {
@@ -27,6 +29,11 @@ export default function App() {
   const [hasCheckedLogin, setHasCheckedLogin] = useState(false);
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
+
+  const { ref: footerRef, inView: isFooterInView } = useInView({
+    threshold: 1.0,
+    delay: 500,
+  });
 
   // Save scroll position when opening a machine detail, restore when closing
   useEffect(() => {
@@ -69,6 +76,13 @@ export default function App() {
     return machines.filter(m => m.technology === active);
   }, [active]);
 
+  useEffect(() => {
+    if (isFooterInView) {
+      // GTM event
+      GTMTracking.trackFooterView();
+    }
+  }, [isFooterInView]);
+
   return (
     <div className="app-wrapper minimal">
       {!activeMachine && (
@@ -90,7 +104,11 @@ export default function App() {
               <button
                 key={tab.key}
                 className={tab.key === active ? 'tab active' : 'tab'}
-                onClick={() => setActive(tab.key)}
+                onClick={() => {
+                  // GTM event
+                  GTMTracking.trackTabChange(tab.GTMlabelEN);
+                  setActive(tab.key);
+                }}
                 role="tab"
                 aria-selected={tab.key === active}
                 aria-controls={`panel-${tab.key}`}
@@ -141,7 +159,7 @@ export default function App() {
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
-      <Footer />
+      <Footer ref={footerRef} />
     </div>
   );
 }

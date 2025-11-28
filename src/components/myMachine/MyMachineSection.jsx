@@ -187,7 +187,11 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         </div>
       ) : (
         <div className="no-machines">
-          <p>{t('noMachines')}</p>
+          <p className="no-machine-title">{t('noMachines')}</p>
+          <p>{t('noMachinesDescription')}</p>
+          <a href="myaccount/machines" className="register-machine-link">
+            {t('registerMachine')}
+          </a>
         </div>
       )}
     </div>
