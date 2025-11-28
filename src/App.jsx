@@ -30,10 +30,10 @@ export default function App() {
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
-  const { ref: footerRef, inView: isFooterInView } = useInView({
-    threshold: 1.0,
-    delay: 500,
-  });
+  // const { ref: footerRef, inView: isFooterInView } = useInView({
+  //   threshold: 1.0,
+  //   delay: 500,
+  // });
 
   // Save scroll position when opening a machine detail, restore when closing
   useEffect(() => {
@@ -76,12 +76,12 @@ export default function App() {
     return machines.filter(m => m.technology === active);
   }, [active]);
 
-  useEffect(() => {
-    if (isFooterInView) {
-      // GTM event
-      GTMTracking.trackFooterView();
-    }
-  }, [isFooterInView]);
+  // useEffect(() => {
+  //   if (isFooterInView) {
+  //     // GTM event
+  //     GTMTracking.trackFooterView();
+  //   }
+  // }, [isFooterInView]);
 
   return (
     <div className="app-wrapper minimal">
@@ -159,7 +159,7 @@ export default function App() {
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
-      <Footer ref={footerRef} />
+      <Footer />
     </div>
   );
 }
