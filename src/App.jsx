@@ -30,11 +30,6 @@ export default function App() {
   const { machineId, openMachine, closeMachine } = useMachineRoute();
   const activeMachine = machineId ? machines.find(m => m.id === machineId) : null;
 
-  // const { ref: footerRef, inView: isFooterInView } = useInView({
-  //   threshold: 1.0,
-  //   delay: 500,
-  // });
-
   // Save scroll position when opening a machine detail, restore when closing
   useEffect(() => {
     if (!machineId) {
@@ -76,12 +71,6 @@ export default function App() {
     return machines.filter(m => m.technology === active);
   }, [active]);
 
-  // useEffect(() => {
-  //   if (isFooterInView) {
-  //     // GTM event
-  //     GTMTracking.trackFooterView();
-  //   }
-  // }, [isFooterInView]);
 
   return (
     <div className="app-wrapper minimal">
@@ -106,7 +95,7 @@ export default function App() {
                 className={tab.key === active ? 'tab active' : 'tab'}
                 onClick={() => {
                   // GTM event
-                  GTMTracking.trackTabChange(tab.GTMlabelEN);
+                  // GTMTracking.GTMtrackTabChange(tab.GTMlabelEN);
                   setActive(tab.key);
                 }}
                 role="tab"
