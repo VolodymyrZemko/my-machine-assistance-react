@@ -8,7 +8,6 @@ import { Search } from './components/search/Search.jsx';
 import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
 import { useTranslation } from './translations/translations.js';
 import * as GTMTracking from './utils/gtmTracking.js';
-import { useInView } from 'react-intersection-observer';
 
 // Tab icon components
 const TabIcon = ({ icon }) => {
@@ -94,8 +93,6 @@ export default function App() {
                 key={tab.key}
                 className={tab.key === active ? 'tab active' : 'tab'}
                 onClick={() => {
-                  // GTM event
-                  // GTMTracking.GTMtrackTabChange(tab.GTMlabelEN);
                   setActive(tab.key);
                 }}
                 role="tab"
@@ -148,7 +145,7 @@ export default function App() {
           <MachineDetail machine={activeMachine} onClose={closeMachine} />
         </div>
       )}
-      <Footer />
+      <Footer activeMachine={activeMachine} />
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation, getCurrentLanguage } from '../../translations/translations.js';
+import * as GTMTracking from '../../utils/gtmTracking.js';
 
 const DETAIL_TABS = [
-  { key: 'overview', label: 'overview', icon: '32/machine/dimensions' },
-  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl' },
-  { key: 'troubleshooting', label: 'troubleshooting', icon: '32/machine/machine-care-ol' }
+  { key: 'overview', label: 'overview', icon: '32/machine/dimensions', GTMlabelDpEN: 'overview' },
+  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl', GTMlabelDpEN: 'guides' },
+  { key: 'troubleshooting', label: 'troubleshooting', icon: '32/machine/machine-care-ol', GTMlabelDpEN: 'troubleshooting' }
 ];
 
 // Detail tab icon component
@@ -185,7 +186,12 @@ export function MachineDetail({ machine, onClose }) {
                     <div key={i} className="manual-item">
                       <span>{manual.name} ({manual.weight})</span>
                       {manual.links?.map((link, j) => (
-                        <a key={j} href={link.url} target="_blank" rel="noopener noreferrer">
+                        <a 
+                          key={j} 
+                          href={link.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                        >
                           {link.language}
                         </a>
                       ))}
@@ -201,7 +207,9 @@ export function MachineDetail({ machine, onClose }) {
               <button
                 key={tab.key}
                 className={tab.key === activeTab ? 'detail-tab active' : 'detail-tab'}
-                onClick={() => handleTabChange(tab.key)}
+                onClick={() => {
+                  handleTabChange(tab.key);
+                }}
               >
                 <DetailTabIcon icon={tab.icon} />
                 <span data-text={t(tab.label)}>{t(tab.label)}</span>
@@ -223,7 +231,12 @@ export function MachineDetail({ machine, onClose }) {
                     <h4>{overview.overviewHeaderTitle.subheadline}</h4>
                     <p>{overview.overviewHeaderTitle.description}</p>
                     {overview.overviewHeaderTitle.cta && (
-                      <a href={overview.overviewHeaderTitle.cta.link} target="_blank" rel="noopener noreferrer" className="cta-button">
+                      <a 
+                        href={overview.overviewHeaderTitle.cta.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="cta-button"
+                      >
                         {overview.overviewHeaderTitle.cta.text}
                       </a>
                     )}
@@ -265,7 +278,13 @@ export function MachineDetail({ machine, onClose }) {
                     <p className="guides-intro">{t('selectFunctionality')}</p>
                     <div className="guides-grid">
                       {instructions.topics?.map((topic, i) => (
-                        <div key={i} className="guide-card" onClick={() => handleGuideSelect(topic)}>
+                        <div 
+                          key={i} 
+                          className="guide-card" 
+                          onClick={() => {
+                            handleGuideSelect(topic);
+                          }}
+                        >
                           <img src={topic.icon} alt={topic.title} />
                           <h4>{topic.title}</h4>
                         </div>

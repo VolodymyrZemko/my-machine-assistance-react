@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from '../../translations/translations.js';
+import * as GTMTracking from '../../utils/gtmTracking.js';
 import machines from '../../data/machines.json';
 
 export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked }) {
@@ -153,7 +154,10 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         <div className="login-prompt">
           <p>{t('pleaseLogin')}</p>
           <p className="register-info">
-            {t('registerMachineInfo')} <a href="secure/login" className="login-link-inline">{t('loginHere')}</a>
+            {t('registerMachineInfo')} <a 
+              href="secure/login" 
+              className="login-link-inline"
+            >{t('loginHere')}</a>
           </p>
         </div>
       ) : userMachines.length > 0 ? (
@@ -174,9 +178,18 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                   {machine.purchaseDate && <p>{t('purchaseDate')} <span>{new Date(machine.purchaseDate).toLocaleDateString()}</span></p>}
                 </div>
                 <div className="my-machine-actions">
-                  <a href="myaccount/machines" className="my-machine-link">My Account</a>
+                  <a 
+                    href="myaccount/machines" 
+                    className="my-machine-link"
+                  >{t('myAccount')}</a>
                   {machine.id ? (
-                    <a href={`#!/${machine.id}`} className="my-machine-link primary" onClick={(e) => onMachineClick(e, machine.id)}>View Details</a>
+                    <a 
+                      href={'#!/' + machine.id} 
+                      className="my-machine-link primary" 
+                      onClick={(e) => {
+                        onMachineClick(e, machine.id);
+                      }}
+                    >{t('viewDetails')}</a>
                   ) : (
                     <span className="my-machine-not-found">{t('machineNotFound')}</span>
                   )}
@@ -189,7 +202,10 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
         <div className="no-machines">
           <p className="no-machine-title">{t('noMachines')}</p>
           <p>{t('noMachinesDescription')}</p>
-          <a href="myaccount/machines" className="register-machine-link">
+          <a 
+            href="myaccount/machines" 
+            className="register-machine-link"
+          >
             {t('registerMachine')}
           </a>
         </div>

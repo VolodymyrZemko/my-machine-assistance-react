@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from '../../translations/translations.js';
+import { useInView } from 'react-intersection-observer';
+import * as GTMTracking from '../../utils/gtmTracking.js';
 import './Footer.css';
 
 // Footer icon component using nb-icon web component
@@ -7,11 +9,57 @@ const FooterIcon = ({ icon }) => {
   return <nb-icon icon={icon} aria-hidden="true"></nb-icon>;
 };
 
-export function Footer() {
+export function Footer({ activeMachine }) {
   const t = useTranslation();
   
+  // GTM footer tracking: IntersectionObserver
+  const { ref: footerRef, inView: isFooterInView } = useInView({
+    threshold: 1.0, // Trigger when 100% in view
+    delay: 1500, // Delay to ensure all content is loaded
+  });
+
+  // GTM footer tracking controls
+  const allowFooterTrackingRef = useRef(false);
+  const footerVisibleTimerRef = useRef(null);
+
+  // Wait a short settle delay on mount so layout/globals finish loading
+  useEffect(() => {
+    const SETTLE_MS = 2000;
+    const id2 = setTimeout(() => {
+      allowFooterTrackingRef.current = true;
+    }, SETTLE_MS);
+    return () => clearTimeout(id2);
+  }, []);
+
+  // GTM event: Track footer view when 100% visible for a period
+  useEffect(() => {
+    const VISIBLE_MS = 2000;
+
+    if (!allowFooterTrackingRef.current) return;
+
+    if (isFooterInView) {
+      footerVisibleTimerRef.current = setTimeout(() => {
+        // Determine label: machine name on detail page, 'search' on list page
+        const label = activeMachine ? activeMachine.name : 'search';
+        GTMTracking.trackFooterView(label);
+      }, VISIBLE_MS);
+    } else {
+      if (footerVisibleTimerRef.current) {
+        clearTimeout(footerVisibleTimerRef.current);
+        footerVisibleTimerRef.current = null;
+      }
+    }
+
+    return () => {
+      if (footerVisibleTimerRef.current) {
+        clearTimeout(footerVisibleTimerRef.current);
+        footerVisibleTimerRef.current = null;
+      }
+    };
+  }, [isFooterInView, activeMachine]);
+  
   return (
-    <footer className="app-footer">
+    <footer ref={footerRef} className="app-footer">
       <div className="container">
         <div className="section-user-info">
           <div className="section-wrapper">
@@ -20,7 +68,11 @@ export function Footer() {
             <p>{t('contactAssistance')}</p>
             <p>{t('assistancePackage')}</p>
             <p>
-              {t('termsConditions')} <a id="machine-registration-tc-link" href="legal">{t('here')}</a>.
+              {t('termsConditions')} <a 
+                id="machine-registration-tc-link" 
+                href="legal"
+                onClick={() => GTMTracking.trackServiceTCClick()}
+              >{t('here')}</a>.
             </p>
             
             <div className="features">
@@ -55,7 +107,12 @@ export function Footer() {
           <div className="section-wrapper">
             <p className="registration-title">{t('machineRegistration')}</p>
             <p>{t('registrationDesc')}</p>
-            <a id="machine-registration-link" href="myaccount/machines" className="btn">{t('registerMachine')}</a>
+            <a 
+              id="machine-registration-link" 
+              href="myaccount/machines" 
+              className="btn"
+              onClick={() => GTMTracking.trackRegisterMachineClick()}
+            >{t('registerMachine')}</a>
           </div>
         </div>
 
