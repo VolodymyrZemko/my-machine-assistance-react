@@ -188,6 +188,7 @@
     position: relative;
     height: 100px;
     display: flex;
+    align-items: center;
   }
 }
 
@@ -235,6 +236,12 @@
   margin: auto;
   font-size: 16px;
   font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .machine-card p {
+    margin-bottom: auto;
+  }
 }
 
 .machine-detail {
@@ -399,6 +406,7 @@
     color: #17171a;
     transition: border-color .2s, color .2s;
     position: relative;
+    text-wrap: nowrap;
 }
 @media (max-width: 768px) {
   .detail-tab {
@@ -808,6 +816,7 @@ display: grid;
     gap: 20px;
     padding: 50px 50px 40px;
     max-width: 72.5rem;
+    min-width: 930px;
     margin: auto;
 }
 
@@ -815,6 +824,7 @@ display: grid;
   .guides-grid {
     grid-template-columns: 1fr;
     padding: 50px 0px 40px;
+    min-width: 100%;
   }
 }
 
@@ -1035,12 +1045,12 @@ strong.instruction-step-index {
 
 .trouble-button .chevron {
   flex-shrink: 0;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .trouble-panel {
   overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  transition: max-height 0.3s ease-in-out;
 }
 
 .trouble-content {

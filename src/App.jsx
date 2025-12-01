@@ -7,7 +7,20 @@ import { Footer } from './components/layout/Footer.jsx';
 import { Search } from './components/search/Search.jsx';
 import { MyMachineSection } from './components/myMachine/MyMachineSection.jsx';
 import { useTranslation } from './translations/translations.js';
-import * as GTMTracking from './utils/gtmTracking.js';
+
+//GTM tracking
+const trackTabClick = (tabName) => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: `machine assistance - ${tabName}`
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance -', tabName);
+};
 
 // Tab icon components
 const TabIcon = ({ icon }) => {
@@ -94,6 +107,8 @@ export default function App() {
                 className={tab.key === active ? 'tab active' : 'tab'}
                 onClick={() => {
                   setActive(tab.key);
+                  // Track tab click, GTM
+                  trackTabClick(tab.GTMlabelEN);
                 }}
                 role="tab"
                 aria-selected={tab.key === active}

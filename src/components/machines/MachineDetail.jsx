@@ -1,10 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation, getCurrentLanguage } from '../../translations/translations.js';
-import * as GTMTracking from '../../utils/gtmTracking.js';
+
+// GTM tracking
+const trackMachineDetailView = (machineName) => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'impression',
+      local_event_action: 'view',
+      local_event_label: `machine assistance - ${machineName}`
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance -', machineName);
+};
+
+const trackUserManualClick = (machineName) => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: `machine assistance - ${machineName} - user manual`
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance -', machineName, '- user manual');
+};
+
+const trackOverviewPDPClick = (machineName) => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: `machine assistance - ${machineName} - overview - go to pdp`
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance -', machineName, '- overview - go to pdp');
+};
 
 const DETAIL_TABS = [
   { key: 'overview', label: 'overview', icon: '32/machine/dimensions', GTMlabelDpEN: 'overview' },
-  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl', GTMlabelDpEN: 'guides' },
+  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl', GTMlabelDpEN: 'guides and videos' },
   { key: 'troubleshooting', label: 'troubleshooting', icon: '32/machine/machine-care-ol', GTMlabelDpEN: 'troubleshooting' }
 ];
 
@@ -20,7 +59,34 @@ export function MachineDetail({ machine, onClose }) {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedGuide, setSelectedGuide] = useState(null);
-  const [expandedTrouble, setExpandedTrouble] = useState(null);
+  const [expandedTrouble, setExpandedTrouble] = useState(new Set());
+
+  // Track detail tab clicks - defined inside component to avoid race condition
+  const trackDetailTabClick = (machineName, tabName) => {
+    try {
+      window.gtmDataObject?.push({
+        event: 'local_event',
+        event_raised_by: 'gr',
+        local_event_category: 'user engagement',
+        local_event_action: 'click',
+        local_event_label: `machine assistance - ${machineName} - ${tabName}`
+      });
+    } catch (e) {}
+    // console.log('GTM Event: machine assistance -', machineName, '-', tabName);
+  };
+
+  const trackGuideClick = (machineName, guideName) => {
+    try {
+      window.gtmDataObject?.push({
+        event: 'local_event',
+        event_raised_by: 'gr',
+        local_event_category: 'user engagement',
+        local_event_action: 'click',
+        local_event_label: `machine assistance - ${machineName} - guides - ${guideName}`
+      });
+    } catch (e) {}
+    // console.log('GTM Event: machine assistance -', machineName, '- guides -', guideName);
+  };
 
   if (!machine) return null;
 
@@ -28,6 +94,11 @@ export function MachineDetail({ machine, onClose }) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [machine.id]);
+
+  // Track machine detail page view, GTM
+  useEffect(() => {
+    trackMachineDetailView(machine.name);
+  }, [machine.name]);
 
   useEffect(() => {
     const prev = document.title;
@@ -129,7 +200,15 @@ export function MachineDetail({ machine, onClose }) {
   }
 
   function toggleTrouble(index) {
-    setExpandedTrouble(expandedTrouble === index ? null : index);
+    setExpandedTrouble(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
   }
 
   return (
@@ -190,7 +269,8 @@ export function MachineDetail({ machine, onClose }) {
                           key={j} 
                           href={link.url} 
                           target="_blank" 
-                          rel="noopener noreferrer" 
+                          rel="noopener noreferrer"
+                          onClick={() => trackUserManualClick(machine.name)}
                         >
                           {link.language}
                         </a>
@@ -208,6 +288,7 @@ export function MachineDetail({ machine, onClose }) {
                 key={tab.key}
                 className={tab.key === activeTab ? 'detail-tab active' : 'detail-tab'}
                 onClick={() => {
+                  trackDetailTabClick(machine.name, tab.GTMlabelDpEN);
                   handleTabChange(tab.key);
                 }}
               >
@@ -236,6 +317,7 @@ export function MachineDetail({ machine, onClose }) {
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="cta-button"
+                        onClick={() => trackOverviewPDPClick(machine.name)}
                       >
                         {overview.overviewHeaderTitle.cta.text}
                       </a>
@@ -282,6 +364,7 @@ export function MachineDetail({ machine, onClose }) {
                           key={i} 
                           className="guide-card" 
                           onClick={() => {
+                            trackGuideClick(machine.name, topic.title);
                             handleGuideSelect(topic);
                           }}
                         >
@@ -350,7 +433,7 @@ export function MachineDetail({ machine, onClose }) {
                       <button
                         className="trouble-button"
                         onClick={() => toggleTrouble(index)}
-                        aria-expanded={expandedTrouble === index}
+                        aria-expanded={expandedTrouble.has(index)}
                       >
                         <span>{trouble.title}</span>
                         <svg
@@ -360,7 +443,7 @@ export function MachineDetail({ machine, onClose }) {
                           viewBox="0 0 24 24"
                           fill="currentColor"
                           className="chevron"
-                          style={{ transform: expandedTrouble === index ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                          style={{ transform: expandedTrouble.has(index) ? 'rotate(180deg)' : 'rotate(0deg)' }}
                         >
                           <path d="m12 15.3-8-8v1.4l8 8 8-8V7.3l-8 8Z"></path>
                         </svg>
@@ -368,9 +451,9 @@ export function MachineDetail({ machine, onClose }) {
                       <div
                         className="trouble-panel"
                         style={{
-                          maxHeight: expandedTrouble === index ? '500px' : '0px',
+                          maxHeight: expandedTrouble.has(index) ? '500px' : '0px',
                           overflow: 'hidden',
-                          transition: 'max-height 0.3s ease-out'
+                          transition: 'max-height 0.3s ease-in-out'
                         }}
                       >
                         <div className="trouble-content" dangerouslySetInnerHTML={{ __html: trouble.content }} />

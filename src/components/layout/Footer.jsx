@@ -14,8 +14,8 @@ export function Footer({ activeMachine }) {
   
   // GTM footer tracking: IntersectionObserver
   const { ref: footerRef, inView: isFooterInView } = useInView({
-    threshold: 1.0, // Trigger when 100% in view
-    delay: 1500, // Delay to ensure all content is loaded
+    threshold: 1.0, // 100% in view
+    delay: 1000, // Delay
   });
 
   // GTM footer tracking controls
@@ -24,7 +24,7 @@ export function Footer({ activeMachine }) {
 
   // Wait a short settle delay on mount so layout/globals finish loading
   useEffect(() => {
-    const SETTLE_MS = 2000;
+    const SETTLE_MS = 1000;
     const id2 = setTimeout(() => {
       allowFooterTrackingRef.current = true;
     }, SETTLE_MS);

@@ -1,7 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from '../../translations/translations.js';
-import * as GTMTracking from '../../utils/gtmTracking.js';
 import machines from '../../data/machines.json';
+
+// GTM tracking
+const trackMyMachineLoginClick = () => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: 'machine assistance - my machines - log in'
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance - my machines - log in');
+};
+
+const trackNoMachinesView = () => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'impression',
+      local_event_action: 'view',
+      local_event_label: 'machine assistance - my machines - no registered machines'
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance - my machines - no registered machines');
+};
+
+const trackNoMachinesRegisterClick = () => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: 'machine assistance - my machines - no registered machines - go to my account'
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance - my machines - no registered machines - go to my account');
+};
+
+const trackMyAccountClick = () => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: 'machine assistance - my machines - edit in my account'
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance - my machines - edit in my account');
+};
+
+const trackTroubleshootingClick = () => {
+  try {
+    window.gtmDataObject?.push({
+      event: 'local_event',
+      event_raised_by: 'gr',
+      local_event_category: 'user engagement',
+      local_event_action: 'click',
+      local_event_label: 'machine assistance - my machines - troubleshooting'
+    });
+  } catch (e) {}
+  // console.log('GTM Event: machine assistance - my machines - troubleshooting');
+};
 
 export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked }) {
   const t = useTranslation();
@@ -10,6 +75,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
   const [userMachines, setUserMachines] = useState([]);
   const [loadingUser, setLoadingUser] = useState(true);
   const [userError, setUserError] = useState(null);
+  const hasTrackedNoMachines = useRef(false);
 
   useEffect(() => {
     // Extract machine ID from FAQ link
@@ -116,6 +182,14 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
     checkUserLogin();
   }, []);
 
+  // Track no machines view when the state is displayed, GTM
+  useEffect(() => {
+    if (!loadingUser && isLoggedIn && userMachines.length === 0 && !hasTrackedNoMachines.current) {
+      hasTrackedNoMachines.current = true;
+      trackNoMachinesView();
+    }
+  }, [loadingUser, isLoggedIn, userMachines.length]);
+
   return (
     <div className="my-machine-section">
       <h2 className="sr-only">{t('myMachine')}</h2>
@@ -157,6 +231,7 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
             {t('registerMachineInfo')} <a 
               href="secure/login" 
               className="login-link-inline"
+              onClick={() => trackMyMachineLoginClick()}
             >{t('loginHere')}</a>
           </p>
         </div>
@@ -181,12 +256,14 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                   <a 
                     href="myaccount/machines" 
                     className="my-machine-link"
+                    onClick={() => trackMyAccountClick()}
                   >{t('myAccount')}</a>
                   {machine.id ? (
                     <a 
                       href={'#!/' + machine.id} 
                       className="my-machine-link primary" 
                       onClick={(e) => {
+                        trackTroubleshootingClick();
                         onMachineClick(e, machine.id);
                       }}
                     >{t('viewDetails')}</a>
@@ -205,8 +282,8 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
           <a 
             href="myaccount/machines" 
             className="register-machine-link"
-          >
-            {t('registerMachine')}
+            onClick={() => trackNoMachinesRegisterClick()}
+          >{t('registerMachine')}
           </a>
         </div>
       )}

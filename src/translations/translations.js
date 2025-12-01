@@ -21,8 +21,8 @@ export const translations = {
     noMachines: "You don't have any registered machines",
     noMachinesDescription: "Sorry, we could not find any machines registered to your Nespresso account. You can register your machine by clicking the button below.",
     registerMachine: "Register Machine",
-    myAccount: "My Account",
-    viewDetails: "View Details",
+    myAccount: "EDIT IN MY ACCOUNT",
+    viewDetails: "TROUBLESHOOTING",
     machineNotFound: "Unfortunately, we did not find your machine. Please use search or find it from the list please.",
     
     // Machine Detail
@@ -37,7 +37,7 @@ export const translations = {
     
     // Tabs in detail
     overview: "Overview",
-    guides: "Guides",
+    guides: "Guides & Videos",
     troubleshooting: "Troubleshooting",
     
     // Messages
