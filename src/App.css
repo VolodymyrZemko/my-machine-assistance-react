@@ -562,10 +562,16 @@ aspect-ratio: 1 / 1;
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -20%;
+    right: -8%;
     width: 50vw;
     max-width: 600px;
     pointer-events: none;
+}
+
+@media (min-width: 768px) and (max-width: 1300px) {
+  .overview-bg {
+    max-width: 300px;
+  }
 }
 
 .overview-bg-mobile {
@@ -762,10 +768,16 @@ width: 48px;
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -10%;
+    right: -8%;
     width: 50vw;
     max-width: 600px;
     pointer-events: none;
+}
+
+@media (min-width: 768px) and (max-width: 1300px) {
+  .guides-bg {
+    max-width: 300px;
+  }
 }
 
 .guides-bg-mobile {
@@ -972,10 +984,16 @@ strong.instruction-step-index {
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -20%;
+    right: -8%;
     width: 50vw;
     max-width: 600px;
     pointer-events: none;
+}
+
+@media (min-width: 768px) and (max-width: 1300px) {
+  .troubleshooting-section {
+    max-width: 300px;
+  }
 }
 
 .troubleshooting-bg-mobile {
