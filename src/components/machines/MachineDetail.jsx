@@ -113,7 +113,7 @@ export function MachineDetail({ machine, onClose }) {
     setData(null);
 
     const lang = getCurrentLanguage();
-    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v3/${machine.id}_${lang}.json`;
+    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v4/${machine.id}_${lang}.json`;
 
     fetch(url)
       .then(res => {
