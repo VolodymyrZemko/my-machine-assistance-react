@@ -95,6 +95,12 @@ background-color: #63472f;
     background-repeat: no-repeat;
 }
 
+@media (max-width: 768px) {
+    .app-footer .machine-registration {
+        background-image: url(https://www.nespresso.com/shared_res/markets/gr/Images/MachineAssistance/Machine-Assistance-Bottom-Hero-Mobile.jpg);
+    }   
+}
+
 .app-footer .machine-registration .registration-title {
 font-weight: 700;
     font-size: 36px;

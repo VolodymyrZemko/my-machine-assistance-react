@@ -90,6 +90,12 @@
     "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Pixie_M.png"
   },
   {
+    "id": "pixie-redesign",
+    "name": "Pixie Redesign",
+    "technology": "OL",
+    "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Pixie-2023_M.png"
+  },
+  {
     "id": "pixie-clips",
     "name": "Pixie Clips",
     "technology": "OL",
