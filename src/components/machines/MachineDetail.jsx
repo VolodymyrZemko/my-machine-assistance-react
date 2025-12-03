@@ -305,44 +305,47 @@ export function MachineDetail({ machine, onClose }) {
                   className="overview-bg"
                   style={{ backgroundImage: `url(${overview.imageBg})` }}
                 />
-                {overview.overviewHeaderTitle ? (
-                  <div className="overview-text">
-                    <h2>{overview.overviewHeaderTitle.title}</h2>
-                    <h3>{overview.overviewHeaderTitle.headline}</h3>
-                    <h4>{overview.overviewHeaderTitle.subheadline}</h4>
-                    <p>{overview.overviewHeaderTitle.description}</p>
-                    {overview.overviewHeaderTitle.cta && (
-                      <a 
-                        href={overview.overviewHeaderTitle.cta.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="cta-button"
-                        onClick={() => trackOverviewPDPClick(machine.name)}
-                      >
-                        {overview.overviewHeaderTitle.cta.text}
-                      </a>
-                    )}
-                  </div>
-                ) : null}
-                {overview.imageBgMob && (
-                  <div
-                    className="overview-bg-mobile"
-                    style={{ backgroundImage: `url(${overview.imageBgMob})` }}
-                  />
-                )}
-                {overview.specifications && overview.specifications.length > 0 && (
-                  <div className="specifications">
-                    <h3 className="sr-only">Specifications</h3>
-                    <div className="specs-grid">
-                      {overview.specifications.map((spec, i) => (
-                        <div key={i} className="spec-item">
-                          <img src={spec.icon} alt="" />
-                          <div dangerouslySetInnerHTML={{ __html: spec.content }} />
-                        </div>
-                      ))}
+                
+                <div className="overview-content-wrapper">
+                  {overview.overviewHeaderTitle ? (
+                    <div className="overview-text">
+                      <h2>{overview.overviewHeaderTitle.title}</h2>
+                      <h3>{overview.overviewHeaderTitle.headline}</h3>
+                      <h4>{overview.overviewHeaderTitle.subheadline}</h4>
+                      <p>{overview.overviewHeaderTitle.description}</p>
+                      {overview.overviewHeaderTitle.cta && (
+                        <a 
+                          href={overview.overviewHeaderTitle.cta.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="cta-button"
+                          onClick={() => trackOverviewPDPClick(machine.name)}
+                        >
+                          {overview.overviewHeaderTitle.cta.text}
+                        </a>
+                      )}
                     </div>
-                  </div>
-                )}
+                  ) : null}
+                  {overview.imageBgMob && (
+                    <div
+                      className="overview-bg-mobile"
+                      style={{ backgroundImage: `url(${overview.imageBgMob})` }}
+                    />
+                  )}
+                  {overview.specifications && overview.specifications.length > 0 && (
+                    <div className="specifications">
+                      <h3 className="sr-only">Specifications</h3>
+                      <div className="specs-grid">
+                        {overview.specifications.map((spec, i) => (
+                          <div key={i} className="spec-item">
+                            <img src={spec.icon} alt="" />
+                            <div dangerouslySetInnerHTML={{ __html: spec.content }} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             ) : activeTab === 'overview' && !overview ? (
               <div className="no-data-message">
@@ -357,22 +360,26 @@ export function MachineDetail({ machine, onClose }) {
                       className="guides-bg"
                       style={{ backgroundImage: `url(${instructions.imageBg})` }}
                     />
-                    <p className="guides-intro">{t('selectFunctionality')}</p>
-                    <div className="guides-grid">
-                      {instructions.topics?.map((topic, i) => (
-                        <div 
-                          key={i} 
-                          className="guide-card" 
-                          onClick={() => {
-                            trackGuideClick(machine.name, topic.title);
-                            handleGuideSelect(topic);
-                          }}
-                        >
-                          <img src={topic.icon} alt={topic.title} />
-                          <h4>{topic.title}</h4>
-                        </div>
-                      ))}
+                    
+                    <div className="guides-content-wrapper">
+                      <p className="guides-intro">{t('selectFunctionality')}</p>
+                      <div className="guides-grid">
+                        {instructions.topics?.map((topic, i) => (
+                          <div 
+                            key={i} 
+                            className="guide-card" 
+                            onClick={() => {
+                              trackGuideClick(machine.name, topic.title);
+                              handleGuideSelect(topic);
+                            }}
+                          >
+                            <img src={topic.icon} alt={topic.title} />
+                            <h4>{topic.title}</h4>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                    
                     {instructions.imageBgMob && (
                       <div
                         className="guides-bg-mobile"

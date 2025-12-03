@@ -547,6 +547,14 @@
   position: relative;
 }
 
+.overview-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 72.5rem;
+    margin: auto;
+}
+
 /* .overview-text {
   max-width: 960px;
   margin: auto;
@@ -564,13 +572,16 @@ aspect-ratio: 1 / 1;
     transform: translateY(-50%);
     right: -8%;
     width: 50vw;
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 20vw;
     pointer-events: none;
 }
 
 @media (min-width: 768px) and (max-width: 1300px) {
   .overview-bg {
-    max-width: 300px;
+      background-size: cover;
+      background-position: left;
+      height: 50%;
   }
 }
 
@@ -602,8 +613,8 @@ aspect-ratio: 1 / 1;
 }
 
 .overview-text {
-    max-width: 72.5rem;
-    margin: auto;
+    /* max-width: 72.5rem;
+    margin: auto; */
     text-align: center;
 }
 
@@ -690,8 +701,8 @@ font-weight: 400;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 50px 50px 40px;
-    max-width: 72.5rem;
-    margin: auto;
+    /* max-width: 72.5rem; */
+    /* margin: auto; */
 }
 
 @media (max-width: 768px) {
@@ -749,6 +760,14 @@ width: 48px;
   position: relative;
 }
 
+.guides-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 72.5rem;
+    margin: auto;
+}
+
 .guides-bg {
     /* aspect-ratio: 1 / 1;
     background-size: contain;
@@ -770,13 +789,16 @@ width: 48px;
     transform: translateY(-50%);
     right: -8%;
     width: 50vw;
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 20vw;
     pointer-events: none;
 }
 
 @media (min-width: 768px) and (max-width: 1300px) {
   .guides-bg {
-    max-width: 300px;
+      background-size: cover;
+      background-position: left;
+      height: 50%;
   }
 }
 
@@ -827,9 +849,9 @@ display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 50px 50px 40px;
-    max-width: 72.5rem;
+    /* max-width: 72.5rem;
     min-width: 930px;
-    margin: auto;
+    margin: auto; */
 }
 
 @media (max-width: 768px) {
@@ -986,13 +1008,16 @@ strong.instruction-step-index {
     transform: translateY(-50%);
     right: -8%;
     width: 50vw;
-    max-width: 600px;
+    /* max-width: 600px; */
+    max-width: 20vw;
     pointer-events: none;
 }
 
 @media (min-width: 768px) and (max-width: 1300px) {
   .troubleshooting-bg {
-    max-width: 300px;
+      background-size: cover;
+      background-position: left;
+      height: 50%;
   }
 }
 
