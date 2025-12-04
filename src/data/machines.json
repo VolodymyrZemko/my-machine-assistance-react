@@ -3,6 +3,12 @@
     "id": "citiz",
     "name": "Citiz",
     "technology": "OL",
+    "img": "https://www.nespresso.com/ecom/medias/sys_master/public/31297563557918/CitiZ-White-front.png"
+  },
+  {
+    "id": "citiz-and-milk",
+    "name": "Citiz and Milk",
+    "technology": "OL",
     "img": "https://www.nespresso.com/shared_res/agility/commons/img/machines/Citiz_M.png"
   },
   {

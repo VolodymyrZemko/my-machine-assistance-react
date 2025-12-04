@@ -78,6 +78,19 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
   const hasTrackedNoMachines = useRef(false);
 
   useEffect(() => {
+    // Normalize machine name for matching
+    function normalizeMachineName(name) {
+      if (!name) return '';
+      
+      return name
+        .toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with hyphens
+        .replace(/&/g, '-and-')         // Replace & with -and-
+        .replace(/\+/g, '-plus')        // Replace + with -plus
+        .replace(/-+/g, '-')            // Replace multiple hyphens with single
+        .replace(/^-|-$/g, '');         // Remove leading/trailing hyphens
+    }
+
     // Extract machine ID from FAQ link
     function extractMachineIdFromFaq(faqLink) {
       if (!faqLink) return null;
@@ -90,12 +103,58 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
       return null;
     }
 
-    // Find matching machine from our JSON based on FAQ link
-    function findMatchingMachine(faqLink) {
-      const machineId = extractMachineIdFromFaq(faqLink);
-      if (!machineId) return null;
+    // Find matching machine from our JSON based on FAQ link or category
+    function findMatchingMachine(faqLink, category) {
+      // First try: Match by FAQ link (exact match)
+      const faqId = extractMachineIdFromFaq(faqLink);
+      if (faqId) {
+        const exactMatch = machines.find(machine => machine.id === faqId);
+        if (exactMatch) return exactMatch;
+      }
       
-      return machines.find(machine => machine.id === machineId);
+      // Second try: Match by category (normalized matching)
+      if (category) {
+        const normalizedCategory = normalizeMachineName(category);
+        
+        // Try exact normalized match first
+        const normalizedMatch = machines.find(machine => 
+          machine.id === normalizedCategory
+        );
+        if (normalizedMatch) return normalizedMatch;
+        
+        // Try pattern matching for variations
+        const patternMatch = machines.find(machine => {
+          const machineId = machine.id;
+          const categoryLower = normalizedCategory;
+          
+          // Remove all hyphens and compare
+          const machineIdNoHyphens = machineId.replace(/-/g, '');
+          const categoryNoHyphens = categoryLower.replace(/-/g, '');
+          
+          if (machineIdNoHyphens === categoryNoHyphens) return true;
+          
+          // Handle common patterns
+          // CitiZ&Milk, CitizMilk, citiz-milk -> citiz-and-milk
+          if (categoryLower.includes('milk')) {
+            const categoryBase = categoryLower.replace(/-?(and-)?milk/g, '');
+            const machineBase = machineId.replace(/-?(and-)?milk/g, '');
+            if (categoryBase === machineBase) return true;
+          }
+          
+          // Handle Plus variations (POP+, pop-plus)
+          if (categoryLower.includes('plus') || machineId.includes('plus')) {
+            const categoryBasePlus = categoryLower.replace(/-?plus/g, '');
+            const machineBasePlus = machineId.replace(/-?plus/g, '');
+            if (categoryBasePlus === machineBasePlus) return true;
+          }
+          
+          return false;
+        });
+        
+        if (patternMatch) return patternMatch;
+      }
+      
+      return null;
     }
 
     async function checkUserLogin() {
@@ -150,8 +209,11 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
             try {
               const productData = await window.napi.catalog().getProduct(productId.split("/").pop());
               
-              // Find matching machine from our local JSON using FAQ link
-              const matchedMachine = findMatchingMachine(productData.faq);
+              // Find matching machine from our local JSON using FAQ link or category
+              const matchedMachine = findMatchingMachine(
+                productData.faq, 
+                productData.category || productData.name
+              );
               
               return {
                 name: productData.name, // Original name from API
@@ -159,7 +221,9 @@ export function MyMachineSection({ onMachineClick, onSwitchToOL, onLoginChecked 
                 img: productData.images?.icon || productData.image || matchedMachine?.img || machines[0].img,
                 serialNumber,
                 purchaseDate,
-                faqLink: productData.faq // Keep FAQ link for debugging
+                faqLink: productData.faq, // Keep FAQ link for debugging
+                category: productData.category || productData.name, // Keep category for debugging
+                matchedBy: matchedMachine ? 'matched' : 'not-found' // Debug info
               };
             } catch (err) {
               // Skip products that can't be fetched (ResourceNotFoundError, etc.)
