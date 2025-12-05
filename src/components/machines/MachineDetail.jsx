@@ -43,7 +43,7 @@ const trackOverviewPDPClick = (machineName) => {
 
 const DETAIL_TABS = [
   { key: 'overview', label: 'overview', icon: '32/machine/dimensions', GTMlabelDpEN: 'overview' },
-  { key: 'guides', label: 'guides', icon: '32/machine/machine-tutorial-vl', GTMlabelDpEN: 'guides and videos' },
+  { key: 'instructions', label: 'guides', icon: '32/machine/machine-tutorial-vl', GTMlabelDpEN: 'guides and videos' },
   { key: 'troubleshooting', label: 'troubleshooting', icon: '32/machine/machine-care-ol', GTMlabelDpEN: 'troubleshooting' }
 ];
 
@@ -113,7 +113,7 @@ export function MachineDetail({ machine, onClose }) {
     setData(null);
 
     const lang = getCurrentLanguage();
-    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v4/${machine.id}_${lang}.json`;
+    const url = `https://www.nespresso.com/shared_res/markets/gr/json/machine-assistance/v5/${machine.id}_${lang}.json`;
 
     fetch(url)
       .then(res => {
@@ -165,15 +165,15 @@ export function MachineDetail({ machine, onClose }) {
       }
       
       // Check if we're in a guide detail view
-      const guideMatch = currentHash.match(/#!\/[^/]+\/guides\/(.+)/);
+      const guideMatch = currentHash.match(/#!\/[^/]+\/instructions\/(.+)/);
       if (guideMatch && instructions) {
         const guidePath = guideMatch[1];
         const guide = instructions.topics?.find(t => t.path === guidePath);
         if (guide) {
           setSelectedGuide(guide);
         }
-      } else if (currentHash.includes('/guides') && !currentHash.includes('/guides/')) {
-        // We're on guides tab but no specific guide
+      } else if (currentHash.includes('/instructions') && !currentHash.includes('/instructions/')) {
+        // We're on instructions tab but no specific guide
         setSelectedGuide(null);
       }
     }
@@ -189,14 +189,14 @@ export function MachineDetail({ machine, onClose }) {
 
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
-    window.location.hash = `#!/${machine.id}/guides/${guide.path}`;
+    window.location.hash = `#!/${machine.id}/instructions/${guide.path}`;
     // Scroll to top when opening a guide
     window.scrollTo(0, 0);
   }
 
   function handleBackToGuides() {
     setSelectedGuide(null);
-    window.location.hash = `#!/${machine.id}/guides`;
+    window.location.hash = `#!/${machine.id}/instructions`;
   }
 
   function toggleTrouble(index) {
@@ -352,7 +352,7 @@ export function MachineDetail({ machine, onClose }) {
                 <p>{t('overviewNotAvailable')}</p>
               </div>
             ) : null}
-            {activeTab === 'guides' && instructions ? (
+            {activeTab === 'instructions' && instructions ? (
               <div className="guides-section">
                 {!selectedGuide ? (
                   <>
@@ -422,7 +422,7 @@ export function MachineDetail({ machine, onClose }) {
                   </div>
                 )}
               </div>
-            ) : activeTab === 'guides' && !instructions ? (
+            ) : activeTab === 'instructions' && !instructions ? (
               <div className="no-data-message">
                 <p>{t('guidesNotAvailable')}</p>
               </div>
