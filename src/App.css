@@ -1109,6 +1109,15 @@ strong.instruction-step-index {
   margin: 6px 0;
 }
 
+.troubleshooting-list .trouble-item a {
+    color: #333;
+    text-decoration: underline;
+}
+
+.troubleshooting-list .trouble-item a:hover {
+    color: black;
+}
+
 /* Shimmer Loading States */
 .shimmer-container {
   padding: 20px 0;

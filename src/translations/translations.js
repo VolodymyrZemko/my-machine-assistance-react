@@ -80,8 +80,8 @@ export const translations = {
     
     // Tabs
     myMachine: "Η Μηχανή Μου",
-    olMachines: "Μηχανές OL",
-    vlMachines: "Μηχανές VL",
+    olMachines: "Μηχανές Original",
+    vlMachines: "Μηχανές Vertuo",
     milkMachines: "Μηχανές Γάλακτος",
     
     // My Machine Section

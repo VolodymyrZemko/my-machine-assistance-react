@@ -4,9 +4,9 @@ import { useEffect, useState, useCallback } from 'react';
 function parseHash() {
   const hash = window.location.hash || '';
   if (hash.startsWith('#!/')) {
-    const parts = hash.slice(3).split('/'); // Remove #!/ and split
+    const parts = hash.slice(3).split('/');
     if (parts.length >= 1 && parts[0]) {
-      return parts[0]; // Return the machine ID (first part after #!/)
+      return parts[0];
     }
   }
   return null;

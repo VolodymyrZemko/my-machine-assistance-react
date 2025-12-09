@@ -144,42 +144,39 @@ export function MachineDetail({ machine, onClose }) {
 
   // Sync active tab to hash
   useEffect(() => {
-    const hash = window.location.hash;
-    const match = hash.match(/#!\/[^/]+\/(.+)/);
-    const tabKeys = DETAIL_TABS.map(t => t.key);
-    if (match && tabKeys.includes(match[1])) {
-      setActiveTab(match[1]);
-    } else {
-      // Set default to overview and replace URL (don't create new history entry)
-      setActiveTab('overview');
-      const newHash = `#!/${machine.id}/overview`;
-      history.replaceState(null, '', window.location.pathname + window.location.search + newHash);
-    }
-
-    // Listen for hash changes
-    function onHashChange() {
-      const currentHash = window.location.hash;
-      const currentMatch = currentHash.match(/#!\/[^/]+\/(.+)/);
-      if (currentMatch && tabKeys.includes(currentMatch[1])) {
-        setActiveTab(currentMatch[1]);
-      }
+    function syncFromHash() {
+      const hash = window.location.hash;
+      const parts = hash.replace(/^#!\//,'').split('/');
+      const tabKeys = DETAIL_TABS.map(t => t.key);
       
-      // Check if we're in a guide detail view
-      const guideMatch = currentHash.match(/#!\/[^/]+\/instructions\/(.+)/);
-      if (guideMatch && instructions) {
-        const guidePath = guideMatch[1];
+      // parts[1] is the tab (overview, instructions, troubleshooting)
+      const tab = parts[1];
+      
+      // Check if it's a deep link to a guide (e.g., #!/machine/instructions/first-use)
+      if (tab === 'instructions' && parts[2] && instructions) {
+        const guidePath = parts[2];
         const guide = instructions.topics?.find(t => t.path === guidePath);
         if (guide) {
+          setActiveTab('instructions');
           setSelectedGuide(guide);
+          return;
         }
-      } else if (currentHash.includes('/instructions') && !currentHash.includes('/instructions/')) {
-        // We're on instructions tab but no specific guide
+      }
+      
+      // Regular tab navigation
+      if (tab && tabKeys.includes(tab)) {
+        setActiveTab(tab);
         setSelectedGuide(null);
+      } else {
+        // Default to overview
+        setActiveTab('overview');
+        history.replaceState(null, '', window.location.pathname + window.location.search + `#!/${machine.id}/overview`);
       }
     }
-
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    
+    syncFromHash();
+    window.addEventListener('hashchange', syncFromHash);
+    return () => window.removeEventListener('hashchange', syncFromHash);
   }, [machine.id, instructions]);
 
   function handleTabChange(tab) {
@@ -190,8 +187,16 @@ export function MachineDetail({ machine, onClose }) {
   function handleGuideSelect(guide) {
     setSelectedGuide(guide);
     window.location.hash = `#!/${machine.id}/instructions/${guide.path}`;
-    // Scroll to top when opening a guide
-    window.scrollTo(0, 0);
+    // Scroll to detail tabs on mobile, top of page on desktop
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      const detailTabs = document.querySelector('.detail-tabs');
+      if (detailTabs) {
+        detailTabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   function handleBackToGuides() {
