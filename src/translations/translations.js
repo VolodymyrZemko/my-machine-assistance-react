@@ -26,7 +26,7 @@ export const translations = {
     machineNotFound: "Unfortunately, we did not find your machine. Please use search or find it from the list please.",
     
     // Machine Detail
-    serialNumber: "S/N:",
+    serialNumber: "Serial Number:",
     purchaseDate: "Purchase Date:",
     detailHeaderMainTitle: "MACHINE ASSISTANCE",
     userManuals: "User Manuals:",
@@ -73,7 +73,7 @@ export const translations = {
     // Search
     searchTitle: "Υποστήριξη Μηχανών",
     searchDescription: "Η Nespresso προσφέρει οδηγίες βήμα προς βήμα και εύκολους οδηγούς για να σας βοηθήσει να αξιοποιήσετε στο έπακρο τη μηχανή Nespresso και τον αφρογαλακτοποιητή Aeroccino. Απλά επιλέξτε το μοντέλο σας από την παρακάτω λίστα και βρείτε όλα όσα χρειάζεστε να γνωρίζετε για τη μηχανή σας.",
-    searchPlaceholder: "Enter machine name",
+    searchPlaceholder: "Εισάγετε το όνομα της μηχανής",
     searchResultFor: "Αποτέλεσμα αναζήτησης για:",
     didntFindWhat: "Δεν βρήκατε αυτό που χρειάζεστε;",
     selectFromList: "Επιλέξτε τη μηχανή σας από την παρακάτω λίστα.",
@@ -97,9 +97,9 @@ export const translations = {
     machineNotFound: "Δυστυχώς, δεν βρήκαμε τη μηχανή σας. Παρακαλώ χρησιμοποιήστε την αναζήτηση ή βρείτε την από την παρακάτω λίστα.",
     
     // Machine Detail
-    serialNumber: "Α/Σ:",
+    serialNumber: "Σειριακός Αριθμός:",
     purchaseDate: "Ημερομηνία Αγοράς:",
-    detailHeaderMainTitle: "MACHINE ASSISTANCE",
+    detailHeaderMainTitle: "ΥΠΟΣΤΗΡΙΞΗ ΜΗΧΑΝΩΝ",
     userManuals: "Εγχειρίδια Χρήστη:",
     
     // Breadcrumbs
@@ -108,7 +108,7 @@ export const translations = {
     
     // Tabs in detail
     overview: "Επισκόπηση",
-    guides: "Οδηγοί",
+    guides: " Οδηγίες & Βίντεο",
     troubleshooting: "Αντιμετώπιση Προβλημάτων",
     
     // Messages
@@ -119,7 +119,7 @@ export const translations = {
     
     // Guide section
     selectFunctionality: "Επιλέξτε μια λειτουργία από την παρακάτω λίστα για να δείτε λεπτομερείς οδηγούς και βίντεο.",
-    backToGuides: "GUIDES & VIDEOS",
+    backToGuides: "ΟΔΗΓΙΕΣ & ΒΙΝΤΕΟ",
     step: "Βήμα",
     selectIssue: "Επιλέξτε το πρόβλημα που αντιμετωπίζετε από την παρακάτω λίστα.",
     
