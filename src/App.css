@@ -570,18 +570,16 @@ aspect-ratio: 1 / 1;
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -8%;
+    right: -4%;
     width: 50vw;
     /* max-width: 600px; */
-    max-width: 20vw;
+    max-width: 17vw;
     pointer-events: none;
 }
 
-@media (min-width: 768px) and (max-width: 1300px) {
+@media (max-width: 1300px) {
   .overview-bg {
-      background-size: cover;
-      background-position: left;
-      height: 50%;
+    display: none;
   }
 }
 
@@ -787,18 +785,16 @@ width: 48px;
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -8%;
+    right: -2%;
     width: 50vw;
     /* max-width: 600px; */
-    max-width: 20vw;
+    max-width: 16vw;
     pointer-events: none;
 }
 
-@media (min-width: 768px) and (max-width: 1300px) {
+@media (max-width: 1300px) {
   .guides-bg {
-      background-size: cover;
-      background-position: left;
-      height: 50%;
+    display: none;
   }
 }
 
@@ -1006,18 +1002,17 @@ strong.instruction-step-index {
     height: 90%;
     top: 50%;
     transform: translateY(-50%);
-    right: -8%;
+    /* right: -8%; */
+    right: -9%;
     width: 50vw;
     /* max-width: 600px; */
-    max-width: 20vw;
+    max-width: 17vw;
     pointer-events: none;
 }
 
-@media (min-width: 768px) and (max-width: 1300px) {
+@media (max-width: 1300px) {
   .troubleshooting-bg {
-      background-size: cover;
-      background-position: left;
-      height: 50%;
+    display: none;
   }
 }
 
