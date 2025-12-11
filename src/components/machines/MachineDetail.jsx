@@ -142,6 +142,18 @@ export function MachineDetail({ machine, onClose }) {
   const troubleshooting = data?.menus?.find(m => m.id === 'troubleshooting');
   const userManuals = data?.userManuals || [];
 
+  // Handle Escape key to go back from guide detail
+  useEffect(() => {
+    function handleEscapeKey(e) {
+      if (e.key === 'Escape' && selectedGuide) {
+        handleBackToGuides();
+      }
+    }
+    
+    window.addEventListener('keydown', handleEscapeKey);
+    return () => window.removeEventListener('keydown', handleEscapeKey);
+  }, [selectedGuide]);
+
   // Sync active tab to hash
   useEffect(() => {
     function syncFromHash() {
@@ -373,9 +385,18 @@ export function MachineDetail({ machine, onClose }) {
                           <div 
                             key={i} 
                             className="guide-card" 
+                            role="button"
+                            tabIndex={0}
                             onClick={() => {
                               trackGuideClick(machine.name, topic.title);
                               handleGuideSelect(topic);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                trackGuideClick(machine.name, topic.title);
+                                handleGuideSelect(topic);
+                              }
                             }}
                           >
                             <img src={topic.icon} alt={topic.title} />
@@ -397,7 +418,7 @@ export function MachineDetail({ machine, onClose }) {
                     <p className="guides-intro">{t('selectFunctionality')}</p>
                     <button className="guide-back-button" onClick={handleBackToGuides}>
                       {selectedGuide.icon && <img src={selectedGuide.icon} alt="Back" />}
-                      {t('backToGuides')}
+                      {selectedGuide.title}
                     </button>
                     <h3 className="sr-only">{selectedGuide.title}</h3>
                     {selectedGuide.videoId && (

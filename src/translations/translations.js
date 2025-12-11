@@ -48,7 +48,7 @@ export const translations = {
     
     // Guide section
     selectFunctionality: "Select a functionality from the list below to view detailed guides and videos.",
-    backToGuides: "GUIDES & VIDEOS",
+    // backToGuides: "GUIDES & VIDEOS",
     step: "Step",
     selectIssue: "Select the issue you are facing from the list below.",
     
@@ -119,7 +119,7 @@ export const translations = {
     
     // Guide section
     selectFunctionality: "Επιλέξτε μια λειτουργία από την παρακάτω λίστα για να δείτε λεπτομερείς οδηγούς και βίντεο.",
-    backToGuides: "ΟΔΗΓΙΕΣ & ΒΙΝΤΕΟ",
+    // backToGuides: "ΟΔΗΓΙΕΣ & ΒΙΝΤΕΟ",
     step: "Βήμα",
     selectIssue: "Επιλέξτε το πρόβλημα που αντιμετωπίζετε από την παρακάτω λίστα.",
     
