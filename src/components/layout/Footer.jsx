@@ -65,7 +65,11 @@ export function Footer({ activeMachine }) {
           <div className="section-wrapper">
             <p className="footer-title">{t('personalizedAssistance')}</p>
             <p className="footer-subtitle">{t('needHelp')}</p>
-            <p>{t('contactAssistance')}</p>
+            <p>
+              {t('contactAssistanceBefore')}
+              <a href={`tel:${t('contactPhoneHref')}`}>{t('contactPhone')}</a>
+              {t('contactAssistanceAfter')}
+            </p>
             <p>{t('assistancePackage')}</p>
             <p>
               {t('termsConditions')} <a 

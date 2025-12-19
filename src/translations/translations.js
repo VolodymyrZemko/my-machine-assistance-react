@@ -55,7 +55,10 @@ export const translations = {
     // Footer
     personalizedAssistance: "PERSONALIZED MACHINE ASSISTANCE",
     needHelp: "NEED HELP?",
-    contactAssistance: "If you require assistance, contact Nespresso on 800 11 71 300 toll free from any landline and receive personalized technical diagnosis and support.",
+    contactAssistanceBefore: "If you require assistance, contact Nespresso on ",
+    contactPhone: "800 11 71 300",
+    contactPhoneHref: "8001171300",
+    contactAssistanceAfter: " toll free from any landline and receive personalized technical diagnosis and support.",
     assistancePackage: "If required, Nespresso offers a full-service Assistance Package which includes complimentary pick-up and repair of your machine and its return to your address of choice.",
     termsConditions: "You may find the Terms & Conditions for your machine service",
     here: "here",
@@ -126,7 +129,10 @@ export const translations = {
     // Footer
     personalizedAssistance: "ΕΞΑΤΟΜΙΚΕΥΜΕΝΗ ΥΠΟΣΤΗΡΙΞΗ ΜΗΧΑΝΩΝ",
     needHelp: "ΧΡΕΙΑΖΕΣΤΕ ΒΟΗΘΕΙΑ;",
-    contactAssistance: "Εάν χρειάζεστε βοήθεια, επικοινωνήστε με τη Nespresso στο 800 11 71 300 δωρεάν από οποιοδήποτε σταθερό τηλέφωνο και λάβετε εξατομικευμένη τεχνική διάγνωση και υποστήριξη.",
+    contactAssistanceBefore: "Εάν χρειάζεστε βοήθεια, επικοινωνήστε με τη Nespresso στο ",
+    contactPhone: "800 11 71 300",
+    contactPhoneHref: "8001171300",
+    contactAssistanceAfter: " δωρεάν από οποιοδήποτε σταθερό τηλέφωνο και λάβετε εξατομικευμένη τεχνική διάγνωση και υποστήριξη.",
     assistancePackage: "Εάν απαιτείται, η Nespresso προσφέρει ένα πλήρες Πακέτο Υποστήριξης που περιλαμβάνει δωρεάν παραλαβή και επισκευή της μηχανής σας και την επιστροφή της στη διεύθυνση της επιλογής σας.",
     termsConditions: "Μπορείτε να βρείτε τους Όρους & Προϋποθέσεις για την εξυπηρέτηση της μηχανής σας",
     here: "εδώ",
